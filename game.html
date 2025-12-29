@@ -25,10 +25,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arnaud leroy + arcade</title>
+    
     <meta property="og:title" content="arnaud leroy + studio">
     <meta property="og:description" content="silence is a material.">
     <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-    <meta property="og:url" content="https://arnaudleroy.com">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
@@ -41,92 +41,54 @@
 
     <style>
         /* [ GAME SPECIFIC STYLES ] */
-        body { 
-            overflow: hidden; /* No scrollbar */
-            touch-action: none; 
-        }
-
-        /* FIX THE FOOTER: Stick to bottom */
-        footer {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            padding: 20px 120px; background: transparent; pointer-events: none;
-        }
+        body { overflow: hidden; touch-action: none; }
+        footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px 120px; background: transparent; pointer-events: none; }
         footer * { pointer-events: auto; }
 
         /* Game Container */
         #game-container {
-            position: relative;
-            width: 100%; height: 65vh;
-            border: 1px solid var(--accent-blue);
-            margin-top: 20px;
-            background: var(--bg-color);
-            overflow: hidden;
-            cursor: none; /* Hide default cursor */
+            position: relative; width: 100%; height: 65vh;
+            border: 1px solid var(--accent-blue); margin-top: 20px;
+            background: var(--bg-color); overflow: hidden; cursor: none;
             transition: background 0.5s ease, border-color 0.5s ease;
         }
 
-        /* LIGHT MODE */
+        /* VISUAL MODES */
+        #game-container.focus-active { filter: contrast(120%) saturate(120%); border-color: #002366; box-shadow: inset 0 0 50px rgba(0, 35, 102, 0.1); }
+        #game-container.glitch-active { filter: invert(100%); } /* GLITCH STORM FX */
+
+        /* LIGHT & DARK THEMES */
         #game-container { background: #FAEBD7; }
-        
-        /* DARK MODE */
         body.dark-mode #game-container { background: #000; border-color: #333; }
+        body.dark-mode #game-container.focus-active { border-color: #FAEBD7; box-shadow: inset 0 0 50px rgba(250, 235, 215, 0.1); }
 
-        /* FOCUS MODE EFFECT (Slow Motion Blur) */
-        #game-container.focus-active {
-            filter: contrast(120%) saturate(120%);
-            border-color: #002366;
-            box-shadow: inset 0 0 50px rgba(0, 35, 102, 0.1);
-        }
-        body.dark-mode #game-container.focus-active {
-            border-color: #FAEBD7;
-            box-shadow: inset 0 0 50px rgba(250, 235, 215, 0.1);
-        }
-
-        /* NIGHTMARE FLASHLIGHT */
+        /* FLASHLIGHT */
         #game-lighting {
-            display: none;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 20;
-            background: radial-gradient(
-                circle 300px at var(--light-x, 50%) calc(100% - 45px), 
-                rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.95) 60%, rgba(0,0,0,1) 100%
-            );
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20;
+            background: radial-gradient(circle 300px at var(--light-x, 50%) calc(100% - 45px), rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.95) 60%, rgba(0,0,0,1) 100%);
         }
         body.dark-mode #game-lighting { display: block; }
 
         /* ENTITIES */
         #player {
-            position: absolute; bottom: 30px; left: 50%;
-            width: 30px; height: 30px;
-            font-family: monospace; font-size: 30px;
-            color: var(--accent-blue);
+            position: absolute; bottom: 30px; left: 50%; width: 30px; height: 30px;
+            font-family: monospace; font-size: 30px; color: var(--accent-blue);
             text-align: center; line-height: 30px; font-weight: bold;
-            transform: translateX(-50%); z-index: 15;
-            transition: color 0.3s ease;
+            transform: translateX(-50%); z-index: 15; transition: color 0.3s ease;
         }
         body.dark-mode #player { color: #FAEBD7; text-shadow: 0 0 15px rgba(250, 235, 215, 0.8); }
 
-        .obstacle {
-            position: absolute; font-family: 'Courier New', monospace;
-            font-size: 14px; color: var(--accent-grey); font-weight: bold; z-index: 10;
-        }
+        .obstacle { position: absolute; font-family: 'Courier New', monospace; font-size: 14px; color: var(--accent-grey); font-weight: bold; z-index: 10; }
         body.dark-mode .obstacle { color: #444; } 
         
-        .heart-item {
-            position: absolute; font-size: 16px; color: #ff3333;
-            text-shadow: 0 0 5px #ff0000; z-index: 12;
-            animation: pulse 1s infinite;
-        }
-
-        .plus-item {
-            position: absolute; font-size: 20px; color: var(--accent-blue);
-            font-weight: bold; z-index: 12;
-            animation: spin 3s linear infinite;
-        }
+        .heart-item { position: absolute; font-size: 16px; color: #ff3333; text-shadow: 0 0 5px #ff0000; z-index: 12; animation: pulse 1s infinite; }
+        .plus-item { position: absolute; font-size: 20px; color: var(--accent-blue); font-weight: bold; z-index: 12; animation: spin 3s linear infinite; }
         body.dark-mode .plus-item { color: #FAEBD7; text-shadow: 0 0 10px #FAEBD7; }
 
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* SHATTER PARTICLES */
+        .shard {
+            position: absolute; width: 4px; height: 4px; pointer-events: none; z-index: 14;
+        }
 
         /* UI LAYER */
         #ui-layer {
@@ -139,29 +101,19 @@
         
         #life-counter { color: #ff3333; letter-spacing: 2px; }
         #score-val { font-weight: bold; }
+        #combo-val { opacity: 0; transition: opacity 0.3s; color: var(--accent-blue); font-weight: bold; }
+        
         body.dark-mode #score-val { color: #FAEBD7; }
 
         /* FOCUS GAUGE UI */
-        #focus-container {
-            display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
-        }
-        #focus-label { font-size: 10px; color: var(--accent-grey); }
-        #focus-bar-bg {
-            width: 100px; height: 4px; background: rgba(160,160,160,0.3);
-            position: relative; overflow: hidden;
-        }
-        #focus-bar-fill {
-            width: 0%; height: 100%; background: var(--accent-blue);
-            transition: width 0.1s linear;
-        }
+        #focus-container { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+        #focus-bar-bg { width: 100px; height: 4px; background: rgba(160,160,160,0.3); position: relative; overflow: hidden; }
+        #focus-bar-fill { width: 0%; height: 100%; background: var(--accent-blue); transition: width 0.1s linear; }
         body.dark-mode #focus-bar-fill { background: #FAEBD7; box-shadow: 0 0 5px #FAEBD7; }
 
-        /* MUTE BUTTON */
         #mute-btn {
-            pointer-events: auto; cursor: pointer;
-            border: 1px solid var(--accent-grey); padding: 5px 10px;
-            font-size: 10px; margin-top: 5px;
-            background: transparent; color: var(--accent-grey);
+            pointer-events: auto; cursor: pointer; border: 1px solid var(--accent-grey); padding: 5px 10px;
+            font-size: 10px; margin-top: 5px; background: transparent; color: var(--accent-grey);
         }
         #mute-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
 
@@ -169,58 +121,42 @@
         #start-screen, #game-over-screen, #pause-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(250, 235, 215, 0.96); z-index: 50;
-            text-align: center; transition: background 0.3s ease;
+            background: rgba(250, 235, 215, 0.96); z-index: 50; text-align: center; transition: background 0.3s ease;
         }
-        body.dark-mode #start-screen, 
-        body.dark-mode #game-over-screen, 
-        body.dark-mode #pause-screen { background: rgba(5, 5, 5, 0.96); }
+        body.dark-mode #start-screen, body.dark-mode #game-over-screen, body.dark-mode #pause-screen { background: rgba(5, 5, 5, 0.96); }
 
         .btn-start {
-            border: 1px solid var(--accent-blue); padding: 15px 40px;
-            background: transparent; color: var(--accent-blue);
-            font-family: 'Courier New', monospace; cursor: pointer;
-            margin-top: 30px; transition: all 0.3s ease;
+            border: 1px solid var(--accent-blue); padding: 15px 40px; background: transparent; color: var(--accent-blue);
+            font-family: 'Courier New', monospace; cursor: pointer; margin-top: 30px; transition: all 0.3s ease;
         }
         .btn-start:hover { background: var(--accent-blue); color: var(--bg-color); }
         body.dark-mode .btn-start { border-color: #444; color: #888; }
         body.dark-mode .btn-start:hover { border-color: #FAEBD7; color: #FAEBD7; background: transparent; }
 
-        /* NEW: CONTROLS BOX */
         .controls-box {
-            margin-top: 25px;
-            padding: 15px 25px;
-            border: 1px dashed var(--accent-blue);
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: var(--accent-blue);
-            text-align: center;
-            line-height: 1.8;
-            opacity: 0.8;
+            margin-top: 25px; padding: 15px 25px; border: 1px dashed var(--accent-blue);
+            font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent-blue);
+            text-align: center; line-height: 1.8; opacity: 0.8;
         }
         body.dark-mode .controls-box { border-color: #444; color: #888; }
-
-        .key-badge {
-            border: 1px solid currentColor;
-            padding: 1px 5px;
-            margin: 0 3px;
-            font-weight: bold;
-            font-size: 10px;
-        }
+        .key-badge { border: 1px solid currentColor; padding: 1px 5px; margin: 0 3px; font-weight: bold; font-size: 10px; }
 
         /* ANIMATIONS */
         .damaged { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
             10%, 90% { transform: translate3d(-1px, 0, 0); }
             20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Shatter Animation */
+        @keyframes explode {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
         }
 
-        @media (max-width: 900px) {
-            footer { padding: 20px; position: absolute; }
-            #game-container { height: 60vh; }
-        }
+        @media (max-width: 900px) { footer { padding: 20px; position: absolute; } #game-container { height: 60vh; } }
     </style>
 </head>
 <body>
@@ -242,7 +178,7 @@
             <div id="ui-layer">
                 <div id="stats-left">
                     <span>LIVES <span class="plus">+</span> <span id="life-counter">♥♥♥</span></span><br>
-                    <span>SCORE <span class="plus">+</span> <span id="score-val">0000</span></span>
+                    <span>SCORE <span class="plus">+</span> <span id="score-val">0000</span> <span id="combo-val">x1</span></span>
                 </div>
                 
                 <div id="focus-container">
@@ -254,14 +190,12 @@
 
             <div id="start-screen">
                 <h2 class="hero-statement" id="title-text" style="font-size: 2.5rem;">system<br>evasion</h2>
-                
                 <div class="controls-box">
                     <div><span class="key-badge">←</span> <span class="key-badge">→</span> NAVIGATE</div>
                     <div><span class="key-badge">SPACE</span> FOCUS (SLOW TIME)</div>
                     <div><span class="key-badge">ESC</span> PAUSE SYSTEM</div>
                     <div style="font-size: 9px; margin-top: 5px; opacity: 0.7;">(mobile: tap sides / bottom)</div>
                 </div>
-
                 <p class="mono-font" id="desc-text" style="margin-top: 20px; font-size: 11px;">
                     avoid noise <span class="plus">+</span> catch blue [+] to fill gauge
                 </p>
@@ -289,12 +223,13 @@
     <footer class="mono-font"></footer> 
 
     <script>
-        // [ SYSTEM ARCADE V8 - CONTROLS + PAUSE ]
+        // [ SYSTEM ARCADE V1.9 - FEATURES PACK ]
         const player = document.getElementById('player');
         const container = document.getElementById('game-container');
         const lighting = document.getElementById('game-lighting');
         const lifeDisplay = document.getElementById('life-counter');
         const scoreDisplay = document.getElementById('score-val');
+        const comboDisplay = document.getElementById('combo-val');
         const focusBar = document.getElementById('focus-bar-fill');
         const titleText = document.getElementById('title-text');
         const descText = document.getElementById('desc-text');
@@ -315,6 +250,17 @@
         const FOCUS_DRAIN_RATE = 0.8;
         const FOCUS_GAIN_AMOUNT = 25;
 
+        // [ FEATURE 2 ] COMBO SYSTEM
+        let comboMultiplier = 1;
+        let comboTimer = 0;
+        const COMBO_MAX_TIME = 120; // Frames (2 seconds)
+
+        // [ FEATURE 3 ] GLITCH STORM
+        let stormTimer = 0;
+        let isStormActive = false;
+        const STORM_INTERVAL = 1800; // 30 seconds
+        const STORM_DURATION = 300;  // 5 seconds
+
         // Audio System
         let audioEnabled = true;
         let audioCtx = null;
@@ -332,45 +278,51 @@
         function playSound(type) {
             if (!audioEnabled || !audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
-
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
             osc.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-
             const now = audioCtx.currentTime;
 
             if (type === 'heart') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
-                gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.start(now);
-                osc.stop(now + 0.1);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(800, now); osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+                gainNode.gain.setValueAtTime(0.1, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
             } else if (type === 'plus') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(440, now);
-                osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
-                gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                osc.start(now);
-                osc.stop(now + 0.2);
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(440, now); osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
+                gainNode.gain.setValueAtTime(0.1, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now); osc.stop(now + 0.2);
             } else if (type === 'damage') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(100, now);
-                osc.frequency.linearRampToValueAtTime(50, now + 0.2);
-                gainNode.gain.setValueAtTime(0.2, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                osc.start(now);
-                osc.stop(now + 0.2);
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, now); osc.frequency.linearRampToValueAtTime(50, now + 0.2);
+                gainNode.gain.setValueAtTime(0.2, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now); osc.stop(now + 0.2);
             }
         }
 
         function toggleAudio() {
             audioEnabled = !audioEnabled;
             document.getElementById('mute-btn').innerText = audioEnabled ? "SOUND: ON" : "SOUND: OFF";
+        }
+
+        // [ FEATURE 1 ] SHATTER ENGINE
+        function createShatter(x, y, color) {
+            for(let i=0; i<8; i++) {
+                const shard = document.createElement('div');
+                shard.className = 'shard';
+                shard.style.backgroundColor = color;
+                shard.style.left = x + '%';
+                shard.style.top = y + '%';
+                
+                // Random explosion direction
+                const tx = (Math.random() - 0.5) * 100 + 'px';
+                const ty = (Math.random() - 0.5) * 100 + 'px';
+                shard.style.setProperty('--tx', tx);
+                shard.style.setProperty('--ty', ty);
+                shard.style.animation = 'explode 0.6s ease-out forwards';
+                
+                container.appendChild(shard);
+                setTimeout(() => shard.remove(), 600);
+            }
         }
 
         // [ 1 ] MODE CHECKER
@@ -410,20 +362,14 @@
             if(e.code === "ArrowRight") keys.ArrowRight = false;
             if(e.code === "Space") keys.Space = false;
         });
-        
         container.addEventListener('touchstart', (e) => {
-            if(e.touches[0].clientY > window.innerHeight * 0.7) {
-                keys.Space = true;
-            } else {
+            if(e.touches[0].clientY > window.innerHeight * 0.7) { keys.Space = true; } 
+            else { 
                 if(e.touches[0].clientX < window.innerWidth / 2) keys.ArrowLeft = true;
                 else keys.ArrowRight = true;
             }
         });
-        container.addEventListener('touchend', () => { 
-            keys.ArrowLeft = false; 
-            keys.ArrowRight = false; 
-            keys.Space = false;
-        });
+        container.addEventListener('touchend', () => { keys.ArrowLeft = false; keys.ArrowRight = false; keys.Space = false; });
 
         // [ 3 ] CORE GAME
         function startGame() {
@@ -441,8 +387,14 @@
             focusLevel = 0; 
             globalSpeed = isNightmare ? 1.3 : 1.0; 
             
-            updateLivesUI();
+            // Feature Resets
+            comboMultiplier = 1;
+            comboTimer = 0;
+            stormTimer = 0;
+            isStormActive = false;
+            container.classList.remove('glitch-active');
             
+            updateLivesUI();
             requestAnimationFrame(update);
             spawnLoop();
             
@@ -462,18 +414,17 @@
             document.getElementById('game-over-screen').style.display = 'none';
             document.getElementById('start-screen').style.display = 'flex';
             container.classList.remove('focus-active');
+            container.classList.remove('glitch-active');
             updateMenuUI();
         }
 
         function togglePause() {
             isPaused = !isPaused;
-            if(isPaused) {
-                document.getElementById('pause-screen').style.display = 'flex';
-                // Stop Physics (Animation Frame loop handles this)
-            } else {
+            if(isPaused) { document.getElementById('pause-screen').style.display = 'flex'; } 
+            else {
                 document.getElementById('pause-screen').style.display = 'none';
                 requestAnimationFrame(update);
-                spawnLoop(); // Restart spawn loop
+                spawnLoop();
             }
         }
 
@@ -484,7 +435,7 @@
         }
 
         function spawnLoop() {
-            if(!gameActive || isPaused) return; // Stop spawning if paused
+            if(!gameActive || isPaused) return; 
             
             let type = 'noise';
             let roll = Math.random();
@@ -495,6 +446,9 @@
 
             let baseTime = isNightmare ? 700 : 800; 
             if (isFocusing) baseTime = baseTime * 2; 
+
+            // Glitch Storm Spawns Faster
+            if (isStormActive) baseTime = baseTime * 0.6;
 
             let nextSpawn = baseTime / globalSpeed;
             if(nextSpawn < 150) nextSpawn = 150;
@@ -509,24 +463,16 @@
             el.style.left = rX + '%';
             el.style.top = '-30px';
             
-            if(type === 'heart') {
-                el.className = 'heart-item';
-                el.innerText = "♥";
-            } else if (type === 'plus') {
-                el.className = 'plus-item';
-                el.innerText = "+";
-            } else {
-                el.className = 'obstacle';
-                el.innerText = NOISE_CHARS[Math.floor(Math.random() * NOISE_CHARS.length)];
+            if(type === 'heart') { el.className = 'heart-item'; el.innerText = "♥"; } 
+            else if (type === 'plus') { el.className = 'plus-item'; el.innerText = "+"; } 
+            else { 
+                el.className = 'obstacle'; 
+                el.innerText = NOISE_CHARS[Math.floor(Math.random() * NOISE_CHARS.length)]; 
             }
-            
             container.appendChild(el);
             
             obstacles.push({
-                el: el,
-                type: type,
-                x: rX,
-                y: 0,
+                el: el, type: type, x: rX, y: 0,
                 speed: (Math.random() * 0.4 + 0.6) * globalSpeed
             });
         }
@@ -534,7 +480,29 @@
         // [ 4 ] GAME LOOP
         function update() {
             if(!gameActive) return;
-            if(isPaused) return; // Stop update loop
+            if(isPaused) return; 
+
+            // --- FEATURE 2: COMBO LOGIC ---
+            if(comboTimer > 0) {
+                comboTimer--;
+                comboDisplay.style.opacity = "1";
+                comboDisplay.innerText = "x" + comboMultiplier;
+            } else {
+                comboMultiplier = 1;
+                comboDisplay.style.opacity = "0";
+            }
+
+            // --- FEATURE 3: GLITCH STORM LOGIC ---
+            stormTimer++;
+            if(!isStormActive && stormTimer > STORM_INTERVAL) {
+                isStormActive = true;
+                stormTimer = 0;
+                container.classList.add('glitch-active');
+            } else if (isStormActive && stormTimer > STORM_DURATION) {
+                isStormActive = false;
+                stormTimer = 0;
+                container.classList.remove('glitch-active');
+            }
 
             // FOCUS LOGIC
             if(keys.Space && focusLevel > 0) {
@@ -547,7 +515,6 @@
             }
             if(focusLevel < 0) focusLevel = 0;
             if(focusLevel > 100) focusLevel = 100;
-            
             focusBar.style.width = focusLevel + '%';
 
             // MOVEMENT
@@ -567,22 +534,41 @@
                 o.y += o.speed * timeScale;
                 o.el.style.top = o.y + '%';
 
+                // COLLISION
                 if (o.y > 88 && o.y < 98) {
                     if (Math.abs(o.x - playerX) < 5) {
+                        
+                        // Hit Something!
                         if(o.type === 'heart') {
                             lives++;
-                            score += 500;
+                            score += 500 * comboMultiplier; // Combo Bonus
                             playSound('heart');
+                            createShatter(o.x, 90, '#ff3333'); // Shatter Red
+                            
+                            // Increase Combo
+                            if(comboMultiplier < 8) comboMultiplier *= 2;
+                            comboTimer = COMBO_MAX_TIME;
+                            
                             updateLivesUI();
                         } else if (o.type === 'plus') {
                             focusLevel += FOCUS_GAIN_AMOUNT;
+                            score += 200 * comboMultiplier;
                             playSound('plus');
-                            score += 200;
+                            createShatter(o.x, 90, '#002366'); // Shatter Blue
+                            
+                            if(comboMultiplier < 8) comboMultiplier *= 2;
+                            comboTimer = COMBO_MAX_TIME;
                         } else {
                             lives--;
                             playSound('damage');
                             updateLivesUI();
+                            createShatter(o.x, 90, '#555'); // Shatter Grey
                             container.classList.add('damaged');
+                            
+                            // Combo Break
+                            comboMultiplier = 1;
+                            comboTimer = 0;
+
                             setTimeout(()=>container.classList.remove('damaged'), 400);
 
                             if(lives <= 0) {
@@ -608,12 +594,11 @@
             document.getElementById('game-over-screen').style.display = 'flex';
             document.getElementById('final-score').innerText = score;
             container.classList.remove('focus-active');
+            container.classList.remove('glitch-active');
         }
     </script>
 </body>
 </html>
-
-
 <!--
 ////////////////////////////////////////////////////////////////////////////////
 // END OF FILE
