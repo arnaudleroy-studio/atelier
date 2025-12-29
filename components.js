@@ -15,7 +15,7 @@
  *    /++__  ++| ++       
  *   | ++  \ ++| ++       
  *   | ++++++++| ++       
- *   | ++__  ++| ++       
+ *   | ++__  ++| ++        
  *   | ++  | ++| ++       
  *   | ++  | ++| ++++++++ 
  *   |__/  |__/|________/ 
@@ -118,8 +118,26 @@ const FOOTER_HTML = `
     </div>
 `;
 
+
 // =============================================================================
-// [ 04 ] NAVIGATION LOGIC
+// [ 04 ] ANALYTICS SENSOR (GoatCounter)
+// =============================================================================
+// "Measuring the signal without the noise."
+// Privacy-friendly, no cookies, no banners.
+function injectAnalytics() {
+    // Only run on the live site (prevents tracking your local edits)
+    if (window.location.hostname === "arnaudleroy.com") {
+        const script = document.createElement('script');
+        script.async = true;
+        script.dataset.goatcounter = 'https://arnaudleroy.goatcounter.com/count';
+        script.src = '//gc.zgo.at/count.js';
+        document.head.appendChild(script);
+        console.log("System: Signal sensor active.");
+    }
+}
+
+// =============================================================================
+// [ 05 ] NAVIGATION LOGIC
 // =============================================================================
 function setActiveLink() {
     const path = window.location.pathname;
@@ -133,7 +151,7 @@ function setActiveLink() {
 }
 
 // =============================================================================
-// [ 05 ] FLASHLIGHT ENGINE
+// [ 06 ] FLASHLIGHT ENGINE
 // =============================================================================
 function initFlashlight() {
     if (!document.getElementById('flashlight')) {
@@ -150,7 +168,7 @@ function initFlashlight() {
 }
 
 // =============================================================================
-// [ 06 ] DARK MODE SYSTEM
+// [ 07 ] DARK MODE SYSTEM
 // =============================================================================
 function initDarkMode() {
     const btn = document.getElementById('mode-toggle');
@@ -183,7 +201,7 @@ function initDarkMode() {
 }
 
 // =============================================================================
-// [ 07 ] MOBILE MENU LOGIC (ADDED)
+// [ 08 ] MOBILE MENU LOGIC (ADDED)
 // =============================================================================
 function initMobileMenu() {
     const toggle = document.querySelector('.mobile-toggle');
@@ -205,7 +223,7 @@ function initMobileMenu() {
 }
 
 // =============================================================================
-// [ 08 ] INITIALIZATION
+// [ 09 ] INITIALIZATION
 // =============================================================================
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -222,10 +240,12 @@ document.addEventListener("DOMContentLoaded", function() {
         footerContainer.innerHTML = FOOTER_HTML; 
     }
 
+    injectAnalytics();
+
     // Boot Systems
     initFlashlight();
     initDarkMode();
-    initMobileMenu(); // <--- Added this call
+    initMobileMenu(); 
    
     console.log(
         "%c arnaud leroy + studio \n%c system: online \n%c silence is a material", 
@@ -248,7 +268,7 @@ document.addEventListener('copy', function(e) {
 
 
 // =============================================================================
-// [ 09 ] PAGE VISIBILITY LOGIC (Ghost Mode)
+// [ 10 ] PAGE VISIBILITY LOGIC (Ghost Mode)
 // =============================================================================
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
@@ -257,3 +277,4 @@ document.addEventListener('visibilitychange', function() {
         document.title = "a l + studio"; // Or restore original title
     }
 });
+
