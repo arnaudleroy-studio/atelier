@@ -19,7 +19,6 @@
     |__/  |__/|________/ 
                          
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +32,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
@@ -46,150 +46,167 @@
             touch-action: none; 
         }
 
-        /* FIX THE FOOTER: Make it stick to bottom so toggle is always there */
+        /* FIX THE FOOTER: Stick to bottom */
         footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 120px; /* Match global padding */
-            background: transparent;
-            pointer-events: none; /* Let clicks pass through empty space */
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            padding: 20px 120px; background: transparent; pointer-events: none;
         }
-        /* Enable clicking on footer contents (like the moon icon) */
         footer * { pointer-events: auto; }
 
         /* Game Container */
         #game-container {
             position: relative;
-            width: 100%;
-            height: 65vh; /* Slightly smaller to fit footer comfortably */
+            width: 100%; height: 65vh;
             border: 1px solid var(--accent-blue);
             margin-top: 20px;
             background: var(--bg-color);
             overflow: hidden;
-            cursor: none;
+            cursor: none; /* Hide default cursor */
             transition: background 0.5s ease, border-color 0.5s ease;
         }
 
-        /* LIGHT MODE (Standard) */
+        /* LIGHT MODE */
         #game-container { background: #FAEBD7; }
         
-        /* DARK MODE (Nightmare) */
-        body.dark-mode #game-container { 
-            background: #000; 
-            border-color: #333; 
+        /* DARK MODE */
+        body.dark-mode #game-container { background: #000; border-color: #333; }
+
+        /* FOCUS MODE EFFECT (Slow Motion Blur) */
+        #game-container.focus-active {
+            filter: contrast(120%) saturate(120%);
+            border-color: #002366;
+            box-shadow: inset 0 0 50px rgba(0, 35, 102, 0.1);
+        }
+        body.dark-mode #game-container.focus-active {
+            border-color: #FAEBD7;
+            box-shadow: inset 0 0 50px rgba(250, 235, 215, 0.1);
         }
 
-        /* NIGHTMARE FLASHLIGHT (Hidden in Light Mode) */
+        /* NIGHTMARE FLASHLIGHT */
         #game-lighting {
             display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 20;
-            /* CENTERED ON PLAYER (+ is 30px tall, bottom 30px. Center is approx 45px from bottom) */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 20;
             background: radial-gradient(
                 circle 300px at var(--light-x, 50%) calc(100% - 45px), 
-                rgba(0,0,0,0) 0%, 
-                rgba(0,0,0,0.2) 20%, 
-                rgba(0,0,0,0.95) 60%, 
-                rgba(0,0,0,1) 100%
+                rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.95) 60%, rgba(0,0,0,1) 100%
             );
         }
         body.dark-mode #game-lighting { display: block; }
 
-        /* PLAYER */
+        /* ENTITIES */
         #player {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            font-family: monospace;
-            font-size: 30px;
+            position: absolute; bottom: 30px; left: 50%;
+            width: 30px; height: 30px;
+            font-family: monospace; font-size: 30px;
             color: var(--accent-blue);
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            transform: translateX(-50%);
-            z-index: 15;
+            text-align: center; line-height: 30px; font-weight: bold;
+            transform: translateX(-50%); z-index: 15;
             transition: color 0.3s ease;
         }
-        body.dark-mode #player { 
-            color: #FAEBD7; 
-            text-shadow: 0 0 15px rgba(250, 235, 215, 0.8); 
-        }
+        body.dark-mode #player { color: #FAEBD7; text-shadow: 0 0 15px rgba(250, 235, 215, 0.8); }
 
-        /* OBSTACLES */
         .obstacle {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: var(--accent-grey);
-            font-weight: bold;
-            z-index: 10;
+            position: absolute; font-family: 'Courier New', monospace;
+            font-size: 14px; color: var(--accent-grey); font-weight: bold; z-index: 10;
         }
-        body.dark-mode .obstacle { color: #444; } /* Darker in nightmare */
+        body.dark-mode .obstacle { color: #444; } 
         
         .heart-item {
-            position: absolute;
-            font-size: 16px;
-            color: #ff3333;
-            text-shadow: 0 0 5px #ff0000;
-            z-index: 12;
+            position: absolute; font-size: 16px; color: #ff3333;
+            text-shadow: 0 0 5px #ff0000; z-index: 12;
             animation: pulse 1s infinite;
         }
+
+        .plus-item {
+            position: absolute; font-size: 20px; color: var(--accent-blue);
+            font-weight: bold; z-index: 12;
+            animation: spin 3s linear infinite;
+        }
+        body.dark-mode .plus-item { color: #FAEBD7; text-shadow: 0 0 10px #FAEBD7; }
+
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* UI LAYER */
         #ui-layer {
-            position: absolute;
-            top: 20px; left: 20px; right: 20px;
-            display: flex; justify-content: space-between;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            color: var(--accent-blue);
-            z-index: 30;
+            position: absolute; top: 20px; left: 20px; right: 20px;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            font-family: 'Courier New', monospace; font-size: 12px;
+            color: var(--accent-blue); z-index: 30; pointer-events: none;
         }
         body.dark-mode #ui-layer { color: #666; }
         
         #life-counter { color: #ff3333; letter-spacing: 2px; }
-        
         #score-val { font-weight: bold; }
         body.dark-mode #score-val { color: #FAEBD7; }
 
+        /* FOCUS GAUGE UI */
+        #focus-container {
+            display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+        }
+        #focus-label { font-size: 10px; color: var(--accent-grey); }
+        #focus-bar-bg {
+            width: 100px; height: 4px; background: rgba(160,160,160,0.3);
+            position: relative; overflow: hidden;
+        }
+        #focus-bar-fill {
+            width: 0%; height: 100%; background: var(--accent-blue);
+            transition: width 0.1s linear;
+        }
+        body.dark-mode #focus-bar-fill { background: #FAEBD7; box-shadow: 0 0 5px #FAEBD7; }
+
+        /* MUTE BUTTON */
+        #mute-btn {
+            pointer-events: auto; cursor: pointer;
+            border: 1px solid var(--accent-grey); padding: 5px 10px;
+            font-size: 10px; margin-top: 5px;
+            background: transparent; color: var(--accent-grey);
+        }
+        #mute-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
         /* SCREENS */
-        #start-screen, #game-over-screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            background: rgba(250, 235, 215, 0.96);
-            z-index: 50;
-            text-align: center;
-            transition: background 0.3s ease;
+        #start-screen, #game-over-screen, #pause-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(250, 235, 215, 0.96); z-index: 50;
+            text-align: center; transition: background 0.3s ease;
         }
-        
         body.dark-mode #start-screen, 
-        body.dark-mode #game-over-screen { 
-            background: rgba(5, 5, 5, 0.96); 
-        }
+        body.dark-mode #game-over-screen, 
+        body.dark-mode #pause-screen { background: rgba(5, 5, 5, 0.96); }
 
         .btn-start {
-            border: 1px solid var(--accent-blue);
-            padding: 15px 40px;
-            background: transparent;
-            color: var(--accent-blue);
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
+            border: 1px solid var(--accent-blue); padding: 15px 40px;
+            background: transparent; color: var(--accent-blue);
+            font-family: 'Courier New', monospace; cursor: pointer;
+            margin-top: 30px; transition: all 0.3s ease;
         }
         .btn-start:hover { background: var(--accent-blue); color: var(--bg-color); }
-        
         body.dark-mode .btn-start { border-color: #444; color: #888; }
         body.dark-mode .btn-start:hover { border-color: #FAEBD7; color: #FAEBD7; background: transparent; }
+
+        /* NEW: CONTROLS BOX */
+        .controls-box {
+            margin-top: 25px;
+            padding: 15px 25px;
+            border: 1px dashed var(--accent-blue);
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--accent-blue);
+            text-align: center;
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+        body.dark-mode .controls-box { border-color: #444; color: #888; }
+
+        .key-badge {
+            border: 1px solid currentColor;
+            padding: 1px 5px;
+            margin: 0 3px;
+            font-weight: bold;
+            font-size: 10px;
+        }
 
         /* ANIMATIONS */
         .damaged { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
@@ -200,7 +217,6 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
-        /* Responsive Footer Fix */
         @media (max-width: 900px) {
             footer { padding: 20px; position: absolute; }
             #game-container { height: 60vh; }
@@ -224,15 +240,30 @@
             <div id="game-lighting"></div>
 
             <div id="ui-layer">
-                <span>LIVES <span class="plus">+</span> <span id="life-counter">♥♥♥</span></span>
-                <span>SCORE <span class="plus">+</span> <span id="score-val">0000</span></span>
-                <span>BEST <span class="plus">+</span> <span id="high-score">0000</span></span>
+                <div id="stats-left">
+                    <span>LIVES <span class="plus">+</span> <span id="life-counter">♥♥♥</span></span><br>
+                    <span>SCORE <span class="plus">+</span> <span id="score-val">0000</span></span>
+                </div>
+                
+                <div id="focus-container">
+                    <span id="focus-label">FOCUS [SPACE]</span>
+                    <div id="focus-bar-bg"><div id="focus-bar-fill"></div></div>
+                    <button id="mute-btn" onclick="toggleAudio()">SOUND: ON</button>
+                </div>
             </div>
 
             <div id="start-screen">
                 <h2 class="hero-statement" id="title-text" style="font-size: 2.5rem;">system<br>evasion</h2>
-                <p class="mono-font" id="desc-text" style="margin-top: 20px;">
-                    avoid the noise <span class="plus">+</span> collect hearts
+                
+                <div class="controls-box">
+                    <div><span class="key-badge">←</span> <span class="key-badge">→</span> NAVIGATE</div>
+                    <div><span class="key-badge">SPACE</span> FOCUS (SLOW TIME)</div>
+                    <div><span class="key-badge">ESC</span> PAUSE SYSTEM</div>
+                    <div style="font-size: 9px; margin-top: 5px; opacity: 0.7;">(mobile: tap sides / bottom)</div>
+                </div>
+
+                <p class="mono-font" id="desc-text" style="margin-top: 20px; font-size: 11px;">
+                    avoid noise <span class="plus">+</span> catch blue [+] to fill gauge
                 </p>
                 <button class="btn-start" onclick="startGame()">initialize +</button>
             </div>
@@ -245,24 +276,32 @@
                 <button class="btn-start" onclick="resetGame()">retry +</button>
             </div>
 
+            <div id="pause-screen" style="display: none;">
+                <h2 class="hero-statement">system<br>halted</h2>
+                <button class="btn-start" onclick="togglePause()">resume +</button>
+            </div>
+
             <div id="player">+</div>
         </div>
 
     </main>
 
-    <footer class="mono-font"></footer> <script>
-        // [ SYSTEM ARCADE V6 ]
+    <footer class="mono-font"></footer> 
+
+    <script>
+        // [ SYSTEM ARCADE V8 - CONTROLS + PAUSE ]
         const player = document.getElementById('player');
         const container = document.getElementById('game-container');
         const lighting = document.getElementById('game-lighting');
         const lifeDisplay = document.getElementById('life-counter');
         const scoreDisplay = document.getElementById('score-val');
-        const highScoreDisplay = document.getElementById('high-score'); // New Element
+        const focusBar = document.getElementById('focus-bar-fill');
         const titleText = document.getElementById('title-text');
         const descText = document.getElementById('desc-text');
         
         // Game State
         let gameActive = false;
+        let isPaused = false;
         let isNightmare = false;
         let lives = 3;
         let score = 0;
@@ -270,16 +309,71 @@
         let playerX = 50; 
         let obstacles = [];
         
-        // HIGH SCORE LOGIC (Global Scope)
-        let highScore = parseInt(localStorage.getItem('al_arcade_best')) || 0;
-        highScoreDisplay.innerText = highScore.toString().padStart(4, '0');
+        // Focus System
+        let focusLevel = 0; 
+        let isFocusing = false;
+        const FOCUS_DRAIN_RATE = 0.8;
+        const FOCUS_GAIN_AMOUNT = 25;
+
+        // Audio System
+        let audioEnabled = true;
+        let audioCtx = null;
 
         // Settings
-        const NOISE_CHARS = ["#", "X", "▒", "▓", "█", "/", "\\", "ERROR"];
+        const NOISE_CHARS = ["#", "X", "▒", "▓", "█", "/", "\\", "NOISE"]; 
         const PLAYER_SPEED = 1.6;
-        let keys = { ArrowLeft: false, ArrowRight: false };
+        let keys = { ArrowLeft: false, ArrowRight: false, Space: false };
 
-        // [ 0 ] MODE CHECKER (Runs continuously to update Menu UI)
+        // [ 0 ] AUDIO ENGINE
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        function playSound(type) {
+            if (!audioEnabled || !audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'heart') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'plus') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } else if (type === 'damage') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.linearRampToValueAtTime(50, now + 0.2);
+                gainNode.gain.setValueAtTime(0.2, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('mute-btn').innerText = audioEnabled ? "SOUND: ON" : "SOUND: OFF";
+        }
+
+        // [ 1 ] MODE CHECKER
         setInterval(() => {
             if(!gameActive) {
                 const dark = document.body.classList.contains('dark-mode');
@@ -299,51 +393,62 @@
             } else {
                 titleText.innerHTML = "system<br>evasion";
                 titleText.style.color = "var(--text-color)";
-                descText.innerHTML = "avoid the noise <span class='plus'>+</span> collect hearts";
+                descText.innerHTML = "avoid noise <span class='plus'>+</span> catch blue [+] to focus";
                 descText.style.color = "var(--text-color)";
             }
         }
 
-        // [ 1 ] CONTROLS
+        // [ 2 ] CONTROLS
         window.addEventListener('keydown', (e) => {
             if(e.code === "ArrowLeft") keys.ArrowLeft = true;
             if(e.code === "ArrowRight") keys.ArrowRight = true;
+            if(e.code === "Space") keys.Space = true;
+            if(e.code === "Escape" && gameActive) togglePause();
         });
         window.addEventListener('keyup', (e) => {
             if(e.code === "ArrowLeft") keys.ArrowLeft = false;
             if(e.code === "ArrowRight") keys.ArrowRight = false;
+            if(e.code === "Space") keys.Space = false;
         });
         
-        // Touch
         container.addEventListener('touchstart', (e) => {
-            if(e.touches[0].clientX < window.innerWidth / 2) keys.ArrowLeft = true;
-            else keys.ArrowRight = true;
+            if(e.touches[0].clientY > window.innerHeight * 0.7) {
+                keys.Space = true;
+            } else {
+                if(e.touches[0].clientX < window.innerWidth / 2) keys.ArrowLeft = true;
+                else keys.ArrowRight = true;
+            }
         });
-        container.addEventListener('touchend', () => { keys.ArrowLeft = false; keys.ArrowRight = false; });
+        container.addEventListener('touchend', () => { 
+            keys.ArrowLeft = false; 
+            keys.ArrowRight = false; 
+            keys.Space = false;
+        });
 
-
-        // [ 2 ] CORE
+        // [ 3 ] CORE GAME
         function startGame() {
+            initAudio(); 
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-over-screen').style.display = 'none';
+            document.getElementById('pause-screen').style.display = 'none';
             
-            // Check Mode
             isNightmare = document.body.classList.contains('dark-mode');
             
             gameActive = true;
+            isPaused = false;
             score = 0;
             lives = 3; 
+            focusLevel = 0; 
             globalSpeed = isNightmare ? 1.3 : 1.0; 
             
             updateLivesUI();
             
-            // Start Loops
             requestAnimationFrame(update);
             spawnLoop();
             
             // Score Timer
             setInterval(() => {
-                if(gameActive) {
+                if(gameActive && !isPaused) {
                     score += 10;
                     scoreDisplay.innerText = score.toString().padStart(4, '0');
                     if(score % 800 === 0) globalSpeed += 0.2; 
@@ -356,7 +461,20 @@
             obstacles = [];
             document.getElementById('game-over-screen').style.display = 'none';
             document.getElementById('start-screen').style.display = 'flex';
+            container.classList.remove('focus-active');
             updateMenuUI();
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            if(isPaused) {
+                document.getElementById('pause-screen').style.display = 'flex';
+                // Stop Physics (Animation Frame loop handles this)
+            } else {
+                document.getElementById('pause-screen').style.display = 'none';
+                requestAnimationFrame(update);
+                spawnLoop(); // Restart spawn loop
+            }
         }
 
         function updateLivesUI() {
@@ -366,13 +484,18 @@
         }
 
         function spawnLoop() {
-            if(!gameActive) return;
+            if(!gameActive || isPaused) return; // Stop spawning if paused
+            
             let type = 'noise';
-            if(Math.random() < 0.05) type = 'heart';
+            let roll = Math.random();
+            if(roll < 0.05) type = 'heart'; 
+            else if(roll < 0.12) type = 'plus'; 
 
             spawnEntity(type);
 
             let baseTime = isNightmare ? 700 : 800; 
+            if (isFocusing) baseTime = baseTime * 2; 
+
             let nextSpawn = baseTime / globalSpeed;
             if(nextSpawn < 150) nextSpawn = 150;
             
@@ -389,6 +512,9 @@
             if(type === 'heart') {
                 el.className = 'heart-item';
                 el.innerText = "♥";
+            } else if (type === 'plus') {
+                el.className = 'plus-item';
+                el.innerText = "+";
             } else {
                 el.className = 'obstacle';
                 el.innerText = NOISE_CHARS[Math.floor(Math.random() * NOISE_CHARS.length)];
@@ -405,35 +531,56 @@
             });
         }
 
-        // [ 3 ] GAME LOOP
+        // [ 4 ] GAME LOOP
         function update() {
             if(!gameActive) return;
+            if(isPaused) return; // Stop update loop
 
-            // Move Player
-            if(keys.ArrowLeft && playerX > 2) playerX -= PLAYER_SPEED;
-            if(keys.ArrowRight && playerX < 98) playerX += PLAYER_SPEED;
+            // FOCUS LOGIC
+            if(keys.Space && focusLevel > 0) {
+                isFocusing = true;
+                focusLevel -= FOCUS_DRAIN_RATE;
+                container.classList.add('focus-active');
+            } else {
+                isFocusing = false;
+                container.classList.remove('focus-active');
+            }
+            if(focusLevel < 0) focusLevel = 0;
+            if(focusLevel > 100) focusLevel = 100;
+            
+            focusBar.style.width = focusLevel + '%';
+
+            // MOVEMENT
+            let currentMoveSpeed = PLAYER_SPEED;
+            if(isFocusing) currentMoveSpeed = PLAYER_SPEED * 1.5; 
+
+            if(keys.ArrowLeft && playerX > 2) playerX -= currentMoveSpeed;
+            if(keys.ArrowRight && playerX < 98) playerX += currentMoveSpeed;
             player.style.left = playerX + '%';
 
-            // Flashlight Tracking
-            if(isNightmare) {
-                lighting.style.setProperty('--light-x', playerX + '%');
-            }
+            if(isNightmare) lighting.style.setProperty('--light-x', playerX + '%');
 
-            // Move Obstacles
+            // OBSTACLES
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 let o = obstacles[i];
-                o.y += o.speed;
+                let timeScale = isFocusing ? 0.3 : 1.0; 
+                o.y += o.speed * timeScale;
                 o.el.style.top = o.y + '%';
 
                 if (o.y > 88 && o.y < 98) {
                     if (Math.abs(o.x - playerX) < 5) {
-                        // COLLISION
                         if(o.type === 'heart') {
                             lives++;
                             score += 500;
+                            playSound('heart');
                             updateLivesUI();
+                        } else if (o.type === 'plus') {
+                            focusLevel += FOCUS_GAIN_AMOUNT;
+                            playSound('plus');
+                            score += 200;
                         } else {
                             lives--;
+                            playSound('damage');
                             updateLivesUI();
                             container.classList.add('damaged');
                             setTimeout(()=>container.classList.remove('damaged'), 400);
@@ -460,17 +607,12 @@
             gameActive = false;
             document.getElementById('game-over-screen').style.display = 'flex';
             document.getElementById('final-score').innerText = score;
-
-            // SAVE HIGH SCORE (Now accessing the global variable correctly)
-            if(score > highScore) {
-                highScore = score;
-                localStorage.setItem('al_arcade_best', highScore);
-                document.getElementById('high-score').innerText = highScore.toString().padStart(4, '0');
-            }
+            container.classList.remove('focus-active');
         }
     </script>
 </body>
 </html>
+
 
 <!--
 ////////////////////////////////////////////////////////////////////////////////
