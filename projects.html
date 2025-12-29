@@ -1,0 +1,145 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
+    <title>arnaud leroy + projects</title>
+    <meta name="description" content="Selected works by Arnaud Leroy Studio. Architecture, Digital, and Object design.">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+<meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="+">
+    <link rel="stylesheet" href="style.css">
+    <script src="components.js" defer></script>
+    <style>
+        /* FILTER BAR STYLES */
+        .filter-bar { margin-bottom: 20px; font-size: 11px; color: var(--accent-grey); user-select: none; }
+        .filter-btn { cursor: pointer; margin-right: 15px; transition: color 0.3s ease; }
+        .filter-btn:hover, .filter-btn.active { color: var(--accent-blue); text-decoration: underline; }
+        
+        /* HIDE LOGIC */
+        .project-row.hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">archive <span class="plus">+</span> work</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">index no <span class="plus">+</span> 05</div>
+
+    <header></header> <main>
+        <div class="project-list-container mono-font">
+            
+            <div class="filter-bar">
+                <span class="filter-btn active" onclick="filterProjects('all', this)">all</span>
+                <span class="filter-btn" onclick="filterProjects('architecture', this)">architecture</span>
+                <span class="filter-btn" onclick="filterProjects('digital', this)">digital</span>
+                <span class="filter-btn" onclick="filterProjects('research', this)">research</span>
+            </div>
+
+            <div class="project-list">
+                <div class="project-row" style="color: #A0A0A0; font-size: 11px;">
+                    <span>no</span><span>project name</span><span>date</span>
+                </div>
+
+                <a href="project-wooden-wall.html" class="project-row" data-category="architecture">
+                    <span>05</span>
+                    <span>
+                        porous boundary <span class="plus">+</span> wooden structure
+                        <span class="status-badge status-ongoing">concept</span>
+                    </span>
+                    <span>2025</span>
+                </a>
+
+                <a href="project-flooring.html" class="project-row" data-category="architecture">
+                    <span>04</span>
+                    <span>
+                        broken grid <span class="plus">+</span> floor study
+                        <span class="status-badge status-ongoing">concept</span>
+                    </span>
+                    <span>2025</span>
+                </a>
+
+                <a href="project-tree-knowledge.html" class="project-row" data-category="digital">
+                    <span>03</span>
+                    <span>
+                        tree of knowledge <span class="plus">+</span> encyclopedia
+                        <span class="status-badge status-ongoing">ongoing</span>
+                    </span>
+                    <span>2025</span>
+                </a>
+                
+                <a href="project-maison-automata.html" class="project-row" data-category="research">
+                    <span>02</span>
+                    <span>
+                        maison automata <span class="plus">+</span> robotic fashion
+                        <span class="status-badge status-ongoing">ongoing</span>
+                    </span>
+                    <span>2025</span>
+                </a>
+
+                <a href="project-birth-studio.html" class="project-row" data-category="research">
+                    <span>01</span>
+                    <span>
+                        birth of the studio <span class="plus">+</span> origin
+                        <span class="status-badge status-paused">archived</span>
+                    </span>
+                    <span>2024</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mono-font"></footer>
+
+    <script>
+        function filterProjects(category, btn) {
+            // 1. Update Active Button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 2. Show/Hide Rows
+            const rows = document.querySelectorAll('.project-row[data-category]');
+            rows.forEach(row => {
+                if (category === 'all' || row.getAttribute('data-category') === category) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->

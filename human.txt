@@ -1,0 +1,10 @@
+/* ARNAUD LEROY + TEAM */
+Creative Direction: Arnaud Leroy
+System Architecture: [a.l.]
+Location: Lisbon + Paris + Tokyo
+
+/* SITE */
+Last Update: 2024/12/28
+Standards: HTML5, CSS3, JS (Vanilla)
+Components: Hand-coded
+Software: No Frameworks

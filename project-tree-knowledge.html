@@ -1,0 +1,279 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
+    <title>arnaud leroy + tree of knowledge</title>
+    <meta name="description" content="Tree of All Knowledge. A data visualization engine and interactive encyclopedia mapping the evolution of technology.">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+<meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="+">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="components.js" defer></script>
+    
+    <style>
+        /* [ 01 ] CODE REPOSITORY STYLE
+           Mimics a terminal or code editor view.
+        */
+        .code-repository {
+            background: #F0F0F0;
+            border: 1px solid var(--accent-blue);
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            margin-top: 40px;
+            position: relative;
+            font-size: 11px;
+            color: #555;
+            transition: background-color 0.8s ease, border-color 0.8s ease;
+        }
+
+        /* Dark Mode Override for Repo */
+        body.dark-mode .code-repository {
+            background: #1a1a1a;
+            color: #A0A0A0;
+            border-color: #444;
+        }
+        
+        /* The Label "Source + Extraction" */
+        .repo-label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            color: var(--accent-blue);
+            font-weight: bold;
+            transition: background-color 0.8s ease;
+        }
+        
+        /* File Tree Structure */
+        .file-tree { 
+            list-style: none; 
+            padding-left: 10px; 
+            border-left: 1px dashed var(--accent-grey); 
+        }
+        
+        .file-tree li { 
+            margin-bottom: 5px; 
+        }
+        
+        .folder { 
+            color: var(--accent-blue); 
+            font-weight: bold; 
+        }
+        
+        .file { 
+            color: var(--text-color); 
+        }
+        
+        .comment { 
+            color: var(--accent-grey); 
+            margin-left: 10px; 
+            font-style: italic; 
+        }
+
+        /* [ 02 ] GALLERY GRID
+           Classic 2x2 Layout. 
+           Images are ALWAYS COLORED (No B&W).
+        */
+        .tree-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            position: sticky;
+            top: 40px;
+        }
+        
+        .tree-img-container {
+            border: 1px solid var(--accent-blue);
+            padding: 5px;
+            background: var(--accent-grey);
+            position: relative;
+            transition: border-color 0.8s ease;
+        }
+        
+        body.dark-mode .tree-img-container { 
+            border-color: #444; 
+        }
+        
+        /* IMAGE LOGIC: ALWAYS COLOR */
+        .tree-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* High Contrast, Full Color */
+            filter: contrast(110%); 
+            transition: filter 0.8s ease;
+        }
+        
+        /* In dark mode, slightly dim brightness to reduce eye strain, 
+           but keep full saturation. */
+        body.dark-mode .tree-img-container img {
+            filter: contrast(120%) brightness(0.9);
+        }
+
+        .caption {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            font-size: 10px;
+            color: var(--accent-blue);
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .tree-gallery { 
+                grid-template-columns: 1fr; 
+                position: static; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">project <span class="plus">+</span> 03</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">status <span class="plus">+</span> ongoing</div>
+
+    <header></header> 
+
+    <main class="grid-layout" style="align-items: start;">
+        
+        <div class="hero-text-container">
+            
+            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+
+            <div style="margin-bottom: 40px; border-bottom: 1px solid var(--accent-grey); padding-bottom: 20px;">
+                <h2 class="hero-statement" style="font-size: 3rem;">tree of all<br>knowledge</h2>
+                <div class="mono-font" style="margin-top: 20px; color: var(--accent-blue);">
+                    visualization engine <span class="plus">+</span> encyclopedia
+                </div>
+            </div>
+
+            <p class="mono-font" style="line-height: 1.6; margin-bottom: 40px;">
+                an interactive encyclopedia designed to visualize the evolution of technology and human knowledge <span class="plus">+</span> a graph-based system allowing users to traverse history through nodes <span class="plus">+</span> connections <span class="plus">+</span> and timelines
+                <br><br>
+                integrates real-time data from wikipedia to generate living networks of discovery <span class="plus">+</span> mapping the unseen links between inventors <span class="plus">+</span> eras <span class="plus">+</span> and machines
+            </p>
+
+            <div class="code-repository">
+                <span class="repo-label">source <span class="plus">+</span> extraction</span>
+                <ul class="file-tree">
+                    <li><span class="folder">/src</span></li>
+                    <li>
+                        <ul class="file-tree">
+                            <li>
+                                <span class="file">├── graph_engine.js</span> 
+                                <span class="comment">// d3 visual logic</span>
+                            </li>
+                            <li>
+                                <span class="file">├── data_parser.py</span> 
+                                <span class="comment">// wiki dump cleaner</span>
+                            </li>
+                            <li>
+                                <span class="file">└── timeline.ts</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li><span class="folder">/data</span></li>
+                    <li>
+                        <ul class="file-tree">
+                            <li>
+                                <span class="file">├── nodes_v1.json</span> 
+                                <span class="comment">// 450mb dataset</span>
+                            </li>
+                            <li>
+                                <span class="file">└── config.yaml</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span class="file">README.md</span> 
+                        <span class="comment">// build instructions</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tree-gallery">
+            
+            <div class="tree-img-container">
+                <img src="tree-1.jpg" alt="Graph Visualization">
+                <span class="caption">fig 01 <span class="plus">+</span> node graph</span>
+            </div>
+
+            <div class="tree-img-container">
+                <img src="tree-2.jpg" alt="Timeline View">
+                <span class="caption">fig 02 <span class="plus">+</span> timeline</span>
+            </div>
+
+            <div class="tree-img-container">
+                <img src="tree-3.jpg" alt="Data Detail">
+                <span class="caption">fig 03 <span class="plus">+</span> data point</span>
+            </div>
+
+            <div class="tree-img-container">
+                <img src="tree-4.jpg" alt="Search Interface">
+                <span class="caption">fig 04 <span class="plus">+</span> interface</span>
+            </div>
+
+        </div>
+
+        <div class="easter-egg" style="top: 150px; left: 50px;">
+            [system_alert]: library_of_alexandria_restored
+        </div>
+
+        <div class="easter-egg" style="bottom: 200px; left: 100px;">
+            data is memory <span class="plus">+</span> memory is survival
+        </div>
+
+        <div class="easter-egg" style="top: 400px; right: 50px;">
+            connect the dots <span class="plus">+</span> see the truth
+        </div>
+        
+        <div class="easter-egg" style="bottom: 50px; right: 50px;">
+            404: ignorance not found
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer> 
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->

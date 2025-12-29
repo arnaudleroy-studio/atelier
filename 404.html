@@ -1,0 +1,108 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signal lost</title>
+    <link rel="stylesheet" href="style.css">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    <script src="components.js" defer></script>
+    
+    <style>
+        /* [ 404 SPECIFIC STYLES ] */
+        
+        .error-layout {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 60vh; text-align: center; position: relative; z-index: 10;
+        }
+
+        /* THE MATRIX BACKGROUND */
+        #matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; overflow: hidden; pointer-events: none;
+            
+            /* Typography for the glitch text */
+            font-family: 'Courier New', monospace; font-size: 10px; line-height: 12px;
+            word-break: break-all;
+            
+            /* Hidden by default (Light Mode) */
+            opacity: 0; transition: opacity 0.8s ease;
+        }
+
+        /* Visible in Dark Mode */
+        body.dark-mode #matrix-bg { opacity: 0.15; color: var(--accent-blue); }
+        
+        /* Prevent selection of background noise */
+        #matrix-bg { user-select: none; }
+    </style>
+</head>
+<body>
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">error <span class="plus">+</span> critical</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">code <span class="plus">+</span> 404</div>
+
+    <header></header>
+
+    <main>
+        <div id="matrix-bg"></div>
+
+        <div class="error-layout mono-font">
+            <h1 style="font-size: 8rem; color: var(--accent-blue); margin: 0; line-height: 1;">404</h1>
+            <p style="margin-bottom: 40px; font-size: 14px;">
+                signal lost <span class="plus">+</span> void detected
+            </p>
+            
+            <a href="index.html" class="brand-link" style="border-bottom: 1px solid var(--accent-blue); font-size: 16px;">
+                reboot system
+            </a>
+        </div>
+    </main>
+
+    <footer class="mono-font"></footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById('matrix-bg');
+            if(container) {
+                const text = "404 + VOID + SIGNAL LOST + SYSTEM FAILURE + ";
+                container.innerText = text.repeat(3000); 
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->

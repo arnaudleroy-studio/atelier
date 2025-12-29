@@ -1,0 +1,476 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>arnaud leroy + arcade</title>
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+<meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="+">
+    <link rel="stylesheet" href="style.css">
+    <script src="components.js" defer></script>
+
+    <style>
+        /* [ GAME SPECIFIC STYLES ] */
+        body { 
+            overflow: hidden; /* No scrollbar */
+            touch-action: none; 
+        }
+
+        /* FIX THE FOOTER: Make it stick to bottom so toggle is always there */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 120px; /* Match global padding */
+            background: transparent;
+            pointer-events: none; /* Let clicks pass through empty space */
+        }
+        /* Enable clicking on footer contents (like the moon icon) */
+        footer * { pointer-events: auto; }
+
+        /* Game Container */
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 65vh; /* Slightly smaller to fit footer comfortably */
+            border: 1px solid var(--accent-blue);
+            margin-top: 20px;
+            background: var(--bg-color);
+            overflow: hidden;
+            cursor: none;
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        /* LIGHT MODE (Standard) */
+        #game-container { background: #FAEBD7; }
+        
+        /* DARK MODE (Nightmare) */
+        body.dark-mode #game-container { 
+            background: #000; 
+            border-color: #333; 
+        }
+
+        /* NIGHTMARE FLASHLIGHT (Hidden in Light Mode) */
+        #game-lighting {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            /* CENTERED ON PLAYER (+ is 30px tall, bottom 30px. Center is approx 45px from bottom) */
+            background: radial-gradient(
+                circle 300px at var(--light-x, 50%) calc(100% - 45px), 
+                rgba(0,0,0,0) 0%, 
+                rgba(0,0,0,0.2) 20%, 
+                rgba(0,0,0,0.95) 60%, 
+                rgba(0,0,0,1) 100%
+            );
+        }
+        body.dark-mode #game-lighting { display: block; }
+
+        /* PLAYER */
+        #player {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            font-family: monospace;
+            font-size: 30px;
+            color: var(--accent-blue);
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            transform: translateX(-50%);
+            z-index: 15;
+            transition: color 0.3s ease;
+        }
+        body.dark-mode #player { 
+            color: #FAEBD7; 
+            text-shadow: 0 0 15px rgba(250, 235, 215, 0.8); 
+        }
+
+        /* OBSTACLES */
+        .obstacle {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--accent-grey);
+            font-weight: bold;
+            z-index: 10;
+        }
+        body.dark-mode .obstacle { color: #444; } /* Darker in nightmare */
+        
+        .heart-item {
+            position: absolute;
+            font-size: 16px;
+            color: #ff3333;
+            text-shadow: 0 0 5px #ff0000;
+            z-index: 12;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        /* UI LAYER */
+        #ui-layer {
+            position: absolute;
+            top: 20px; left: 20px; right: 20px;
+            display: flex; justify-content: space-between;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--accent-blue);
+            z-index: 30;
+        }
+        body.dark-mode #ui-layer { color: #666; }
+        
+        #life-counter { color: #ff3333; letter-spacing: 2px; }
+        
+        #score-val { font-weight: bold; }
+        body.dark-mode #score-val { color: #FAEBD7; }
+
+        /* SCREENS */
+        #start-screen, #game-over-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: rgba(250, 235, 215, 0.96);
+            z-index: 50;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        
+        body.dark-mode #start-screen, 
+        body.dark-mode #game-over-screen { 
+            background: rgba(5, 5, 5, 0.96); 
+        }
+
+        .btn-start {
+            border: 1px solid var(--accent-blue);
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--accent-blue);
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+        .btn-start:hover { background: var(--accent-blue); color: var(--bg-color); }
+        
+        body.dark-mode .btn-start { border-color: #444; color: #888; }
+        body.dark-mode .btn-start:hover { border-color: #FAEBD7; color: #FAEBD7; background: transparent; }
+
+        /* ANIMATIONS */
+        .damaged { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Responsive Footer Fix */
+        @media (max-width: 900px) {
+            footer { padding: 20px; position: absolute; }
+            #game-container { height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">system <span class="plus">+</span> arcade</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">index <span class="plus">+</span> 06</div>
+
+    <header></header> <main class="grid-layout" style="display: block; max-width: 900px;">
+        
+        <div style="text-align: center; margin-bottom: 10px;">
+            <a href="index.html" class="mono-font back-link">&lt; exit system</a>
+        </div>
+
+        <div id="game-container">
+            <div id="game-lighting"></div>
+
+            <div id="ui-layer">
+                <span>LIVES <span class="plus">+</span> <span id="life-counter">♥♥♥</span></span>
+                <span>SCORE <span class="plus">+</span> <span id="score-val">0000</span></span>
+                <span>BEST <span class="plus">+</span> <span id="high-score">0000</span></span>
+            </div>
+
+            <div id="start-screen">
+                <h2 class="hero-statement" id="title-text" style="font-size: 2.5rem;">system<br>evasion</h2>
+                <p class="mono-font" id="desc-text" style="margin-top: 20px;">
+                    avoid the noise <span class="plus">+</span> collect hearts
+                </p>
+                <button class="btn-start" onclick="startGame()">initialize +</button>
+            </div>
+
+            <div id="game-over-screen" style="display: none;">
+                <h2 class="hero-statement">signal lost</h2>
+                <p class="mono-font" style="margin-top: 20px;">
+                    final score <span class="plus">+</span> <span id="final-score">0</span>
+                </p>
+                <button class="btn-start" onclick="resetGame()">retry +</button>
+            </div>
+
+            <div id="player">+</div>
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer> <script>
+        // [ SYSTEM ARCADE V6 ]
+        const player = document.getElementById('player');
+        const container = document.getElementById('game-container');
+        const lighting = document.getElementById('game-lighting');
+        const lifeDisplay = document.getElementById('life-counter');
+        const scoreDisplay = document.getElementById('score-val');
+        const highScoreDisplay = document.getElementById('high-score'); // New Element
+        const titleText = document.getElementById('title-text');
+        const descText = document.getElementById('desc-text');
+        
+        // Game State
+        let gameActive = false;
+        let isNightmare = false;
+        let lives = 3;
+        let score = 0;
+        let globalSpeed = 1.0;
+        let playerX = 50; 
+        let obstacles = [];
+        
+        // HIGH SCORE LOGIC (Global Scope)
+        let highScore = parseInt(localStorage.getItem('al_arcade_best')) || 0;
+        highScoreDisplay.innerText = highScore.toString().padStart(4, '0');
+
+        // Settings
+        const NOISE_CHARS = ["#", "X", "▒", "▓", "█", "/", "\\", "ERROR"];
+        const PLAYER_SPEED = 1.6;
+        let keys = { ArrowLeft: false, ArrowRight: false };
+
+        // [ 0 ] MODE CHECKER (Runs continuously to update Menu UI)
+        setInterval(() => {
+            if(!gameActive) {
+                const dark = document.body.classList.contains('dark-mode');
+                if(dark !== isNightmare) {
+                    isNightmare = dark;
+                    updateMenuUI();
+                }
+            }
+        }, 300);
+
+        function updateMenuUI() {
+            if(isNightmare) {
+                titleText.innerHTML = "nightmare<br>drive";
+                titleText.style.color = "#ff3333";
+                descText.innerHTML = "visibility reduced <span class='plus'>+</span> speed increased";
+                descText.style.color = "#A0A0A0";
+            } else {
+                titleText.innerHTML = "system<br>evasion";
+                titleText.style.color = "var(--text-color)";
+                descText.innerHTML = "avoid the noise <span class='plus'>+</span> collect hearts";
+                descText.style.color = "var(--text-color)";
+            }
+        }
+
+        // [ 1 ] CONTROLS
+        window.addEventListener('keydown', (e) => {
+            if(e.code === "ArrowLeft") keys.ArrowLeft = true;
+            if(e.code === "ArrowRight") keys.ArrowRight = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            if(e.code === "ArrowLeft") keys.ArrowLeft = false;
+            if(e.code === "ArrowRight") keys.ArrowRight = false;
+        });
+        
+        // Touch
+        container.addEventListener('touchstart', (e) => {
+            if(e.touches[0].clientX < window.innerWidth / 2) keys.ArrowLeft = true;
+            else keys.ArrowRight = true;
+        });
+        container.addEventListener('touchend', () => { keys.ArrowLeft = false; keys.ArrowRight = false; });
+
+
+        // [ 2 ] CORE
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-over-screen').style.display = 'none';
+            
+            // Check Mode
+            isNightmare = document.body.classList.contains('dark-mode');
+            
+            gameActive = true;
+            score = 0;
+            lives = 3; 
+            globalSpeed = isNightmare ? 1.3 : 1.0; 
+            
+            updateLivesUI();
+            
+            // Start Loops
+            requestAnimationFrame(update);
+            spawnLoop();
+            
+            // Score Timer
+            setInterval(() => {
+                if(gameActive) {
+                    score += 10;
+                    scoreDisplay.innerText = score.toString().padStart(4, '0');
+                    if(score % 800 === 0) globalSpeed += 0.2; 
+                }
+            }, 100);
+        }
+
+        function resetGame() {
+            obstacles.forEach(o => o.el.remove());
+            obstacles = [];
+            document.getElementById('game-over-screen').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'flex';
+            updateMenuUI();
+        }
+
+        function updateLivesUI() {
+            let hearts = "";
+            for(let i=0; i<lives; i++) hearts += "♥";
+            lifeDisplay.innerText = hearts;
+        }
+
+        function spawnLoop() {
+            if(!gameActive) return;
+            let type = 'noise';
+            if(Math.random() < 0.05) type = 'heart';
+
+            spawnEntity(type);
+
+            let baseTime = isNightmare ? 700 : 800; 
+            let nextSpawn = baseTime / globalSpeed;
+            if(nextSpawn < 150) nextSpawn = 150;
+            
+            setTimeout(spawnLoop, nextSpawn);
+        }
+
+        function spawnEntity(type) {
+            const el = document.createElement('div');
+            const rX = Math.random() * 90 + 5;
+            
+            el.style.left = rX + '%';
+            el.style.top = '-30px';
+            
+            if(type === 'heart') {
+                el.className = 'heart-item';
+                el.innerText = "♥";
+            } else {
+                el.className = 'obstacle';
+                el.innerText = NOISE_CHARS[Math.floor(Math.random() * NOISE_CHARS.length)];
+            }
+            
+            container.appendChild(el);
+            
+            obstacles.push({
+                el: el,
+                type: type,
+                x: rX,
+                y: 0,
+                speed: (Math.random() * 0.4 + 0.6) * globalSpeed
+            });
+        }
+
+        // [ 3 ] GAME LOOP
+        function update() {
+            if(!gameActive) return;
+
+            // Move Player
+            if(keys.ArrowLeft && playerX > 2) playerX -= PLAYER_SPEED;
+            if(keys.ArrowRight && playerX < 98) playerX += PLAYER_SPEED;
+            player.style.left = playerX + '%';
+
+            // Flashlight Tracking
+            if(isNightmare) {
+                lighting.style.setProperty('--light-x', playerX + '%');
+            }
+
+            // Move Obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                let o = obstacles[i];
+                o.y += o.speed;
+                o.el.style.top = o.y + '%';
+
+                if (o.y > 88 && o.y < 98) {
+                    if (Math.abs(o.x - playerX) < 5) {
+                        // COLLISION
+                        if(o.type === 'heart') {
+                            lives++;
+                            score += 500;
+                            updateLivesUI();
+                        } else {
+                            lives--;
+                            updateLivesUI();
+                            container.classList.add('damaged');
+                            setTimeout(()=>container.classList.remove('damaged'), 400);
+
+                            if(lives <= 0) {
+                                gameOver();
+                                return;
+                            }
+                        }
+                        o.el.remove();
+                        obstacles.splice(i, 1);
+                        continue;
+                    }
+                }
+                if (o.y > 100) {
+                    o.el.remove();
+                    obstacles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function gameOver() {
+            gameActive = false;
+            document.getElementById('game-over-screen').style.display = 'flex';
+            document.getElementById('final-score').innerText = score;
+
+            // SAVE HIGH SCORE (Now accessing the global variable correctly)
+            if(score > highScore) {
+                highScore = score;
+                localStorage.setItem('al_arcade_best', highScore);
+                document.getElementById('high-score').innerText = highScore.toString().padStart(4, '0');
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->
