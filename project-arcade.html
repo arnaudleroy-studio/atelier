@@ -1,0 +1,256 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project + evasion</title>
+    
+    <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="components.js" defer></script>
+
+    <style>
+        /* PROJECT SPECIFIC LAYOUT */
+        body { 
+            overflow-y: auto; 
+            text-transform: lowercase; 
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+            margin-bottom: 100px;
+        }
+
+        .project-meta {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            border-top: 1px solid var(--grid-line);
+            padding-top: 10px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent-grey);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--accent-blue);
+            margin-bottom: 20px;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+        .hero-img:hover { filter: grayscale(0%); }
+
+        .feature-block {
+            margin-bottom: 60px;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+            font-weight: normal;
+        }
+        
+        body.dark-mode .feature-title { color: #FAEBD7; }
+        body.dark-mode .hero-img { border-color: #333; opacity: 0.9; }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+        .rules-list li::before { content: "+ "; color: var(--accent-blue); }
+
+        .btn-launch {
+            display: inline-block;
+            border: 1px solid var(--accent-blue);
+            padding: 20px 60px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-decoration: none;
+            color: var(--accent-blue);
+            transition: all 0.3s ease;
+            margin-top: 40px;
+        }
+        .btn-launch:hover { background: var(--accent-blue); color: var(--bg-color); }
+        body.dark-mode .btn-launch { border-color: #FAEBD7; color: #FAEBD7; }
+        body.dark-mode .btn-launch:hover { background: #FAEBD7; color: #000; }
+
+        /* [ EASTER EGGS / NIGHT VISION ] */
+        .night-reveal {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 1s ease 0.5s; /* Delay reveal */
+            color: #ff3333; /* System Red */
+            font-family: 'Courier New', monospace;
+        }
+
+        /* The Reveal Logic */
+        body.dark-mode .night-reveal {
+            opacity: 1;
+            height: auto;
+            overflow: visible;
+            text-shadow: 0 0 8px rgba(255, 50, 50, 0.6);
+            animation: pulse-glitch 4s infinite;
+        }
+
+        /* Special positioning for the title ghost */
+        .ghost-title {
+            position: absolute;
+            font-size: 10px;
+            margin-top: -10px;
+            letter-spacing: 2px;
+        }
+
+        @keyframes pulse-glitch {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        @media (max-width: 768px) {
+            .project-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">project <span class="plus">+</span> 06</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">status <span class="plus">+</span> live</div>
+
+    <header></header> 
+    
+    <main class="grid-layout" style="display: block; max-width: 1000px;">
+        
+        <div style="margin-bottom: 40px;">
+            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+        </div>
+
+        <div style="position: relative;">
+            <h1 class="hero-statement" style="font-size: 3rem; line-height: 1;">system<br>evasion</h1>
+            <div class="night-reveal ghost-title">[ 0xff_nightmare_protocol_active ]</div>
+        </div>
+        
+        <div class="project-meta">
+            <span>release : v1.9.0</span>
+            <span>type : reactive arcade</span>
+            <span>platform : web / mobile</span>
+        </div>
+
+        <div class="project-grid">
+            
+            <div>
+                <p class="mono-font" style="max-width: 400px; margin-bottom: 30px;">
+                    a minimal survival engine built on the principles of digital tension + the goal is not just to survive + but to master the flow of time and chaos
+                    <br><br>
+                    no assets + no images + pure code rendering
+                </p>
+                <a href="game.html" class="btn-launch">initialize system +</a>
+            </div>
+
+            <div>
+                <img src="gameimg/start.jpg" class="hero-img" alt="start screen interface">
+                <div class="mono-font" style="font-size: 10px; text-align: right;">fig 01 + initialization sequence</div>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-bottom: 1px solid var(--grid-line); margin: 60px 0;">
+
+        <div class="project-grid">
+            
+            <div class="feature-block">
+                <img src="gameimg/focus.jpg" class="hero-img" alt="focus mechanics">
+                <h3 class="feature-title">01 + time dilation</h3>
+                <p class="mono-font">
+                    the [space] bar triggers a hyper-focus state + the world slows down + contrast increases + and the audio dampens + use this resource strategically to thread through impossible gaps
+                </p>
+            </div>
+
+            <div class="feature-block">
+                <img src="gameimg/glitchmode.jpg" class="hero-img" alt="glitch mode">
+                <h3 class="feature-title">02 + the glitch storm</h3>
+                <p class="mono-font">
+                    every 30 seconds + the system destabilizes + colors invert + physics accelerate + this phase tests pure reflex over strategy + survival during a storm yields double points
+                </p>
+            </div>
+
+            <div class="feature-block">
+                <img src="gameimg/ingame2.jpg" class="hero-img" alt="combo system">
+                <h3 class="feature-title">03 + combo architecture</h3>
+                <p class="mono-font">
+                    collecting data packets (+) in rapid succession builds a multiplier (x2 + x4 + x8) + hesitation resets the counter + aggression is rewarded
+                </p>
+            </div>
+
+            <div class="feature-block">
+                <img src="gameimg/nightmare.jpg" class="hero-img" alt="nightmare mode">
+                <h3 class="feature-title">04 + nightmare drive</h3>
+                <p class="mono-font">
+                    activating the studio's "dark mode" transforms the game into a horror-survival experience + visibility is limited to a dynamic flashlight cone that tracks player movement
+                </p>
+            </div>
+
+        </div>
+
+        <div style="background: var(--bg-color); border: 1px solid var(--accent-blue); padding: 30px; margin-bottom: 100px;">
+            <h3 class="feature-title" style="font-size: 1rem;">system rules :</h3>
+            <ul class="rules-list">
+                <li>avoid [noise] and obstacles (# + x + /)</li>
+                <li>catch blue [+] to recharge focus gauge</li>
+                <li>catch red [♥] to restore system integrity (lives)</li>
+                <li>shatter physics enabled on impact</li>
+                <li>local memory stores highest score permanently</li>
+                <li class="night-reveal">+ don't look behind you</li>
+            </ul>
+        </div>
+        
+        <div class="night-reveal" style="text-align: center; margin-bottom: 20px; font-size: 9px; opacity: 0.5;">
+            signal_strength: 10% ... connection_unstable
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer> 
+
+</body>
+</html>
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->

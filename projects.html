@@ -25,97 +25,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
-    <title>arnaud leroy + projects</title>
-    <meta name="description" content="Selected works by Arnaud Leroy Studio. Architecture, Digital, and Object design.">
-   <meta property="og:title" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + studio">
     <meta property="og:description" content="silence is a material.">
     <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta property="og:url" content="https://arnaudleroy.com">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    
+    <title>arnaud leroy + projects</title>
+    
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
+    
     <link rel="stylesheet" href="style.css">
     <script src="components.js" defer></script>
+    
     <style>
-        /* FILTER BAR STYLES */
-        .filter-bar { margin-bottom: 20px; font-size: 11px; color: var(--accent-grey); user-select: none; }
-        .filter-btn { cursor: pointer; margin-right: 15px; transition: color 0.3s ease; }
-        .filter-btn:hover, .filter-btn.active { color: var(--accent-blue); text-decoration: underline; }
+        /* [ GLOBAL OVERRIDES ] */
+        body { text-transform: lowercase; }
+
+        /* 1. FILTER BAR */
+        .filter-bar { 
+            margin-bottom: 20px; 
+            font-size: 11px; 
+            color: var(--accent-grey); 
+            user-select: none; 
+            display: flex; 
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 0px solid var(--grid-line);
+            padding-bottom: 5px;
+        }
+        .filter-btn { 
+            cursor: pointer; 
+            transition: opacity 0.3s ease; 
+            opacity: 0.5;
+        }
+        .filter-btn:hover, .filter-btn.active { 
+            opacity: 1; 
+            color: var(--accent-blue); 
+            text-decoration: underline; 
+            text-underline-offset: 4px;
+        }
         
-        /* HIDE LOGIC */
+        /* 2. PROJECT LIST */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-row {
+            display: grid;
+            /* Fixed ID | Fluid Content | Fixed Year */
+            grid-template-columns: 30px 1fr 60px; 
+            align-items: center; /* Vertically center everything */
+            padding: 16px 0;
+            border-bottom: 1px dotted var(--grid-line);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: opacity 0.3s ease, padding 0.3s ease;
+            font-family: 'Courier New', monospace; 
+        }
+
+        .project-row:hover {
+            opacity: 0.8;
+            padding-left: 5px; 
+        }
+
+
         .project-row.hidden { display: none; }
+
+        /* 3. TYPOGRAPHY */
+        .p-id { 
+            font-size: 11px; 
+            color: var(--accent-grey); 
+        }
+        
+        .p-year { 
+            font-size: 11px; 
+            color: var(--accent-grey); 
+            text-align: right; 
+        }
+
+        /* 4. CONTENT COLUMN (STRICT HORIZONTAL) */
+        .p-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px; /* Spacing between Title -> Tags -> Desc */
+            white-space: nowrap; /* FORCE ONE LINE */
+            overflow: hidden; /* Cut off if screen is too small */
+        }
+        
+        .p-title {
+            font-size: 12px; 
+            font-weight: normal; 
+            margin: 0;
+            color: var(--text-color);
+            line-height: 1;
+            flex-shrink: 0; /* Title never shrinks */
+        }
+
+        .p-desc {
+            font-size: 10px;
+            color: var(--accent-grey);
+            opacity: 0.6;
+            text-overflow: ellipsis;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        /* 5. SMALLER ROTATING PLUS */
+        .plus-spin {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: var(--accent-blue);
+            font-size: 10px; /* SMALLER SIZE */
+            vertical-align: middle;
+            margin: 0 2px;
+        }
+        
+        .project-row:hover .plus-spin {
+            transform: rotate(90deg);
+        }
+
+        /* 6. PILLS */
+        .tag-container {
+            display: inline-flex;
+            gap: 5px;
+            flex-shrink: 0; /* Tags never shrink */
+        }
+        
+        .tag-pill {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.1;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+
+        /* Colors */
+        .tag-game { background: #e0f2f1; color: #00695c; }   
+        .tag-arch { background: #fff3e0; color: #ef6c00; }   
+        .tag-digi { background: #e3f2fd; color: #1565c0; }   
+        .tag-fash { background: #fce4ec; color: #c2185b; }   
+        .tag-res  { background: #f3e5f5; color: #7b1fa2; }   
+
+        /* Dark Mode */
+        body.dark-mode .tag-game { background: rgba(128, 255, 219, 0.15); color: #80ffdb; }
+        body.dark-mode .tag-arch { background: rgba(255, 204, 128, 0.15); color: #ffcc80; }
+        body.dark-mode .tag-digi { background: rgba(144, 202, 249, 0.15); color: #90caf9; }
+        body.dark-mode .tag-fash { background: rgba(244, 143, 177, 0.15); color: #f48fb1; }
+        body.dark-mode .tag-res  { background: rgba(206, 147, 216, 0.15); color: #ce93d8; }
+
+        /* Mobile Adjustment */
+        @media (max-width: 768px) {
+            .p-desc { display: none; } /* Hide description on mobile to fit one line */
+            .p-content { gap: 10px; }
+        }
+        @media (max-width: 600px) {
+            .project-row { grid-template-columns: 25px 1fr; gap: 10px; }
+            .p-year { display: none; } 
+        }
     </style>
 </head>
 <body>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">archive <span class="plus">+</span> work</div>
     <div class="fixed-axis right-axis"></div>
-    <div class="axis-label right-label">index no <span class="plus">+</span> 05</div>
+    <div class="axis-label right-label">index no <span class="plus">+</span> 06</div>
 
     <header></header> <main>
         <div class="project-list-container mono-font">
             
             <div class="filter-bar">
-                <span class="filter-btn active" onclick="filterProjects('all', this)">all</span>
+                <span class="filter-btn active" onclick="filterProjects('all', this)">[ all ]</span>
                 <span class="filter-btn" onclick="filterProjects('architecture', this)">architecture</span>
                 <span class="filter-btn" onclick="filterProjects('digital', this)">digital</span>
+                <span class="filter-btn" onclick="filterProjects('game', this)">game</span>
+                <span class="filter-btn" onclick="filterProjects('fashion', this)">fashion</span>
                 <span class="filter-btn" onclick="filterProjects('research', this)">research</span>
             </div>
 
             <div class="project-list">
-                <div class="project-row" style="color: #A0A0A0; font-size: 11px;">
-                    <span>no</span><span>project name</span><span>date</span>
-                </div>
+                
+                <a href="project-arcade.html" class="project-row" data-category="game digital">
+                    <span class="p-id">06</span>
+                    <div class="p-content">
+                        <h2 class="p-title">system evasion</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-game">game</span>
+                            <span class="tag-pill tag-digi">digital</span>
+                        </div>
+                        <span class="p-desc">reactive arcade <span class="plus-spin">+</span> creative coding</span>
+                    </div>
+                    <span class="p-year">2025</span>
+                </a>
 
                 <a href="project-wooden-wall.html" class="project-row" data-category="architecture">
-                    <span>05</span>
-                    <span>
-                        porous boundary <span class="plus">+</span> wooden structure
-                        <span class="status-badge status-ongoing">concept</span>
-                    </span>
-                    <span>2025</span>
+                    <span class="p-id">05</span>
+                    <div class="p-content">
+                        <h2 class="p-title">porous boundary</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-arch">architecture</span>
+                        </div>
+                        <span class="p-desc">wooden structure <span class="plus-spin">+</span> concept</span>
+                    </div>
+                    <span class="p-year">2025</span>
                 </a>
 
                 <a href="project-flooring.html" class="project-row" data-category="architecture">
-                    <span>04</span>
-                    <span>
-                        broken grid <span class="plus">+</span> floor study
-                        <span class="status-badge status-ongoing">concept</span>
-                    </span>
-                    <span>2025</span>
+                    <span class="p-id">04</span>
+                    <div class="p-content">
+                        <h2 class="p-title">broken grid</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-arch">architecture</span>
+                        </div>
+                        <span class="p-desc">floor study <span class="plus-spin">+</span> interior</span>
+                    </div>
+                    <span class="p-year">2025</span>
                 </a>
 
-                <a href="project-tree-knowledge.html" class="project-row" data-category="digital">
-                    <span>03</span>
-                    <span>
-                        tree of knowledge <span class="plus">+</span> encyclopedia
-                        <span class="status-badge status-ongoing">ongoing</span>
-                    </span>
-                    <span>2025</span>
+                <a href="project-tree-knowledge.html" class="project-row" data-category="digital research">
+                    <span class="p-id">03</span>
+                    <div class="p-content">
+                        <h2 class="p-title">tree of knowledge</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-digi">digital</span>
+                            <span class="tag-pill tag-res">research</span>
+                        </div>
+                        <span class="p-desc">encyclopedia <span class="plus-spin">+</span> interface</span>
+                    </div>
+                    <span class="p-year">2025</span>
                 </a>
                 
-                <a href="project-maison-automata.html" class="project-row" data-category="research">
-                    <span>02</span>
-                    <span>
-                        maison automata <span class="plus">+</span> robotic fashion
-                        <span class="status-badge status-ongoing">ongoing</span>
-                    </span>
-                    <span>2025</span>
+                <a href="project-maison-automata.html" class="project-row" data-category="fashion research">
+                    <span class="p-id">02</span>
+                    <div class="p-content">
+                        <h2 class="p-title">maison automata</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-fash">fashion</span>
+                            <span class="tag-pill tag-res">research</span>
+                        </div>
+                        <span class="p-desc">robotic fashion <span class="plus-spin">+</span> wearable</span>
+                    </div>
+                    <span class="p-year">2025</span>
                 </a>
 
                 <a href="project-birth-studio.html" class="project-row" data-category="research">
-                    <span>01</span>
-                    <span>
-                        birth of the studio <span class="plus">+</span> origin
-                        <span class="status-badge status-paused">archived</span>
-                    </span>
-                    <span>2024</span>
+                    <span class="p-id">01</span>
+                    <div class="p-content">
+                        <h2 class="p-title">birth of the studio</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-res">research</span>
+                        </div>
+                        <span class="p-desc">origin <span class="plus-spin">+</span> manifesto</span>
+                    </div>
+                    <span class="p-year">2024</span>
                 </a>
+
             </div>
         </div>
     </main>
@@ -124,15 +297,16 @@
 
     <script>
         function filterProjects(category, btn) {
-            // 1. Update Active Button
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            // 2. Show/Hide Rows
             const rows = document.querySelectorAll('.project-row[data-category]');
             rows.forEach(row => {
-                if (category === 'all' || row.getAttribute('data-category') === category) {
+                const projectCats = row.getAttribute('data-category'); 
+                if (category === 'all' || projectCats.includes(category)) {
                     row.classList.remove('hidden');
+                    row.style.animation = 'none';
+                    row.offsetHeight; 
+                    row.style.animation = 'fadeIn 0.3s ease forwards';
                 } else {
                     row.classList.add('hidden');
                 }
