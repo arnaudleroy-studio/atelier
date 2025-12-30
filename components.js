@@ -278,3 +278,19 @@ document.addEventListener('visibilitychange', function() {
     }
 });
 
+// =============================================================================
+// [ 11 ] GLOBAL X-RAY BLUEPRINT MODE
+// =============================================================================
+// Hold [ ALT ] (or Option on Mac) to reveal system architecture.
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Alt') {
+        document.body.classList.add('blueprint-mode');
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'Alt') {
+        document.body.classList.remove('blueprint-mode');
+    }
+});
