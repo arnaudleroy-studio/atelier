@@ -1,0 +1,256 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: dec 27 2024
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project + the oracle</title>
+    
+    <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="components.js" defer></script>
+
+    <style>
+        /* [ PROJECT SPECIFIC OVERRIDES ] */
+        body { overflow-y: auto; }
+
+        .project-meta {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            border-top: 1px solid var(--grid-line);
+            padding-top: 10px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent-grey);
+        }
+
+        /* [ THE REAL ICON ASSET ] */
+        .icon-showcase {
+            width: 100%; max-width: 200px; /* Perfect size for the grid */
+            margin: 0 auto 20px auto;
+            display: block;
+            border-radius: 22%; /* Apple Squircle Approximation */
+            box-shadow: 0 20px 40px rgba(0,35,102, 0.2);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
+        }
+        .icon-showcase:hover { transform: scale(1.02) rotate(-1deg); }
+        
+        body.dark-mode .icon-showcase {
+            box-shadow: 0 20px 40px rgba(250, 235, 215, 0.1);
+            border: 1px solid rgba(250, 235, 215, 0.1);
+        }
+
+        /* [ MATH GRIDS ] */
+        .math-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            margin-top: 40px; border-top: 1px dotted var(--grid-line); padding-top: 20px;
+        }
+        .stat-label { font-size: 9px; color: var(--accent-grey); display: block; margin-bottom: 5px; }
+        .stat-value { font-size: 14px; font-family: 'Courier New', monospace; font-weight: bold; color: var(--accent-blue); }
+        body.dark-mode .stat-value { color: #FAEBD7; }
+        
+        .math-note {
+            grid-column: span 2; font-size: 10px; color: var(--accent-grey); 
+            margin-top: 10px; font-style: italic; opacity: 0.7;
+        }
+
+        /* [ STRATEGY CARDS ] */
+        .strategy-card {
+            border: 1px solid var(--accent-blue);
+            padding: 20px; margin-bottom: 10px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            transition: all 0.3s ease; cursor: help;
+        }
+        .strategy-card:hover { background: var(--accent-blue); color: var(--bg-color); }
+        body.dark-mode .strategy-card { border-color: #FAEBD7; }
+        body.dark-mode .strategy-card:hover { background: #FAEBD7; color: #002366; }
+
+        @media (max-width: 768px) {
+            .math-grid { grid-template-columns: 1fr; }
+            .math-note { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">project <span class="plus">+</span> 07</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">status <span class="plus">+</span> golden_master</div>
+
+    <header></header> 
+    
+    <main class="grid-layout" style="display: block; max-width: 1000px;">
+        
+        <div style="margin-bottom: 60px;">
+            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+        </div>
+
+        <div class="studio-layout" style="margin-bottom: 100px;">
+            <div>
+                <h1 class="hero-statement" style="font-size: 3.5rem; line-height: 0.9;">the<br>oracle</h1>
+                <div class="project-meta" style="margin-top: 20px; border-top: 1px solid var(--accent-blue); padding-top: 10px;">
+                    <span>platform : iOS / watchOS</span>
+                    <span style="float: right;">v1.0.0</span>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+                <p class="mono-font" style="line-height: 1.6; text-align: justify;">
+                    a computational divination tool + built on the premise that in an age of additive noise, silence is a material + shake to subtract + tap to consult
+                    <br><br>
+                    the application functions as a "silence engine" + delivering oblique strategies to unblock the creative process + no settings + no history + no cloud
+                </p>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--grid-line); padding-top: 60px; margin-bottom: 100px;">
+            <div class="studio-layout">
+                
+                <div style="text-align: center;">
+                    <img src="oracle_icon_final.png" alt="The Stencil 8 Icon" class="icon-showcase">
+                    <span class="mono-font" style="font-size: 10px; color: var(--accent-grey);">fig 01 + the stencil 8 (affinity export)</span>
+                </div>
+
+                <div>
+                    <h3 class="serif-font" style="color: var(--accent-blue); margin-bottom: 20px;">mathematics of silence</h3>
+                    <p class="mono-font">
+                        the icon is calculated via the <strong>golden ratio (φ)</strong>. the central glyph (8) rises above the triangle, breaking the stencil boundary.
+                        <br><br>
+                        we rounded the triangle corners to exactly <strong>89px</strong> (a fibonacci number) to balance the "industrial" feel with the "organic" hand.
+                    </p>
+
+                    <div class="math-grid">
+                        <div>
+                            <span class="stat-label">CANVAS</span>
+                            <span class="stat-value">1024 px</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">GOLDEN MARGINS</span>
+                            <span class="stat-value">144 px</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">CORNER RADIUS (FIBONACCI)</span>
+                            <span class="stat-value">89 px</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">GLYPH HEIGHT (SILVER RATIO)</span>
+                            <span class="stat-value">450 px</span>
+                        </div>
+                        <div class="math-note">
+                            * values derived to ensure the "8" floats without touching the void walls
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 100px;">
+            <h3 class="serif-font" style="margin-bottom: 30px; font-size: 2rem;">the light deck</h3>
+            <p class="mono-font" style="margin-bottom: 40px; max-width: 600px;">
+                the app runs on a randomized array of essential truths + hard-coded into the binary + selected via accelerometer chaos
+            </p>
+
+            <div class="studio-layout">
+                <div>
+                    <div class="strategy-card">remove the essential</div>
+                    <div class="strategy-card">silence is a material</div>
+                    <div class="strategy-card">subtract until it breaks</div>
+                    <div class="strategy-card">honor the noise</div>
+                </div>
+                <div>
+                    <div class="strategy-card">make it ugly</div>
+                    <div class="strategy-card">don't build for the feed</div>
+                    <div class="strategy-card">amplify the error</div>
+                    <div class="strategy-card">kill your darlings</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: var(--accent-blue); color: var(--bg-color); padding: 60px; margin-bottom: 60px; position: relative; overflow: hidden;">
+            <div class="studio-layout">
+                <div>
+                    <h3 class="serif-font" style="color: var(--bg-color);">disconnected brain</h3>
+                    <p class="mono-font" style="margin-top: 20px; color: rgba(250, 235, 215, 0.7);">
+                        the watchOS architecture is standalone + it does not require the phone to function + it allows for the "naked run" + leaving the network behind
+                    </p>
+                    <button id="haptic-trigger" class="mono-font" style="margin-top: 40px; background: transparent; border: 1px solid var(--bg-color); color: var(--bg-color); padding: 15px 30px; cursor: pointer;">
+                        [ tap to simulate haptic ]
+                    </button>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 150px; height: 180px; border: 2px solid rgba(255,255,255,0.2); border-radius: 30px; display: flex; align-items: center; justify-content: center; position: relative;">
+                        <span class="mono-font" style="font-size: 10px; text-align: center;">remove<br>the<br>essential</span>
+                        <div style="position: absolute; top: 10px; right: -10px; width: 4px; height: 20px; background: rgba(255,255,255,0.3);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="easter-egg" style="top: 220px; left: 80px;">the_answer_is_inside_the_noise</div>
+        <div class="easter-egg" style="top: 550px; right: 50px;">fibonacci_sequence_verified</div>
+        <div class="easter-egg" style="bottom: 120px; left: 50px;">watch_target: linked</div>
+        <div class="easter-egg" style="top: 45%; left: 45%; opacity: 0.2;">fig_ghost_01</div>
+
+        <div class="night-reveal" style="text-align: center; font-size: 9px; margin-top: 40px; opacity: 0.5;">
+            [ system note: silence is the ultimate luxury ]
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer> 
+
+    <script>
+        // HAPTIC SIMULATION
+        const btn = document.getElementById('haptic-trigger');
+        if(btn) {
+            btn.addEventListener('click', () => {
+                if (navigator.vibrate) {
+                    navigator.vibrate(50); // The "Heavy" Impact
+                    const originalText = btn.innerText;
+                    btn.innerText = "[ signal received ]";
+                    
+                    // Secret console log for the curious
+                    console.log("%c ORACLE: SIGNAL RECEIVED", "color: #002366; font-weight: bold; background: #FAEBD7; padding: 5px;");
+                    
+                    setTimeout(() => { btn.innerText = originalText; }, 1000);
+                } else {
+                    btn.innerText = "[ haptic engine unavailable ]";
+                    setTimeout(() => { btn.innerText = "[ tap to simulate haptic ]"; }, 2000);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->
