@@ -50,10 +50,10 @@
 
         /* [ THE REAL ICON ASSET ] */
         .icon-showcase {
-            width: 100%; max-width: 200px; /* Perfect size for the grid */
+            width: 100%; max-width: 200px;
             margin: 0 auto 20px auto;
             display: block;
-            border-radius: 22%; /* Apple Squircle Approximation */
+            border-radius: 22%; /* Apple Squircle */
             box-shadow: 0 20px 40px rgba(0,35,102, 0.2);
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
         }
@@ -63,6 +63,68 @@
             box-shadow: 0 20px 40px rgba(250, 235, 215, 0.1);
             border: 1px solid rgba(250, 235, 215, 0.1);
         }
+
+        /* [ IPHONE SIMULATOR ] */
+        .iphone-frame {
+            width: 280px; height: 560px;
+            background: #f5f5f5;
+            border: 6px solid #d0d0d0;
+            border-radius: 40px;
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        body.dark-mode .iphone-frame {
+            background: #000;
+            border-color: #333;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        
+        /* The Dynamic Island */
+        .notch {
+            width: 90px; height: 24px;
+            background: #000;
+            border-radius: 12px;
+            position: absolute; top: 15px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Screen Content */
+        .iphone-screen {
+            height: 100%; width: 100%;
+            background-color: var(--accent-blue);
+            color: var(--bg-color);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; text-align: center;
+        }
+        
+        .oracle-text {
+            font-family: 'Rockwell', serif;
+            font-size: 24px;
+            line-height: 1.4;
+            transition: opacity 0.2s;
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .shaking { animation: shake 0.5s; }
 
         /* [ MATH GRIDS ] */
         .math-grid {
@@ -83,11 +145,28 @@
             border: 1px solid var(--accent-blue);
             padding: 20px; margin-bottom: 10px;
             font-family: 'Courier New', monospace; font-size: 11px;
-            transition: all 0.3s ease; cursor: help;
+            transition: all 0.3s ease; cursor: default;
         }
         .strategy-card:hover { background: var(--accent-blue); color: var(--bg-color); }
         body.dark-mode .strategy-card { border-color: #FAEBD7; }
         body.dark-mode .strategy-card:hover { background: #FAEBD7; color: #002366; }
+
+        /* [ WATCH SIMULATOR ] */
+        .watch-frame {
+            width: 160px; height: 190px;
+            background: #111;
+            border-radius: 36px;
+            border: 4px solid #333;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 0 auto;
+        }
+        .watch-crown {
+            position: absolute; top: 30px; right: -10px;
+            width: 8px; height: 24px;
+            background: #444; border-radius: 4px;
+        }
 
         @media (max-width: 768px) {
             .math-grid { grid-template-columns: 1fr; }
@@ -100,13 +179,13 @@
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">project <span class="plus">+</span> 07</div>
     <div class="fixed-axis right-axis"></div>
-    <div class="axis-label right-label">status <span class="plus">+</span> golden_master</div>
+    <div class="axis-label right-label">status <span class="plus">+</span> release</div>
 
     <header></header> 
     
     <main class="grid-layout" style="display: block; max-width: 1000px;">
         
-        <div style="margin-bottom: 60px;">
+        <div style="margin-bottom: 40px;">
             <a href="projects.html" class="mono-font back-link">&lt; previous</a>
         </div>
 
@@ -117,13 +196,25 @@
                     <span>platform : iOS / watchOS</span>
                     <span style="float: right;">v1.0.0</span>
                 </div>
-            </div>
-            <div style="display: flex; flex-direction: column; justify-content: flex-end;">
-                <p class="mono-font" style="line-height: 1.6; text-align: justify;">
-                    a computational divination tool + built on the premise that in an age of additive noise, silence is a material + shake to subtract + tap to consult
+                
+                <p class="mono-font" style="line-height: 1.6; text-align: justify; margin-top: 40px;">
+                    a psychological trigger engine built to break executive dysfunction + built on the premise that you do not need more ideas + you need activation
                     <br><br>
-                    the application functions as a "silence engine" + delivering oblique strategies to unblock the creative process + no settings + no history + no cloud
+                    shake the device to bypass the thinking brain and engage the doing brain + immediate action + no history + no hesitation
                 </p>
+            </div>
+            
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="iphone-frame" onclick="simulateAppShake()">
+                    <div class="notch"></div>
+                    <div class="iphone-screen">
+                        <span id="iphone-text" class="oracle-text">tap to<br>shake</span>
+                        <div class="mono-font" style="position:absolute; bottom:30px; font-size:9px; opacity:0.6;">[ the oracle ]</div>
+                    </div>
+                </div>
+                <div class="mono-font" style="position: absolute; margin-top: 600px; font-size: 9px; color: var(--accent-grey);">
+                    fig 01 + interactive simulation
+                </div>
             </div>
         </div>
 
@@ -132,15 +223,15 @@
                 
                 <div style="text-align: center;">
                     <img src="oracle_icon_final.png" alt="The Stencil 8 Icon" class="icon-showcase">
-                    <span class="mono-font" style="font-size: 10px; color: var(--accent-grey);">fig 01 + the stencil 8 (affinity export)</span>
+                    <span class="mono-font" style="font-size: 10px; color: var(--accent-grey);">fig 02 + the stencil 8 (affinity export)</span>
                 </div>
 
                 <div>
                     <h3 class="serif-font" style="color: var(--accent-blue); margin-bottom: 20px;">mathematics of silence</h3>
                     <p class="mono-font">
-                        the icon is calculated via the <strong>golden ratio (φ)</strong>. the central glyph (8) rises above the triangle, breaking the stencil boundary.
+                        the icon is calculated via the <strong>golden ratio (φ)</strong> + the central glyph (8) rises above the triangle + breaking the stencil boundary + transforming the negative space into a singularity
                         <br><br>
-                        we rounded the triangle corners to exactly <strong>89px</strong> (a fibonacci number) to balance the "industrial" feel with the "organic" hand.
+                        we rounded the triangle corners to exactly <strong>89px</strong> (a fibonacci number) to balance the "industrial" feel with the "organic" hand
                     </p>
 
                     <div class="math-grid">
@@ -169,23 +260,23 @@
         </div>
 
         <div style="margin-bottom: 100px;">
-            <h3 class="serif-font" style="margin-bottom: 30px; font-size: 2rem;">the light deck</h3>
+            <h3 class="serif-font" style="margin-bottom: 30px; font-size: 2rem;">the activation deck</h3>
             <p class="mono-font" style="margin-bottom: 40px; max-width: 600px;">
-                the app runs on a randomized array of essential truths + hard-coded into the binary + selected via accelerometer chaos
+                the app bypasses "artistic block" by issuing direct psychological commands + designed to trigger action
             </p>
 
             <div class="studio-layout">
                 <div>
-                    <div class="strategy-card">remove the essential</div>
-                    <div class="strategy-card">silence is a material</div>
-                    <div class="strategy-card">subtract until it breaks</div>
-                    <div class="strategy-card">honor the noise</div>
+                    <div class="strategy-card">inhale. exhale. repeat.</div>
+                    <div class="strategy-card">say it out loud: i am a legend</div>
+                    <div class="strategy-card">do it. now.</div>
+                    <div class="strategy-card">do it badly. just start.</div>
                 </div>
                 <div>
-                    <div class="strategy-card">make it ugly</div>
-                    <div class="strategy-card">don't build for the feed</div>
-                    <div class="strategy-card">amplify the error</div>
-                    <div class="strategy-card">kill your darlings</div>
+                    <div class="strategy-card">stand up. shake it off.</div>
+                    <div class="strategy-card">stop thinking. move your hands.</div>
+                    <div class="strategy-card">you are ready.</div>
+                    <div class="strategy-card">what if it was easy?</div>
                 </div>
             </div>
         </div>
@@ -197,26 +288,28 @@
                     <p class="mono-font" style="margin-top: 20px; color: rgba(250, 235, 215, 0.7);">
                         the watchOS architecture is standalone + it does not require the phone to function + it allows for the "naked run" + leaving the network behind
                     </p>
-                    <button id="haptic-trigger" class="mono-font" style="margin-top: 40px; background: transparent; border: 1px solid var(--bg-color); color: var(--bg-color); padding: 15px 30px; cursor: pointer;">
-                        [ tap to simulate haptic ]
-                    </button>
+                    <div class="mono-font" style="margin-top: 40px; font-size: 11px;">
+                        [ standalone_mode: active ]
+                    </div>
                 </div>
+                
                 <div style="display: flex; align-items: center; justify-content: center;">
-                    <div style="width: 150px; height: 180px; border: 2px solid rgba(255,255,255,0.2); border-radius: 30px; display: flex; align-items: center; justify-content: center; position: relative;">
-                        <span class="mono-font" style="font-size: 10px; text-align: center;">remove<br>the<br>essential</span>
-                        <div style="position: absolute; top: 10px; right: -10px; width: 4px; height: 20px; background: rgba(255,255,255,0.3);"></div>
+                    <div class="watch-frame">
+                        <div class="watch-crown"></div>
+                        <div style="text-align: center;">
+                            <span class="mono-font" style="font-size: 10px; color: #fff;">do it<br>badly<br>just<br>do it</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="easter-egg" style="top: 220px; left: 80px;">the_answer_is_inside_the_noise</div>
+        <div class="easter-egg" style="top: 220px; left: 80px;">psychological_override_active</div>
         <div class="easter-egg" style="top: 550px; right: 50px;">fibonacci_sequence_verified</div>
         <div class="easter-egg" style="bottom: 120px; left: 50px;">watch_target: linked</div>
-        <div class="easter-egg" style="top: 45%; left: 45%; opacity: 0.2;">fig_ghost_01</div>
 
         <div class="night-reveal" style="text-align: center; font-size: 9px; margin-top: 40px; opacity: 0.5;">
-            [ system note: silence is the ultimate luxury ]
+            [ system note: hesitation is the enemy ]
         </div>
 
     </main>
@@ -224,24 +317,38 @@
     <footer class="mono-font"></footer> 
 
     <script>
-        // HAPTIC SIMULATION
-        const btn = document.getElementById('haptic-trigger');
-        if(btn) {
-            btn.addEventListener('click', () => {
-                if (navigator.vibrate) {
-                    navigator.vibrate(50); // The "Heavy" Impact
-                    const originalText = btn.innerText;
-                    btn.innerText = "[ signal received ]";
-                    
-                    // Secret console log for the curious
-                    console.log("%c ORACLE: SIGNAL RECEIVED", "color: #002366; font-weight: bold; background: #FAEBD7; padding: 5px;");
-                    
-                    setTimeout(() => { btn.innerText = originalText; }, 1000);
-                } else {
-                    btn.innerText = "[ haptic engine unavailable ]";
-                    setTimeout(() => { btn.innerText = "[ tap to simulate haptic ]"; }, 2000);
-                }
-            });
+        // [ INTERACTIVE IPHONE SIMULATOR ]
+        const strategies = [
+            "inhale.<br>exhale.<br>repeat.",
+            "say it<br>out loud:<br>i am<br>a legend",
+            "do it.<br>now.",
+            "do it<br>badly.<br>just<br>start.",
+            "stand up.<br>shake<br>it off.",
+            "stop<br>thinking.<br>move your<br>hands.",
+            "you are<br>ready.",
+            "what if<br>it was<br>easy?"
+        ];
+
+        function simulateAppShake() {
+            const phone = document.querySelector('.iphone-frame');
+            const screenText = document.getElementById('iphone-text');
+            
+            // 1. Visual Shake
+            phone.classList.remove('shaking');
+            void phone.offsetWidth; // Trigger reflow
+            phone.classList.add('shaking');
+            
+            // 2. Haptic (if mobile)
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            // 3. Change Content
+            screenText.style.opacity = 0;
+            
+            setTimeout(() => {
+                const randomStrategy = strategies[Math.floor(Math.random() * strategies.length)];
+                screenText.innerHTML = randomStrategy;
+                screenText.style.opacity = 1;
+            }, 200);
         }
     </script>
 
