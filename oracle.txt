@@ -1,0 +1,88 @@
+THE ORACLE // SYSTEM ARCHITECTURE v1.3 [Golden Master]
+================================================================================
+"Silence is a Material."
+A computational divination tool designed to break executive dysfunction.
+
+[ 01 ] THE VELOCITY ENGINE (The Rage Sensor)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  The app listens to the accelerometer (G-Force). It distinguishes between a 
+  gentle oscillation (Calm Shake) and a violent impulse (Rage Shake).
+  - Soft Shake (< 2.5 G): Returns soothing advice ("breathe.", "patience.").
+  - Hard Shake (> 2.5 G): Returns aggressive commands ("do it.", "wake up.").
+> THE PSYCHOLOGY:
+  Traditional apps ignore the user's physical state. The Oracle acknowledges 
+  frustration. If you shake it in anger, it matches your energy with urgency.
+> THE CODE:
+  Uses Apple's `CoreMotion` framework. Calculates the square root of the sum 
+  of squares (vector magnitude) of X, Y, Z axes to determine total force.
+
+[ 02 ] THE BLACKOUT TIMER (Enforced Reflection)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  Immediately after delivering a strategy, the interface "dies." The screen 
+  fades to absolute black for 10 seconds. Touch interaction is disabled.
+> THE PSYCHOLOGY:
+  Creatives are "dopamine loopers"—we re-roll dice until we get an easy answer. 
+  The Blackout removes the slot-machine effect. It forces the user to sit 
+  in the void with the answer they were given, preventing avoidance behaviors.
+> THE CODE:
+  A `ZStack` black overlay triggered via `DispatchQueue.main.asyncAfter`. 
+  Locks the UI thread interaction logic during the duration.
+
+[ 03 ] THE HAPTIC METRONOME (Somatic Anchor)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  If the strategy "inhale。 exhale。 repeat。" is selected, the Taptic Engine 
+  begins to pulse at 60 BPM (resting heart rate).
+> THE PSYCHOLOGY:
+  Anxiety accelerates the heart rate. By holding a device that physically 
+  beats at a calm rhythm, the user's nervous system instinctively attempts 
+  to entrain (sync) with the slower tempo. It is biofeedback without a screen.
+> THE CODE:
+  A `Timer` firing `UIImpactFeedbackGenerator(style: .soft)` every 1.0 seconds.
+
+[ 04 ] THE CIRCADIAN GUARD (Midnight Protocol)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  If the app is opened between 02:00 AM and 05:00 AM, the randomization 
+  engine is disabled. It returns only one message: "go to sleep。".
+> THE PSYCHOLOGY:
+  Nothing good is created at 4 AM by an exhausted mind. The app transitions 
+  from a tool of production to a guardian of health. It rejects the toxic 
+  "hustle culture" that demands 24/7 output.
+> THE CODE:
+  `Calendar.current.component(.hour)` check inserted before the Deck Logic.
+
+[ 05 ] THE ANTI-STREAK (Negative Gamification)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  Instead of celebrating "Daily Streaks" (which induce anxiety to maintain), 
+  the app tracks "Days Since Last Consultation."
+  Footer reads: "3 days since last consultation。 good。"
+> THE PSYCHOLOGY:
+  The goal of a tool is to NOT need the tool. We reward independence. 
+  If you haven't asked the Oracle in a week, you are doing the work. 
+  That is success.
+> THE CODE:
+  `UserDefaults` stores a simple Timestamp. Logic calculates the `DateComponents` 
+  delta on app launch.
+
+[ 06 ] THE SYSTEM ANOMALY (The Glitch)
+--------------------------------------------------------------------------------
+> THE MECHANIC:
+  There is a 0.2% (1 in 500) chance that a shake triggers a "System Failure." 
+  The background flashes Red, and the text reads "none of this matters。"
+> THE PSYCHOLOGY:
+  It introduces myth and rarity. It reminds the user that the system is 
+  fallible, breaking the seriousness of the creative block. It serves as a 
+  digital "Memento Mori."
+> THE CODE:
+  `Int.random(in: 0...500) == 0`. Overrides all other logic branches.
+
+================================================================================
+DESIGN SPECIFICATIONS
+> Font: Rockwell Bold (The weight of industry).
+> Palette: Void Blue (#002366) + Paper Cream (#FAEBD7).
+> Punctuation: The Japanese Kuten (。) represents a closed loop/circle.
+================================================================================

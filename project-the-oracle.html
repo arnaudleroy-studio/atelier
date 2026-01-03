@@ -83,7 +83,6 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
         
-        /* The Dynamic Island */
         .notch {
             width: 90px; height: 24px;
             background: #000;
@@ -93,7 +92,6 @@
             z-index: 10;
         }
 
-        /* Screen Content */
         .iphone-screen {
             height: 100%; width: 100%;
             background-color: var(--accent-blue);
@@ -110,7 +108,6 @@
             transition: opacity 0.2s;
         }
 
-        /* Shake Animation */
         @keyframes shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
             10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -126,6 +123,20 @@
         }
         .shaking { animation: shake 0.5s; }
 
+        /* [ PSYCHOLOGY LIST ] */
+        .psych-list { list-style: none; margin-top: 20px; }
+        .psych-item { 
+            border-bottom: 1px dotted var(--grid-line); 
+            padding: 15px 0; 
+            display: grid; 
+            grid-template-columns: 1.5fr 2fr;
+            gap: 20px;
+        }
+        .psych-command { font-family: 'Rockwell', serif; color: var(--accent-blue); font-size: 14px; }
+        .psych-logic { font-family: 'Courier New', monospace; font-size: 11px; opacity: 0.8; line-height: 1.4; }
+        
+        body.dark-mode .psych-command { color: #FAEBD7; }
+
         /* [ MATH GRIDS ] */
         .math-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
@@ -139,17 +150,6 @@
             grid-column: span 2; font-size: 10px; color: var(--accent-grey); 
             margin-top: 10px; font-style: italic; opacity: 0.7;
         }
-
-        /* [ STRATEGY CARDS ] */
-        .strategy-card {
-            border: 1px solid var(--accent-blue);
-            padding: 20px; margin-bottom: 10px;
-            font-family: 'Courier New', monospace; font-size: 11px;
-            transition: all 0.3s ease; cursor: default;
-        }
-        .strategy-card:hover { background: var(--accent-blue); color: var(--bg-color); }
-        body.dark-mode .strategy-card { border-color: #FAEBD7; }
-        body.dark-mode .strategy-card:hover { background: #FAEBD7; color: #002366; }
 
         /* [ WATCH SIMULATOR ] */
         .watch-frame {
@@ -170,6 +170,7 @@
 
         @media (max-width: 768px) {
             .math-grid { grid-template-columns: 1fr; }
+            .psych-item { grid-template-columns: 1fr; gap: 5px; }
             .math-note { grid-column: span 1; }
         }
     </style>
@@ -194,7 +195,7 @@
                 <h1 class="hero-statement" style="font-size: 3.5rem; line-height: 0.9;">the<br>oracle</h1>
                 <div class="project-meta" style="margin-top: 20px; border-top: 1px solid var(--accent-blue); padding-top: 10px;">
                     <span>platform : iOS / watchOS</span>
-                    <span style="float: right;">v1.0.0</span>
+                    <span style="float: right;">v1.3.0</span>
                 </div>
                 
                 <p class="mono-font" style="line-height: 1.6; text-align: justify; margin-top: 40px;">
@@ -202,6 +203,10 @@
                     <br><br>
                     shake the device to bypass the thinking brain and engage the doing brain + immediate action + no history + no hesitation
                 </p>
+                <div class="mono-font" style="margin-top: 20px; font-size: 10px; color: var(--accent-blue);">
+                    <span class="plus">+</span> velocity_sensor_enabled <br>
+                    <span class="plus">+</span> haptic_metronome_ready
+                </div>
             </div>
             
             <div style="display: flex; justify-content: center; align-items: center;">
@@ -219,8 +224,39 @@
         </div>
 
         <div style="border-top: 1px solid var(--grid-line); padding-top: 60px; margin-bottom: 100px;">
+            <h3 class="serif-font" style="color: var(--accent-blue); margin-bottom: 10px;">psychological architecture</h3>
+            <p class="mono-font" style="margin-bottom: 40px; opacity: 0.7;">decoding the "activation deck" strategies</p>
+
+            <ul class="psych-list">
+                <li class="psych-item">
+                    <span class="psych-command">inhale。 exhale。 repeat。</span>
+                    <span class="psych-logic"><strong>protocol 01: vagus nerve stimulation</strong><br>cools the parasympathetic nervous system + lowers cortisol spikes associated with creative anxiety.</span>
+                </li>
+                <li class="psych-item">
+                    <span class="psych-command">say it out loud: i am a legend。</span>
+                    <span class="psych-logic"><strong>protocol 02: identity shift</strong><br>cognitive reframing + you behave according to the identity you articulate + the imposter cannot survive this sentence.</span>
+                </li>
+                <li class="psych-item">
+                    <span class="psych-command">do it badly。 just start。</span>
+                    <span class="psych-logic"><strong>protocol 03: perfectionism collapse</strong><br>perfectionism is just fear disguised as standards + by granting permission to be bad, we lower the activation energy required to begin.</span>
+                </li>
+                <li class="psych-item">
+                    <span class="psych-command">do it。 now。</span>
+                    <span class="psych-logic"><strong>protocol 04: urgency trigger</strong><br>a direct command to the pre-frontal cortex + bypasses the analysis loop.</span>
+                </li>
+                <li class="psych-item">
+                    <span class="psych-command">stand up。 shake it off。</span>
+                    <span class="psych-logic"><strong>protocol 05: somatic interruption</strong><br>the mind follows the body + changing physical state forces a reset of the mental state (embodied cognition).</span>
+                </li>
+                <li class="psych-item">
+                    <span class="psych-command">stop thinking。 move your hands。</span>
+                    <span class="psych-logic"><strong>protocol 06: motor sensory loop</strong><br>thinking is often a trap + movement is the exit + engages muscle memory over logic.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 100px;">
             <div class="studio-layout">
-                
                 <div style="text-align: center;">
                     <img src="oracle_icon_final.png" alt="The Stencil 8 Icon" class="icon-showcase">
                     <span class="mono-font" style="font-size: 10px; color: var(--accent-grey);">fig 02 + the stencil 8 (affinity export)</span>
@@ -259,28 +295,6 @@
             </div>
         </div>
 
-        <div style="margin-bottom: 100px;">
-            <h3 class="serif-font" style="margin-bottom: 30px; font-size: 2rem;">the activation deck</h3>
-            <p class="mono-font" style="margin-bottom: 40px; max-width: 600px;">
-                the app bypasses "artistic block" by issuing direct psychological commands + designed to trigger action
-            </p>
-
-            <div class="studio-layout">
-                <div>
-                    <div class="strategy-card">inhale. exhale. repeat.</div>
-                    <div class="strategy-card">say it out loud: i am a legend</div>
-                    <div class="strategy-card">do it. now.</div>
-                    <div class="strategy-card">do it badly. just start.</div>
-                </div>
-                <div>
-                    <div class="strategy-card">stand up. shake it off.</div>
-                    <div class="strategy-card">stop thinking. move your hands.</div>
-                    <div class="strategy-card">you are ready.</div>
-                    <div class="strategy-card">what if it was easy?</div>
-                </div>
-            </div>
-        </div>
-
         <div style="background: var(--accent-blue); color: var(--bg-color); padding: 60px; margin-bottom: 60px; position: relative; overflow: hidden;">
             <div class="studio-layout">
                 <div>
@@ -297,7 +311,7 @@
                     <div class="watch-frame">
                         <div class="watch-crown"></div>
                         <div style="text-align: center;">
-                            <span class="mono-font" style="font-size: 10px; color: #fff;">do it<br>badly<br>just<br>do it</span>
+                            <span class="mono-font" style="font-size: 10px; color: #fff;">do it<br>badly。<br>just<br>do it。</span>
                         </div>
                     </div>
                 </div>
@@ -319,13 +333,13 @@
     <script>
         // [ INTERACTIVE IPHONE SIMULATOR ]
         const strategies = [
-            "inhale.<br>exhale.<br>repeat.",
-            "say it<br>out loud:<br>i am<br>a legend",
-            "do it.<br>now.",
-            "do it<br>badly.<br>just<br>start.",
-            "stand up.<br>shake<br>it off.",
-            "stop<br>thinking.<br>move your<br>hands.",
-            "you are<br>ready.",
+            "inhale。<br>exhale。<br>repeat。",
+            "say it<br>out loud:<br>i am<br>a legend。",
+            "do it。<br>now。",
+            "do it<br>badly。<br>just<br>start。",
+            "stand up。<br>shake<br>it off。",
+            "stop<br>thinking。<br>move your<br>hands。",
+            "you are<br>ready。",
             "what if<br>it was<br>easy?"
         ];
 
