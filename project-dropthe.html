@@ -1,0 +1,640 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: jan 04 2026
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++       
+     /++__  ++| ++       
+    | ++  \ ++| ++       
+    | ++++++++| ++       
+    | ++__  ++| ++       
+    | ++  | ++| ++       
+    | ++  | ++| ++++++++ 
+    |__/  |__/|________/ 
+                         
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project + dropthe</title>
+    
+    <meta name="description" content="DROPTHE. A data utility network. Drop the noise. Keep the data.">
+    <meta property="og:title" content="arnaud leroy + dropthe">
+    <meta property="og:description" content="drop the noise + keep the data">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:url" content="https://arnaudleroy.com/project-dropthe.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    
+    <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="components.js" defer></script>
+
+    <style>
+        /* [ PROJECT SPECIFIC: DROPTHE ] */
+        body { 
+            overflow-y: auto; 
+            text-transform: lowercase; 
+        }
+
+        /* THE TERMINAL AESTHETIC */
+        .terminal-block {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00ff00;
+            position: relative;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+
+        .terminal-block::before {
+            content: "DROPTHE://";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 9px;
+            color: #444;
+            letter-spacing: 2px;
+        }
+
+        .terminal-block::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #00ff00;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* CATEGORY SPECTRUM */
+        .spectrum-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin: 40px 0;
+            height: 80px;
+        }
+
+        .spectrum-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .spectrum-bar:hover {
+            transform: scaleY(1.1);
+            transform-origin: bottom;
+        }
+
+        .spectrum-bar span {
+            font-size: 8px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            position: absolute;
+            bottom: -20px;
+        }
+
+        .spectrum-bar:hover span {
+            opacity: 1;
+        }
+
+        .bar-tech { background: linear-gradient(to top, #007BFF 0%, #007BFF 70%, transparent 70%); }
+        .bar-coin { background: linear-gradient(to top, #6F42C1 0%, #6F42C1 85%, transparent 85%); }
+        .bar-money { background: linear-gradient(to top, #28A745 0%, #28A745 60%, transparent 60%); }
+        .bar-culture { background: linear-gradient(to top, #E83E8C 0%, #E83E8C 45%, transparent 45%); }
+        .bar-travel { background: linear-gradient(to top, #556B2F 0%, #556B2F 55%, transparent 55%); }
+        .bar-data { background: linear-gradient(to top, #20C997 0%, #20C997 90%, transparent 90%); }
+        .bar-gear { background: linear-gradient(to top, #FD7E14 0%, #FD7E14 40%, transparent 40%); }
+
+        /* DATA TABLE PREVIEW */
+        .data-preview {
+            border: 1px solid var(--accent-blue);
+            margin: 40px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            overflow: hidden;
+        }
+
+        .data-header {
+            background: var(--accent-blue);
+            color: var(--bg-color);
+            padding: 10px 15px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .data-row {
+            padding: 12px 15px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            border-bottom: 1px dotted var(--grid-line);
+            transition: background 0.2s ease;
+        }
+
+        .data-row:hover {
+            background: rgba(0, 35, 102, 0.05);
+        }
+
+        body.dark-mode .data-row:hover {
+            background: rgba(250, 235, 215, 0.05);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-verified {
+            color: #28A745;
+        }
+
+        .status-pending {
+            color: #FD7E14;
+        }
+
+        /* PHILOSOPHY CARDS */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .phil-card {
+            border: 1px solid var(--grid-line);
+            padding: 30px;
+            position: relative;
+        }
+
+        .phil-card::before {
+            content: attr(data-num);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-size: 10px;
+            color: var(--accent-blue);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        .phil-title {
+            font-family: 'Rockwell', serif;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .phil-title {
+            color: #FAEBD7;
+        }
+
+        /* LIVE COUNTER */
+        .live-counter {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+            padding: 40px;
+            border-top: 1px solid var(--grid-line);
+            border-bottom: 1px solid var(--grid-line);
+        }
+
+        .counter-item {
+            text-align: center;
+        }
+
+        .counter-value {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        body.dark-mode .counter-value {
+            color: #FAEBD7;
+        }
+
+        .counter-label {
+            font-size: 9px;
+            color: var(--accent-grey);
+            letter-spacing: 2px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* REDACTED TEXT */
+        .redacted {
+            background: var(--text-color);
+            color: var(--text-color);
+            padding: 0 4px;
+            transition: all 0.3s ease;
+            cursor: help;
+        }
+
+        .redacted:hover {
+            background: transparent;
+            color: var(--accent-blue);
+        }
+
+        body.dark-mode .redacted {
+            background: #444;
+            color: #444;
+        }
+
+        body.dark-mode .redacted:hover {
+            background: transparent;
+            color: #FAEBD7;
+        }
+
+        /* ARCHITECTURE DIAGRAM */
+        .arch-diagram {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 30px;
+            border: 1px dashed var(--accent-blue);
+            margin: 40px 0;
+            white-space: pre;
+            overflow-x: auto;
+            color: var(--accent-grey);
+        }
+
+        /* DARK MODE SECRETS */
+        .night-signal {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+        }
+
+        body.dark-mode .night-signal {
+            opacity: 1;
+            height: auto;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .spectrum-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+            .live-counter {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .data-header,
+            .data-row {
+                grid-template-columns: 1fr 1fr;
+                font-size: 10px;
+            }
+            .data-header span:nth-child(3),
+            .data-header span:nth-child(4),
+            .data-row span:nth-child(3),
+            .data-row span:nth-child(4) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">project <span class="plus">+</span> 08</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">status <span class="plus">+</span> building</div>
+
+    <header></header>
+
+    <main class="grid-layout" style="display: block; max-width: 1000px;">
+        
+        <div style="margin-bottom: 40px;">
+            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+        </div>
+
+        <div style="position: relative;">
+            <h1 class="hero-statement" style="font-size: 4rem; line-height: 0.9; letter-spacing: -2px;">
+                drop<br>the<span style="color: var(--accent-blue);">_</span>
+            </h1>
+            <div class="night-signal" style="margin-top: 10px;">
+                [ signal_acquired: broadcasting ]
+            </div>
+        </div>
+
+        <div class="mono-font" style="margin-top: 30px; margin-bottom: 60px; font-size: 11px; color: var(--accent-grey);">
+            <span>platform : data utility network</span>
+            <span style="margin: 0 20px;">|</span>
+            <span>stack : <span class="redacted">wordpress</span> + <span class="redacted">automation</span></span>
+            <span style="margin: 0 20px;">|</span>
+            <span>status : active development</span>
+        </div>
+
+        <!-- THE MANIFESTO -->
+        <div style="max-width: 700px; margin-bottom: 80px;">
+            <p class="mono-font" style="font-size: 14px; line-height: 1.8; text-align: justify;">
+                the internet is drowning in noise <span class="plus">+</span> opinions dressed as facts <span class="plus">+</span> content farms optimized for engagement over truth <span class="plus">+</span> algorithms that feed outrage because outrage converts
+                <br><br>
+                <strong style="color: var(--accent-blue);">dropthe</strong> is the antidote <span class="plus">+</span> a data utility built on one principle <span class="plus">+</span> verified information presented without spin <span class="plus">+</span> tables over takes <span class="plus">+</span> numbers over narratives
+                <br><br>
+                we are not a blog <span class="plus">+</span> we are not a magazine <span class="plus">+</span> we are a <strong>signal amplifier</strong> in a world of noise
+            </p>
+        </div>
+
+        <!-- TERMINAL BLOCK -->
+        <div class="terminal-block">
+            <div style="margin-top: 20px;">
+                <span style="color: #666;">&gt; system.philosophy</span><br><br>
+                <span style="color: #00ff00;">DROP THE NOISE.</span><br>
+                <span style="color: #00ff00;">KEEP THE DATA.</span><span class="terminal-cursor"></span>
+            </div>
+        </div>
+
+        <!-- CATEGORY SPECTRUM -->
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ VERTICAL ARCHITECTURE ]
+            </div>
+            <div class="spectrum-grid">
+                <div class="spectrum-bar bar-tech"><span>tech</span></div>
+                <div class="spectrum-bar bar-coin"><span>coin</span></div>
+                <div class="spectrum-bar bar-money"><span>money</span></div>
+                <div class="spectrum-bar bar-culture"><span>culture</span></div>
+                <div class="spectrum-bar bar-travel"><span>travel</span></div>
+                <div class="spectrum-bar bar-data"><span>data</span></div>
+                <div class="spectrum-bar bar-gear"><span>gear</span></div>
+            </div>
+            <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 30px; text-align: center;">
+                each vertical operates as an independent data stream <span class="plus">+</span> unified under one authority
+            </div>
+        </div>
+
+        <!-- PHILOSOPHY CARDS -->
+        <div class="philosophy-grid">
+            <div class="phil-card" data-num="01">
+                <h3 class="phil-title">the living url</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    traditional media creates new urls for every update <span class="plus">+</span> fragmenting authority across thousands of dead pages <span class="plus">+</span> we maintain permanent urls that evolve <span class="plus">+</span> one source of truth that compounds over time
+                </p>
+            </div>
+            <div class="phil-card" data-num="02">
+                <h3 class="phil-title">brutalist utility</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    we reject the friendly saas aesthetic <span class="plus">+</span> no rounded corners <span class="plus">+</span> no gradient buttons <span class="plus">+</span> information density without clutter <span class="plus">+</span> inspired by bloomberg terminals and swiss design
+                </p>
+            </div>
+            <div class="phil-card" data-num="03">
+                <h3 class="phil-title">monospace truth</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    data is displayed in monospace <span class="plus">+</span> the typography of terminals and ledgers <span class="plus">+</span> it signals raw information <span class="plus">+</span> no marketing <span class="plus">+</span> no spin <span class="plus">+</span> just verified facts
+                </p>
+            </div>
+            <div class="phil-card" data-num="04">
+                <h3 class="phil-title">the automation engine</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    beneath the surface <span class="plus">+</span> <span class="redacted">pipelines</span> collect <span class="plus">+</span> verify <span class="plus">+</span> and publish data at scale <span class="plus">+</span> humans curate <span class="plus">+</span> machines execute <span class="plus">+</span> the system never sleeps
+                </p>
+            </div>
+        </div>
+
+        <!-- DATA TABLE PREVIEW -->
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ SAMPLE OUTPUT: DATA STACK ]
+            </div>
+            <div class="data-preview">
+                <div class="data-header">
+                    <span>ENTITY</span>
+                    <span>METRIC</span>
+                    <span>DELTA</span>
+                    <span>STATUS</span>
+                </div>
+                <div class="data-row">
+                    <span>claude 3.5 sonnet</span>
+                    <span>9.4</span>
+                    <span style="color: #28A745;">+0.3</span>
+                    <span class="status-verified">● verified</span>
+                </div>
+                <div class="data-row">
+                    <span>gpt-4 turbo</span>
+                    <span>9.1</span>
+                    <span style="color: #DC3545;">-0.1</span>
+                    <span class="status-verified">● verified</span>
+                </div>
+                <div class="data-row">
+                    <span>gemini ultra</span>
+                    <span>8.8</span>
+                    <span style="color: #28A745;">+0.2</span>
+                    <span class="status-verified">● verified</span>
+                </div>
+                <div class="data-row">
+                    <span style="color: var(--accent-grey);">[redacted]</span>
+                    <span style="color: var(--accent-grey);">—</span>
+                    <span style="color: var(--accent-grey);">—</span>
+                    <span class="status-pending">● pending</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARCHITECTURE DIAGRAM -->
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ SYSTEM TOPOLOGY ]
+            </div>
+            <div class="arch-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                     DATA SOURCES                            │
+│   [ APIs ]        [ Scrapers ]        [ AI Extraction ]     │
+└──────────┬────────────┬────────────────────┬────────────────┘
+           │            │                    │
+           ▼            ▼                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  PROCESSING LAYER                           │
+│            verify + normalize + structure                   │
+└─────────────────────────┬───────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   PUBLISH ENGINE                            │
+│              [ automated ] [ monitored ]                    │
+└─────────────────────────┬───────────────────────────────────┘
+                          │
+                          ▼
+              ┌───────────────────────┐
+              │    dropthe.org/*      │
+              │   [ living pages ]    │
+              └───────────────────────┘</div>
+        </div>
+
+        <!-- LIVE COUNTERS (Placeholder) -->
+        <div class="live-counter">
+            <div class="counter-item">
+                <span class="counter-value" id="counter-stacks">███</span>
+                <span class="counter-label">DATA STACKS</span>
+            </div>
+            <div class="counter-item">
+                <span class="counter-value" id="counter-verticals">7</span>
+                <span class="counter-label">VERTICALS</span>
+            </div>
+            <div class="counter-item">
+                <span class="counter-value" id="counter-uptime">99.9%</span>
+                <span class="counter-label">UPTIME</span>
+            </div>
+        </div>
+
+        <!-- THE TENSION -->
+        <div style="margin: 80px 0; padding: 40px; background: var(--accent-blue); color: var(--bg-color);">
+            <h3 class="serif-font" style="font-size: 1.3rem; margin-bottom: 20px;">the paradox</h3>
+            <p class="mono-font" style="line-height: 1.8; opacity: 0.9;">
+                at arnaud leroy studio <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> we preach silence as a material <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> the beauty of negative space <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> the power of restraint
+                <br><br>
+                dropthe is the inverse <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> it is signal <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> density <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> information as weapon against noise <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> both philosophies serve the same master <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> clarity
+            </p>
+        </div>
+
+        <!-- STATUS -->
+        <div style="margin: 80px 0; text-align: center;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); letter-spacing: 3px; margin-bottom: 20px;">
+                [ PROJECT STATUS ]
+            </div>
+            <div style="display: inline-flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #28A745;">●</span> infrastructure
+                </span>
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #28A745;">●</span> design system
+                </span>
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #FD7E14;">●</span> automation
+                </span>
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #FD7E14;">●</span> content pipeline
+                </span>
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #DC3545;">●</span> public launch
+                </span>
+            </div>
+            <div class="night-signal" style="margin-top: 30px;">
+                target: 50k sessions → mediavine approval → independence
+            </div>
+        </div>
+
+        <!-- LINK -->
+        <div style="text-align: center; margin: 80px 0;">
+            <a href="https://dropthe.org" target="_blank" class="serif-font" style="font-size: 1.2rem; color: var(--accent-blue); text-decoration: none; border-bottom: 2px solid var(--accent-blue); padding-bottom: 5px; transition: all 0.3s ease;">
+                dropthe.org
+            </a>
+            <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 15px;">
+                [ domain active <span class="plus">+</span> system building ]
+            </div>
+        </div>
+
+        <!-- EASTER EGGS -->
+        <div class="easter-egg" style="top: 200px; left: 50px;">noise_is_the_enemy</div>
+        <div class="easter-egg" style="top: 400px; right: 60px;">data_is_the_weapon</div>
+        <div class="easter-egg" style="bottom: 300px; left: 80px;">we see everything</div>
+        <div class="easter-egg" style="bottom: 150px; right: 40px;">the algorithm watches back</div>
+        <div class="easter-egg" style="top: 600px; left: 40%;">
+            <a href="https://dropthe.org" target="_blank" class="easter-egg">[ enter the void ]</a>
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer>
+
+    <script>
+        // Animate counter on scroll
+        const counterStacks = document.getElementById('counter-stacks');
+        let counted = false;
+        
+        function animateCounter() {
+            if (counted) return;
+            const rect = counterStacks.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                counted = true;
+                let current = 0;
+                const target = 247;
+                const increment = Math.ceil(target / 50);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counterStacks.textContent = current;
+                }, 30);
+            }
+        }
+        
+        window.addEventListener('scroll', animateCounter);
+        animateCounter();
+    </script>
+
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "drop the noise + keep the data"
+////////////////////////////////////////////////////////////////////////////////
+-->
