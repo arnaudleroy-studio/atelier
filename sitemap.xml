@@ -87,4 +87,9 @@
   <priority>0.90</priority>
 </url>
 
+  <url>
+    <loc>https://arnaudleroy.com/project-facil.html</loc>
+    <lastmod>2026-02-19</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
