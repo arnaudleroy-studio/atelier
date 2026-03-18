@@ -1,0 +1,984 @@
+<!-- Private dashboard deploy: arnaudleroy.com/dashboard -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex,max-snippet:0,max-image-preview:none,max-video-preview:0">
+  <title>Domain Portfolio Dashboard V2</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fragment+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Fragment Mono', 'SF Mono', Consolas, monospace;
+      --bg: #06101c;
+      --bg-2: #091624;
+      --surface: #0c1a2e;
+      --surface-2: #0f1f36;
+      --surface-3: #132842;
+      --border: rgba(148,179,225,0.08);
+      --border-bright: rgba(148,179,225,0.16);
+      --text: #e8eef6;
+      --text-dim: #7e92ab;
+      --text-muted: #4e6380;
+      --accent: #22a2e3;
+      --accent-dim: rgba(34,162,227,0.10);
+      --green: #22c07a; --green-dim: rgba(34,192,122,0.10);
+      --amber: #e5a525; --amber-dim: rgba(229,165,37,0.10);
+      --red: #e5453a; --red-dim: rgba(229,69,58,0.10);
+      --purple: #a87cda; --purple-dim: rgba(168,124,218,0.10);
+      --blue: #3a8fd4; --blue-dim: rgba(58,143,212,0.10);
+      --slate: #5d7084; --slate-dim: rgba(93,112,132,0.10);
+      --gold: #d4a73a; --gold-dim: rgba(212,167,58,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); background-image: radial-gradient(ellipse at 20% 0%, rgba(34,162,227,0.04) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(34,192,122,0.03) 0%, transparent 40%); color: var(--text); min-height: 100vh; }
+    .wrap { max-width: 1520px; margin: 0 auto; display: grid; grid-template-columns: 200px 1fr; gap: 0 36px; padding: 0 24px; }
+    .main { min-width: 0; padding: 32px 0 80px; }
+
+    /* TOC */
+    .toc { position: sticky; top: 24px; align-self: start; padding: 20px 0; grid-row: 1 / -1; max-height: calc(100dvh - 48px); overflow-y: auto; }
+    .toc::-webkit-scrollbar { width: 3px; }
+    .toc::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
+    .toc-brand { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--text-dim); padding-bottom: 14px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .toc-brand span { color: var(--accent); }
+    .toc-section-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); padding: 12px 8px 4px; }
+    .toc a { display: block; font-size: 12px; color: var(--text-dim); text-decoration: none; padding: 5px 10px; border-radius: 6px; border-left: 2px solid transparent; transition: all 0.15s; line-height: 1.4; margin-bottom: 1px; }
+    .toc a:hover { color: var(--text); background: var(--surface); }
+    .tier-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+    /* Hero */
+    .hero { margin-bottom: 32px; }
+    .hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--text-dim); font-size: 14px; line-height: 1.5; max-width: 680px; }
+    .hero-meta { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 8px; }
+
+    /* KPIs */
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 28px; }
+    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; animation: fadeUp 0.5s ease both; }
+    .kpi:nth-child(2){animation-delay:.05s}.kpi:nth-child(3){animation-delay:.1s}.kpi:nth-child(4){animation-delay:.15s}.kpi:nth-child(5){animation-delay:.2s}.kpi:nth-child(6){animation-delay:.25s}
+    .kpi-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+    .kpi-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+
+    /* Badges */
+    .badge { font-family: var(--font-mono); font-size: 10px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; display: inline-block; }
+    .badge.green{background:var(--green-dim);color:var(--green)}.badge.amber{background:var(--amber-dim);color:var(--amber)}.badge.blue{background:var(--blue-dim);color:var(--blue)}.badge.purple{background:var(--purple-dim);color:var(--purple)}.badge.red{background:var(--red-dim);color:var(--red)}.badge.slate{background:var(--slate-dim);color:var(--slate)}.badge.gold{background:var(--gold-dim);color:var(--gold)}
+    .label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 4px; display: block; }
+
+    /* Health badge */
+    .health-badge { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 24px; border-radius: 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+
+    /* Section headers */
+    .section-header { display: flex; align-items: center; gap: 12px; margin: 28px 0 14px; }
+    .section-header h2 { font-size: 16px; font-weight: 700; }
+    .tier-header { display: flex; align-items: center; gap: 12px; margin: 36px 0 18px; scroll-margin-top: 20px; }
+    .tier-header h2 { font-size: 16px; font-weight: 700; }
+    .tier-tag { font-family: var(--font-mono); font-size: 10px; padding: 3px 10px; border-radius: 999px; }
+    .tier-tag.t1{background:var(--green-dim);color:var(--green)}.tier-tag.t2{background:var(--amber-dim);color:var(--amber)}.tier-tag.t3{background:var(--slate-dim);color:var(--slate)}
+
+    /* Health Leaderboard */
+    .leaderboard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 28px; }
+    .lb-row { display: grid; grid-template-columns: 160px 50px 50px 1fr 200px 90px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .lb-row:last-child { border-bottom: none; }
+    .lb-domain { color: var(--text); text-decoration: none; font-weight: 600; font-size: 13px; }
+    .lb-domain:hover { color: var(--accent); }
+    .lb-score { font-family: var(--font-mono); font-size: 18px; font-weight: 700; text-align: center; }
+    .lb-bar-track { height: 6px; background: var(--bg-2); border-radius: 3px; }
+    .lb-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+    .lb-pillars { display: flex; gap: 4px; }
+    .mini-pillar { width: 36px; text-align: center; }
+    .mini-pillar span { font-family: var(--font-mono); font-size: 8px; color: var(--text-muted); display: block; margin-bottom: 2px; }
+    .mini-pillar::after { content: ''; display: block; height: 4px; background: var(--bg-2); border-radius: 2px; }
+    .mini-pillar::after { background: linear-gradient(to right, var(--fill-color) var(--fill-pct), var(--bg-2) var(--fill-pct)); }
+    .lb-fresh { font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+    .fresh-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+
+    /* Alerts */
+    .alerts-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 28px; }
+    .alert-item { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .alert-item:last-child { border-bottom: none; }
+    .alert-sev { flex-shrink: 0; }
+    .alert-msg { color: var(--text-dim); line-height: 1.4; }
+
+    /* Domain cards */
+    .domain-grid { display: grid; gap: 16px; margin-bottom: 8px; }
+    .domain-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; transition: border-color 0.2s; scroll-margin-top: 20px; animation: fadeUp 0.4s ease both; }
+    .domain-card:hover { border-color: var(--border-bright); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .card-top h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    .card-top .role { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+    .badges { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+
+    .focus-box { background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 12px 16px; margin-bottom: 16px; }
+    .focus-box p { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+    .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-bottom: 16px; }
+    .metric-cell { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; text-align: center; }
+    .metric-cell .val { font-size: 18px; font-weight: 700; }
+    .metric-cell .val.dim { color: var(--text-muted); font-size: 14px; }
+
+    .sparkline-row { display: flex; gap: 12px; margin-bottom: 16px; }
+    .spark-box { flex: 1; background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+
+    /* Pillar bars */
+    .pillars-grid { display: grid; gap: 8px; margin-top: 12px; }
+    .pillar { display: grid; grid-template-columns: 80px 1fr 40px; gap: 8px; align-items: center; }
+    .pillar-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+    .pillar-track { height: 8px; background: var(--bg-2); border-radius: 4px; }
+    .pillar-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+    .pillar-val { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-align: right; }
+
+    /* Health header */
+    .health-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+    .health-score-big { font-size: 36px; font-weight: 800; }
+    .health-max { font-size: 14px; color: var(--text-muted); font-weight: 400; }
+    .health-band { font-family: var(--font-mono); font-size: 12px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 2px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .tab { font-family: var(--font-mono); font-size: 11px; padding: 8px 14px; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none; }
+    .tab:hover { color: var(--text-dim); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Targets */
+    .targets { display: grid; gap: 8px; }
+    .target-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+    .target-item p { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+    /* Backlinks */
+    .bl-summary { display: flex; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; padding: 10px 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; }
+    .bl-stat { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
+    .bl-stat .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .bl-stat strong { color: var(--text); font-weight: 600; }
+    .bl-divider { width: 1px; background: var(--border-bright); align-self: stretch; margin: 0 4px; }
+    .bl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .bl-table th { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border-bright); }
+    .bl-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+    .bl-table tr:hover td { background: var(--surface-2); }
+    .editorial-gem td { background: rgba(212,167,58,0.04); }
+    .editorial-gem td:first-child { color: var(--gold); font-weight: 600; }
+
+    /* Action table */
+    .action-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .action-table th { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-bright); }
+    .action-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-dim); }
+    .action-table tr:hover td { background: var(--surface-2); }
+    .domain-name { color: var(--text); font-weight: 600; white-space: nowrap; }
+
+    /* Accounts */
+    .accounts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+    .account-chip { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 12px; display: flex; align-items: center; gap: 8px; }
+    .account-chip .platform { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--text-muted); min-width: 60px; }
+    .account-chip .handle { color: var(--accent); font-weight: 500; }
+
+    /* 301 Redirect Banner */
+    .redirect-banner { background: linear-gradient(135deg, rgba(34,192,122,0.08), rgba(34,162,227,0.06)); border: 1px solid rgba(34,192,122,0.25); border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; }
+    .redirect-banner-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .redirect-check { width: 44px; height: 44px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .redirect-title { font-size: 18px; font-weight: 700; color: var(--green); }
+    .redirect-subtitle { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+    .redirect-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+    .redirect-link-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; text-align: center; }
+    .redirect-link-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .redirect-link-dr { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--green); }
+    .redirect-link-type { font-family: var(--font-mono); font-size: 9px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
+    .redirect-rules { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+    .redirect-rules-title { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+    .redirect-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .redirect-table td { padding: 4px 8px; border-bottom: 1px solid var(--border); }
+    .redirect-from { font-family: var(--font-mono); color: var(--text-dim); }
+    .redirect-arrow { color: var(--green); font-weight: 700; text-align: center; width: 30px; }
+    .redirect-to { font-family: var(--font-mono); color: var(--green); font-weight: 500; }
+
+    .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; }
+    .footer code { color: var(--purple); font-family: var(--font-mono); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; } }
+    @media (max-width: 1000px) {
+      .wrap { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; z-index: 200; max-height: none; display: flex; gap: 4px; overflow-x: auto; background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 24px; grid-row: auto; }
+      .toc::-webkit-scrollbar { display: none; }
+      .toc-brand, .toc-section-label { display: none; }
+      .toc a { white-space: nowrap; flex-shrink: 0; border-left: none; }
+      .kpi-row { grid-template-columns: repeat(3, 1fr); }
+      .lb-row { grid-template-columns: 120px 40px 40px 1fr 80px; }
+      .lb-pillars { display: none; }
+      .sparkline-row { flex-direction: column; }
+    }
+    @media (max-width: 640px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } .lb-row { grid-template-columns: 100px 40px 1fr 70px; } .lb-badges { display: none; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="toc" id="toc">
+    
+<div class="toc-brand"><span>Domain</span> OS v2</div>
+<a href="#overview">Overview</a>
+<a href="#health-leaderboard">Health Scores</a>
+<a href="#alerts">Alerts</a>
+<a href="#actions">Action Queue</a>
+<a href="#accounts">Accounts</a>
+<div class="toc-section-label">Tier 1 -- Live Portfolio</div><a href="#coffeeper-com"><span class="tier-dot" style="background:var(--green)"></span>coffeeper.com</a><a href="#coffeetrove-com"><span class="tier-dot" style="background:var(--green)"></span>coffeetrove.com</a><a href="#dropthe-org"><span class="tier-dot" style="background:var(--green)"></span>dropthe.org</a><a href="#facil-guide"><span class="tier-dot" style="background:var(--green)"></span>facil.guide</a><div class="toc-section-label">Tier 2 -- Planned</div><a href="#suphuman-org"><span class="tier-dot" style="background:var(--amber)"></span>suphuman.org</a><div class="toc-section-label">Tier 3 -- Candidates</div><a href="#arcadebliss-com"><span class="tier-dot" style="background:var(--slate)"></span>arcadebliss.com</a><a href="#bakerina-com"><span class="tier-dot" style="background:var(--slate)"></span>bakerina.com</a><a href="#mohanarun-com"><span class="tier-dot" style="background:var(--slate)"></span>mohanarun.com</a><a href="#mohitkhare-me"><span class="tier-dot" style="background:var(--slate)"></span>mohitkhare.me</a><a href="#studenthelpforum-com"><span class="tier-dot" style="background:var(--slate)"></span>studenthelpforum.com</a>
+  </nav>
+
+  <div class="main">
+    <div class="hero" id="overview">
+      <h1>Domain <span>Portfolio</span> V2</h1>
+      <p>10 domains. Health scoring, content freshness, regression alerts, and backlink classification -- all from portfolio.db.</p>
+      <div class="hero-meta">Generated 2026-03-18 19:09 UTC | Source: domains/portfolio.db</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-label">Domains</div><div class="kpi-value">10</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Health</div><div class="kpi-value" style="color:var(--red)">24</div></div>
+      <div class="kpi"><div class="kpi-label">Total Keywords</div><div class="kpi-value" style="color:var(--accent)">1000</div></div>
+      <div class="kpi"><div class="kpi-label">Open Alerts</div><div class="kpi-value" style="color:var(--red)">4</div></div>
+      <div class="kpi"><div class="kpi-label">Velocity (refs)</div><div class="kpi-value" style="color:var(--red)">-90</div></div>
+      <div class="kpi"><div class="kpi-label">301 Done</div><div class="kpi-value" style="color:var(--green)">0</div></div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="section-header" id="alerts"><h2>Alerts</h2><span class="badge red">4 open</span></div>
+    <div class="alerts-panel">
+      <div class="alert-item"><div class="alert-sev"><span class="badge amber">warning</span></div><div class="alert-msg">mohitkhare.me: Ref domains dropped 12% (197 -&gt; 173)</div></div><div class="alert-item"><div class="alert-sev"><span class="badge amber">warning</span></div><div class="alert-msg">studenthelpforum.com: Ref domains dropped 12% (180 -&gt; 159)</div></div><div class="alert-item"><div class="alert-sev"><span class="badge amber">warning</span></div><div class="alert-msg">arcadebliss.com: DR dropped 3 points (6 -&gt; 3)</div></div><div class="alert-item"><div class="alert-sev"><span class="badge amber">warning</span></div><div class="alert-msg">arcadebliss.com: Ref domains dropped 13% (110 -&gt; 96)</div></div>
+    </div>
+
+    <!-- Health Leaderboard -->
+    <div class="section-header" id="health-leaderboard"><h2>Health Score Leaderboard</h2></div>
+    <div class="leaderboard">
+      
+    <div class="lb-row">
+      <a href="#dropthe-org" class="lb-domain">dropthe.org</a>
+      <div class="lb-badges"><span class="badge green">T1</span></div>
+      <div class="lb-score" style="color:var(--accent)">66</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:66%;background:var(--accent)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 15/20 - DR 23.0 (trending up +1)" style="--fill-color:var(--green);--fill-pct:75%"><span>Auth</span></div><div class="mini-pillar" title="Links: 14/20 - 10 editorial, 8 DF, 9 spam/21 refs" style="--fill-color:var(--accent);--fill-pct:70%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 20/20 - 1d ago" style="--fill-color:var(--green);--fill-pct:100%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 17/20 - indexed +5, google +4, socials +3, email +2, 7 snapshots +3" style="--fill-color:var(--green);--fill-pct:85%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--green)" title="2d ago"></span> 2d ago</div>
+    </div>
+    <div class="lb-row">
+      <a href="#facil-guide" class="lb-domain">facil.guide</a>
+      <div class="lb-badges"><span class="badge green">T1</span></div>
+      <div class="lb-score" style="color:var(--amber)">51</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:51%;background:var(--amber)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 6/20 - DR 7.0" style="--fill-color:var(--amber);--fill-pct:30%"><span>Auth</span></div><div class="mini-pillar" title="Links: 0/20 - no backlink analysis" style="--fill-color:var(--red);--fill-pct:0%"><span>Links</span></div><div class="mini-pillar" title="Search: 20/20 - 1000 keywords" style="--fill-color:var(--green);--fill-pct:100%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 16/20 - 16d ago" style="--fill-color:var(--green);--fill-pct:80%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 9/20 - indexed +5, google +4" style="--fill-color:var(--amber);--fill-pct:45%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--accent)" title="17d ago"></span> 17d ago</div>
+    </div>
+    <div class="lb-row">
+      <a href="#mohanarun-com" class="lb-domain">mohanarun.com</a>
+      <div class="lb-badges"><span class="badge slate">T3</span></div>
+      <div class="lb-score" style="color:var(--red)">29</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:29%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 11/20 - DR 11.0 (trending up +1)" style="--fill-color:var(--accent);--fill-pct:55%"><span>Auth</span></div><div class="mini-pillar" title="Links: 18/20 - 16 editorial, 5 DF, 50 spam/202 refs" style="--fill-color:var(--green);--fill-pct:90%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - 2 snapshots +3, rejected -3" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#coffeetrove-com" class="lb-domain">coffeetrove.com</a>
+      <div class="lb-badges"><span class="badge green">T1</span></div>
+      <div class="lb-score" style="color:var(--red)">27</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:27%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 0/20 - no DR data" style="--fill-color:var(--red);--fill-pct:0%"><span>Auth</span></div><div class="mini-pillar" title="Links: 0/20 - no backlink analysis" style="--fill-color:var(--red);--fill-pct:0%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 20/20 - 0d ago" style="--fill-color:var(--green);--fill-pct:100%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 7/20 - google +4, socials +1, email +2" style="--fill-color:var(--amber);--fill-pct:35%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--green)" title="1d ago"></span> 1d ago</div>
+    </div>
+    <div class="lb-row">
+      <a href="#coffeeper-com" class="lb-domain">coffeeper.com</a>
+      <div class="lb-badges"><span class="badge green">T1</span></div>
+      <div class="lb-score" style="color:var(--red)">18</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:18%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 4/20 - DR 3.8 (trending up +1)" style="--fill-color:var(--red);--fill-pct:20%"><span>Auth</span></div><div class="mini-pillar" title="Links: 11/20 - 7 editorial, 8 DF, 40 spam/142 refs" style="--fill-color:var(--accent);--fill-pct:55%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 3/20 - 2 snapshots +3" style="--fill-color:var(--red);--fill-pct:15%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#mohitkhare-me" class="lb-domain">mohitkhare.me</a>
+      <div class="lb-badges"><span class="badge slate">T3</span></div>
+      <div class="lb-score" style="color:var(--red)">17</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:17%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 15/20 - DR 28.0 (trending up +1)" style="--fill-color:var(--green);--fill-pct:75%"><span>Auth</span></div><div class="mini-pillar" title="Links: 2/20 - 4 editorial, 5 DF, 150 spam/174 refs" style="--fill-color:var(--red);--fill-pct:10%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - 2 snapshots +3, rejected -3" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#bakerina-com" class="lb-domain">bakerina.com</a>
+      <div class="lb-badges"><span class="badge slate">T3</span></div>
+      <div class="lb-score" style="color:var(--red)">13</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:13%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 10/20 - DR 13.0" style="--fill-color:var(--accent);--fill-pct:50%"><span>Auth</span></div><div class="mini-pillar" title="Links: 3/20 - 6 editorial, 5 DF, 100 spam/180 refs" style="--fill-color:var(--red);--fill-pct:15%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - rejected -3" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#studenthelpforum-com" class="lb-domain">studenthelpforum.com</a>
+      <div class="lb-badges"><span class="badge slate">T3</span></div>
+      <div class="lb-score" style="color:var(--red)">13</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:13%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 6/20 - DR 10.0 (trending down)" style="--fill-color:var(--amber);--fill-pct:30%"><span>Auth</span></div><div class="mini-pillar" title="Links: 7/20 - 7 editorial, 4 DF, 80 spam/161 refs" style="--fill-color:var(--amber);--fill-pct:35%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - 2 snapshots +3, rejected -3" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#arcadebliss-com" class="lb-domain">arcadebliss.com</a>
+      <div class="lb-badges"><span class="badge slate">T3</span></div>
+      <div class="lb-score" style="color:var(--red)">5</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:5%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 3/20 - DR 3.4 (trending down)" style="--fill-color:var(--red);--fill-pct:15%"><span>Auth</span></div><div class="mini-pillar" title="Links: 2/20 - 1 editorial, 2 DF, 0 spam/97 refs" style="--fill-color:var(--red);--fill-pct:10%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - 2 snapshots +3, rejected -3" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    <div class="lb-row">
+      <a href="#suphuman-org" class="lb-domain">suphuman.org</a>
+      <div class="lb-badges"><span class="badge amber">T2</span></div>
+      <div class="lb-score" style="color:var(--red)">0</div>
+      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:0%;background:var(--red)"></div></div>
+      <div class="lb-pillars"><div class="mini-pillar" title="Auth: 0/20 - no DR data" style="--fill-color:var(--red);--fill-pct:0%"><span>Auth</span></div><div class="mini-pillar" title="Links: 0/20 - no backlink analysis" style="--fill-color:var(--red);--fill-pct:0%"><span>Links</span></div><div class="mini-pillar" title="Search: 0/20 - no keyword data" style="--fill-color:var(--red);--fill-pct:0%"><span>Search</span></div><div class="mini-pillar" title="Fresh: 0/20 - no publish date" style="--fill-color:var(--red);--fill-pct:0%"><span>Fresh</span></div><div class="mini-pillar" title="Ops: 0/20 - no operational data" style="--fill-color:var(--red);--fill-pct:0%"><span>Ops</span></div></div>
+      <div class="lb-fresh"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div>
+    </div>
+    </div>
+
+    <!-- Action Queue -->
+    <div class="section-header" id="actions"><h2>Action Queue</h2></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 0 0;overflow-x:auto">
+      <table class="action-table"><thead><tr><th>Domain</th><th>Action</th><th>Priority</th><th>Status</th><th>Details</th></tr></thead><tbody>
+        <tr><td class="domain-name">coffeetrove.com</td><td>indexation_audit</td><td><span class="badge red">critical</span></td><td>open</td><td>Inspect noindex/canonicals/templates and measure indexed vs published ratio.</td></tr><tr><td class="domain-name">dropthe.org</td><td>technical_trust_audit</td><td><span class="badge red">critical</span></td><td>open</td><td>Audit crawl/indexation/thin-content/internal-linking to stabilize Google trust.</td></tr><tr><td class="domain-name">studenthelpforum.com</td><td>salvageability_check</td><td><span class="badge red">critical</span></td><td>closed</td><td>Closed 2026-03-17 after formal audit: reject due to porn-history/trust contamination despite some real education links.</td></tr><tr><td class="domain-name">arcadebliss.com</td><td>candidate_audit</td><td><span class="badge amber">high</span></td><td>closed</td><td>Closed 2026-03-17 after formal audit: mostly dead Flash-directory debris with weak strategic upside.</td></tr><tr><td class="domain-name">bakerina.com</td><td>candidate_audit</td><td><span class="badge amber">high</span></td><td>closed</td><td>Closed 2026-03-17 after formal audit: uneven quality concentration plus availability issues.</td></tr><tr><td class="domain-name">facil.guide</td><td>cluster_plan</td><td><span class="badge amber">high</span></td><td>open</td><td>Define 3-5 core clusters and deepen internal linking without topic drift.</td></tr><tr><td class="domain-name">mohanarun.com</td><td>candidate_audit</td><td><span class="badge amber">high</span></td><td>closed</td><td>Closed 2026-03-17 after formal audit: weak transferable value and no credible Suphuman support case.</td></tr><tr><td class="domain-name">mohitkhare.me</td><td>candidate_audit</td><td><span class="badge amber">high</span></td><td>closed</td><td>Closed 2026-03-17 after formal audit: unavailable / scooped and not worth pursuing further.</td></tr><tr><td class="domain-name">suphuman.org</td><td>niche_policy_definition</td><td><span class="badge amber">high</span></td><td>open</td><td>Define exact wedge, sourcing standard, editorial policy, and claims guardrails before launch.</td></tr><tr><td class="domain-name">coffeeper.com</td><td>redirect_monitoring</td><td><span class="badge blue">medium</span></td><td>open</td><td>Keep live CoffeeTrove redirect support stable; do not reopen the broader redirect track for the woman-roaster query-string edge case alone; later tighten it only if needed and watch transfer/indexation signals.</td></tr>
+      </tbody></table>
+    </div>
+
+    <!-- Accounts -->
+    <div class="section-header" id="accounts"><h2>Accounts</h2><span class="badge blue">30 total</span></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px">
+      <div class="tabs" data-group="accounts">
+        <button class="tab active" data-tab="acct-dropthe">DropThe (22)</button>
+        <button class="tab" data-tab="acct-coffeetrove">CoffeeTrove (7)</button>
+        <button class="tab" data-tab="acct-facil">Facil (1)</button>
+      </div>
+      <div class="tab-content active" id="acct-dropthe"><div class="accounts-grid"><div class="account-chip"><span class="platform">bing_webmaster</span><span class="handle">dropthe.org</span></div><div class="account-chip"><span class="platform">blogger</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">bluesky</span><span class="handle">@dropthehq</span></div><div class="account-chip"><span class="platform">crunchbase</span><span class="handle">dropthe</span></div><div class="account-chip"><span class="platform">dev_to</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">email</span><span class="handle">editor@dropthe.org</span></div><div class="account-chip"><span class="platform">github</span><span class="handle">arnaudleroy-studio</span></div><div class="account-chip"><span class="platform">gsc</span><span class="handle">dropthe.org</span></div><div class="account-chip"><span class="platform">haro</span><span class="handle">Mike Durand</span></div><div class="account-chip"><span class="platform">instagram</span><span class="handle">@dropthehq</span></div><div class="account-chip"><span class="platform">medium</span><span class="handle">@dropthehq</span></div><div class="account-chip"><span class="platform">patreon</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">pinterest</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">product_hunt</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">quora</span><span class="handle">DropThe</span></div><div class="account-chip"><span class="platform">qwoted</span><span class="handle">Mike Durand</span></div><div class="account-chip"><span class="platform">reddit</span><span class="handle">u/dropthehq</span></div><div class="account-chip"><span class="platform">sos</span><span class="handle">Mike Durand</span></div><div class="account-chip"><span class="platform">substack</span><span class="handle">dropthehq</span></div><div class="account-chip"><span class="platform">threads</span><span class="handle">@dropthehq</span></div><div class="account-chip"><span class="platform">twitter</span><span class="handle">@dropthehq</span></div><div class="account-chip"><span class="platform">youtube</span><span class="handle">@dropthehq</span></div></div></div>
+      <div class="tab-content" id="acct-coffeetrove"><div class="accounts-grid"><div class="account-chip"><span class="platform">email</span><span class="handle">mike@coffeetrove.com</span></div><div class="account-chip"><span class="platform">facebook</span><span class="handle">coffeetrove</span></div><div class="account-chip"><span class="platform">github</span><span class="handle">CoffeeTrove</span></div><div class="account-chip"><span class="platform">instagram</span><span class="handle">@coffeetrove</span></div><div class="account-chip"><span class="platform">pinterest</span><span class="handle">coffeetrove</span></div><div class="account-chip"><span class="platform">vercel</span><span class="handle">coffee-trove</span></div><div class="account-chip"><span class="platform">youtube</span><span class="handle">@coffeetrove</span></div></div></div>
+      <div class="tab-content" id="acct-facil"><div class="accounts-grid"><div class="account-chip"><span class="platform">email</span><span class="handle">contact@facil.guide</span></div></div></div>
+    </div>
+
+    <!-- Domain Cards -->
+    <div class="tier-header" id="tier1"><h2>Tier 1 -- Live Portfolio</h2><span class="tier-tag t1">core assets</span></div><div class="domain-grid">
+        <div class="domain-card" id="coffeeper-com">
+          <div class="card-top">
+            <div>
+              <h3>coffeeper.com</h3>
+              <div class="role">support_asset_redirect_vehicle</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">18</span>
+              <span class="badge green">T1</span>
+              <span class="badge purple">301_to_portfolio_site</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Preserve the live coffeeper redirect state, tighten edge-case mapping only if needed, and monitor relevance transfer into CoffeeTrove.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">3.8<span style="color:var(--green);font-weight:700;margin-left:4px">^</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">142</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">201</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,36.0 180.0,4.0"/><circle cx="180.0" cy="4.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--purple)"/></svg></div>
+          </div>
+
+          <div class="tabs" data-group="coffeeper-com">
+            <button class="tab active" data-tab="coffeeper-com-health">Health</button>
+            <button class="tab" data-tab="coffeeper-com-targets">Targets</button>
+            <button class="tab" data-tab="coffeeper-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="coffeeper-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">18<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:20%;background:var(--red)"></div></div><div class="pillar-val">4/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:55%;background:var(--accent)"></div></div><div class="pillar-val">11/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:15%;background:var(--red)"></div></div><div class="pillar-val">3/20</div></div></div>
+          </div>
+          <div class="tab-content" id="coffeeper-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep redirects stable, monitor transfer into CoffeeTrove, and only refine edge-case mappings if needed.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain a stable CoffeeTrove support asset unless stronger rebuild evidence appears.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>No direct monetization; value is transferred authority into CoffeeTrove if clean.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="coffeeper-com-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>7</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>7</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>1</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>40</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>8</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>1</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr class="editorial-gem"><td>sprudge.com</td><td>75</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">5 BEST LINK articles mentioning San Franciscan roasters. Editorial by staff writers.</td></tr><tr class="editorial-gem"><td>dailycoffeenews.com</td><td>75</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">2 BEST LINK articles by Nick Brown referencing SF roasters</td></tr><tr class="editorial-gem"><td>nytimes.com</td><td>94</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">2 dofollow links from NYT</td></tr><tr class="editorial-gem"><td>seattletimes.com</td><td>89</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">4 dofollow links</td></tr><tr class="editorial-gem"><td>nrf.com</td><td>88</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">National Retail Federation</td></tr><tr><td>kickstarter.com</td><td>92</td><td><span class="badge green">DF</span></td><td><span class="badge green">platform</span></td><td style="font-size:11px;color:var(--text-muted)">1 link</td></tr><tr class="editorial-gem"><td>baristamagazine.com</td><td>68</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">BEST LINK - Barista Showdown article mentioning SF25 roasters</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="coffeetrove-com">
+          <div class="card-top">
+            <div>
+              <h3>coffeetrove.com</h3>
+              <div class="role">data_directory_commerce_asset</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">27</span>
+              <span class="badge green">T1</span>
+              <span class="badge blue">build_data_asset</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Win indexation first, then build coffee entity and directory authority at scale.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--green)" title="1d ago"></span> 1d ago</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Refs</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Backlinks</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+          </div>
+
+          <div class="tabs" data-group="coffeetrove-com">
+            <button class="tab active" data-tab="coffeetrove-com-health">Health</button>
+            <button class="tab" data-tab="coffeetrove-com-targets">Targets</button>
+            <button class="tab" data-tab="coffeetrove-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="coffeetrove-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">27<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">At risk</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:100%;background:var(--green)"></div></div><div class="pillar-val">20/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:35%;background:var(--amber)"></div></div><div class="pillar-val">7/20</div></div></div>
+          </div>
+          <div class="tab-content" id="coffeetrove-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Strong indexation, first serious keyword footprint, and 3-6 core coffee clusters live.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>DR 40-50+ coffee authority platform.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>affiliate, featured listings, partnerships, premium placements, later selective editorial backlinks</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="coffeetrove-com-backlinks">
+            <div style="color:var(--text-muted);font-size:13px;padding:12px 0">No backlinks analysis yet.</div>
+          </div>
+        </div>
+        <div class="domain-card" id="dropthe-org">
+          <div class="card-top">
+            <div>
+              <h3>dropthe.org</h3>
+              <div class="role">flagship_authority_site</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--accent);color:#fff">66</span>
+              <span class="badge green">T1</span>
+              <span class="badge green">build_authority_site</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Recover Google trust and turn DropThe into the flagship editorial authority asset.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">23.0<span style="color:var(--green);font-weight:700;margin-left:4px">^</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--green)" title="2d ago"></span> 2d ago</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,36.0 60.0,36.0 120.0,18.8 180.0,4.0"/><circle cx="180.0" cy="4.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,36.0 36.0,36.0 72.0,36.0 108.0,30.4 144.0,24.9 180.0,4.0"/><circle cx="180.0" cy="4.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+          </div>
+
+          <div class="tabs" data-group="dropthe-org">
+            <button class="tab active" data-tab="dropthe-org-health">Health</button>
+            <button class="tab" data-tab="dropthe-org-targets">Targets</button>
+            <button class="tab" data-tab="dropthe-org-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="dropthe-org-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--accent)">66<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--accent)">Growing</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:75%;background:var(--green)"></div></div><div class="pillar-val">15/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:70%;background:var(--accent)"></div></div><div class="pillar-val">14/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:100%;background:var(--green)"></div></div><div class="pillar-val">20/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:85%;background:var(--green)"></div></div><div class="pillar-val">17/20</div></div></div>
+          </div>
+          <div class="tab-content" id="dropthe-org-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Stabilize Google trust, reach DR 30-35, and strengthen editorial consistency.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>DR 50+ flagship media asset.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>partnerships, affiliate, sponsorship, later selective editorial placements</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="dropthe-org-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>10</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>2</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>0</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>9</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>8</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>3</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr><td>startupfa.me</td><td>82</td><td><span class="badge green">DF</span></td><td><span class="badge slate">directory</span></td><td style="font-size:11px;color:var(--text-muted)">Best startups for Data/Open Data 2026. Logo + content link.</td></tr><tr><td>fazier.com</td><td>81</td><td><span class="badge slate">NF</span></td><td><span class="badge slate">directory</span></td><td style="font-size:11px;color:var(--text-muted)">Subclip launch page references dropthe.org/studio</td></tr><tr class="editorial-gem"><td>adilrafeeque.com</td><td>55</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">2026 Guide to Web/App/AI article. Contextual link to /business/</td></tr><tr class="editorial-gem"><td>crunch.id</td><td>53</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">ProductHunt Launch Domain Usage tracking</td></tr><tr class="editorial-gem"><td>triggeredplay.com</td><td>10</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">50 Best Browser Games 2026 - mentions dropthe as curated directory</td></tr><tr class="editorial-gem"><td>geekrealmhub.com</td><td>3.9</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Guest article. 3 contextual links: directory/gaming, highest rated games, homepage. Byline credit.</td></tr><tr><td>guialacerda.net</td><td>9</td><td><span class="badge green">DF</span></td><td><span class="badge slate">earned_press</span></td><td style="font-size:11px;color:var(--text-muted)">Portuguese news - Knight of Seven Kingdoms ratings analysis citing dropthe data</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="facil-guide">
+          <div class="card-top">
+            <div>
+              <h3>facil.guide</h3>
+              <div class="role">niche_seo_asset</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--amber);color:#fff">51</span>
+              <span class="badge green">T1</span>
+              <span class="badge green">build_niche_asset</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Protect clean Google trust and deepen 3-5 tight clusters without topic drift.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">7.0</div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">1000</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">5.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--accent)" title="17d ago"></span> 17d ago</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Refs</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Backlinks</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+          </div>
+
+          <div class="tabs" data-group="facil-guide">
+            <button class="tab active" data-tab="facil-guide-health">Health</button>
+            <button class="tab" data-tab="facil-guide-targets">Targets</button>
+            <button class="tab" data-tab="facil-guide-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="facil-guide-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--amber)">51<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--amber)">Needs attention</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:30%;background:var(--amber)"></div></div><div class="pillar-val">6/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:100%;background:var(--green)"></div></div><div class="pillar-val">20/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:80%;background:var(--green)"></div></div><div class="pillar-val">16/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:45%;background:var(--amber)"></div></div><div class="pillar-val">9/20</div></div></div>
+          </div>
+          <div class="tab-content" id="facil-guide-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Reach DR 15-20 and turn light traffic into compounding organic growth.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>DR 35-50 compact niche authority asset.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>affiliate or product-adjacent recommendations, newsletter, later selective partner mentions</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="facil-guide-backlinks">
+            <div style="color:var(--text-muted);font-size:13px;padding:12px 0">No backlinks analysis yet.</div>
+          </div>
+        </div></div><div class="tier-header" id="tier2"><h2>Tier 2 -- Planned</h2><span class="tier-tag t2">pre-launch</span></div><div class="domain-grid">
+        <div class="domain-card" id="suphuman-org">
+          <div class="card-top">
+            <div>
+              <h3>suphuman.org</h3>
+              <div class="role">ymyl_authority_build</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">0</span>
+              <span class="badge amber">T2</span>
+              <span class="badge green">build_authority_site</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Define the narrow supplement wedge, evidence standard, and editorial rules before launching anything.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">--</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Refs</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Backlinks</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+          </div>
+
+          <div class="tabs" data-group="suphuman-org">
+            <button class="tab active" data-tab="suphuman-org-health">Health</button>
+            <button class="tab" data-tab="suphuman-org-targets">Targets</button>
+            <button class="tab" data-tab="suphuman-org-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="suphuman-org-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">0<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="suphuman-org-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Define wedge, sourcing policy, claims policy, and launch structure.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>DR 35-50+ if built carefully.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>Affiliate later, newsletter, selective sponsors once trust is real.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="suphuman-org-backlinks">
+            <div style="color:var(--text-muted);font-size:13px;padding:12px 0">No backlinks analysis yet.</div>
+          </div>
+        </div></div><div class="tier-header" id="tier3"><h2>Tier 3 -- Candidates</h2><span class="tier-tag t3">evaluate</span></div><div class="domain-grid">
+        <div class="domain-card" id="arcadebliss-com">
+          <div class="card-top">
+            <div>
+              <h3>arcadebliss.com</h3>
+              <div class="role">gaming_revival_candidate</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">5</span>
+              <span class="badge slate">T3</span>
+              <span class="badge red">reject</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Closed candidate: mostly dead historical debris with too little strategic upside to justify rebuild effort.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">3.4<span style="color:var(--red);font-weight:700;margin-left:4px">v</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">96</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">414</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--purple)"/></svg></div>
+          </div>
+
+          <div class="tabs" data-group="arcadebliss-com">
+            <button class="tab active" data-tab="arcadebliss-com-health">Health</button>
+            <button class="tab" data-tab="arcadebliss-com-targets">Targets</button>
+            <button class="tab" data-tab="arcadebliss-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="arcadebliss-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">5<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:15%;background:var(--red)"></div></div><div class="pillar-val">3/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:10%;background:var(--red)"></div></div><div class="pillar-val">2/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="arcadebliss-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep closed unless materially new evidence appears.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain out of the active portfolio queue unless a much stronger case emerges.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>None. Rejected asset.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="arcadebliss-com-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>1</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>12</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>2</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>0</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>2</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>2</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr class="editorial-gem"><td>mobygames.com</td><td>79</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">MobyGames company page for ArcadeBliss.com</td></tr><tr><td>kongregate.com</td><td>79</td><td><span class="badge slate">NF</span></td><td><span class="badge green">platform</span></td><td style="font-size:11px;color:var(--text-muted)">User profile linking to arcadebliss</td></tr><tr><td>jouwpagina.nl</td><td>75</td><td><span class="badge green">DF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">3+ Dutch gaming link pages with 100+ individual game links to arcadebliss</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="bakerina-com">
+          <div class="card-top">
+            <div>
+              <h3>bakerina.com</h3>
+              <div class="role">food_baking_revival_candidate</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">13</span>
+              <span class="badge slate">T3</span>
+              <span class="badge red">reject</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Closed candidate: there is some niche coherence, but weak quality concentration and availability issues kill the case.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">13.0</div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">180</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">1600</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Refs</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+            <div class="spark-box"><span class="label">Backlinks</span><div style="color:var(--text-muted);font-size:11px;padding-top:14px">no trend</div></div>
+          </div>
+
+          <div class="tabs" data-group="bakerina-com">
+            <button class="tab active" data-tab="bakerina-com-health">Health</button>
+            <button class="tab" data-tab="bakerina-com-targets">Targets</button>
+            <button class="tab" data-tab="bakerina-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="bakerina-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">13<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:50%;background:var(--accent)"></div></div><div class="pillar-val">10/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:15%;background:var(--red)"></div></div><div class="pillar-val">3/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="bakerina-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep closed unless materially new evidence appears.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain out of the active portfolio queue unless the case changes dramatically.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>None. Rejected asset.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="bakerina-com-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>6</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>9</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>2</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>100</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>5</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>2</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr class="editorial-gem"><td>theguardian.com</td><td>93</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Felicity Cloake&#x27;s &#x27;How to make perfect poached pears&#x27; - references bakerina recipe. BEST LINK.</td></tr><tr class="editorial-gem"><td>kqed.org</td><td>86</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">3 articles by Stephanie Rosenbaum Klassen mentioning bakerina blog (Writers Colony, Double Corn, Schiacciata)</td></tr><tr><td>beancounters.blogs.com</td><td>83</td><td><span class="badge green">DF</span></td><td><span class="badge slate">blog</span></td><td style="font-size:11px;color:var(--text-muted)">Real blog reference to bakerina&#x27;s existentialism post</td></tr><tr><td>deliciousdays.com</td><td>78</td><td><span class="badge slate">NF</span></td><td><span class="badge slate">food_blog</span></td><td style="font-size:11px;color:var(--text-muted)">Comment on Zwetschgendatschi post</td></tr><tr><td>metafilter.com</td><td>77</td><td><span class="badge green">DF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">MetaFilter thread referencing bakerina&#x27;s writing</td></tr><tr><td>cinematreasures.org</td><td>71</td><td><span class="badge green">DF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">Bleecker St Cinema photo linked</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="mohanarun-com">
+          <div class="card-top">
+            <div>
+              <h3>mohanarun.com</h3>
+              <div class="role">personal_brand_or_health_support_candidate</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">29</span>
+              <span class="badge slate">T3</span>
+              <span class="badge red">reject</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Closed candidate: the apparent profile flatters more than it transfers, so there is no reason to keep a Suphuman support path open.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">11.0<span style="color:var(--green);font-weight:700;margin-left:4px">^</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">201</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">261</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,36.0 180.0,4.0"/><circle cx="180.0" cy="4.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--purple)"/></svg></div>
+          </div>
+
+          <div class="tabs" data-group="mohanarun-com">
+            <button class="tab active" data-tab="mohanarun-com-health">Health</button>
+            <button class="tab" data-tab="mohanarun-com-targets">Targets</button>
+            <button class="tab" data-tab="mohanarun-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="mohanarun-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">29<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">At risk</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:55%;background:var(--accent)"></div></div><div class="pillar-val">11/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:90%;background:var(--green)"></div></div><div class="pillar-val">18/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="mohanarun-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep closed unless materially new evidence appears.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain out of the active portfolio queue unless a new fit case emerges.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>None. Rejected asset.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="mohanarun-com-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>16</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>10</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>3</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>50</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>5</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>12</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr class="editorial-gem"><td>socialmediaexaminer.com</td><td>85</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Launch book media page - &#x27;The Elevation Principle&#x27; review referenced</td></tr><tr class="editorial-gem"><td>sherpablog.marketingsherpa.com</td><td>82</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Comment on SEO article</td></tr><tr><td>teamtreehouse.com</td><td>81</td><td><span class="badge green">DF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">Forum answer mentioning blog</td></tr><tr class="editorial-gem"><td>sive.rs (Derek Sivers)</td><td>80</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Comment on &#x27;Paradox of Choice&#x27; post with blog link</td></tr><tr class="editorial-gem"><td>calnewport.com</td><td>80</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Pingback from &#x27;4 Weeks to 4.0&#x27; post</td></tr><tr class="editorial-gem"><td>sdtimes.com</td><td>77</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">BEST LINK - Alan Zeichick mentions &#x27;News on Monday reader Mohan Arun&#x27; in article</td></tr><tr class="editorial-gem"><td>danpink.com</td><td>77</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Daniel Pink blog comment with URL</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="mohitkhare-me">
+          <div class="card-top">
+            <div>
+              <h3>mohitkhare.me</h3>
+              <div class="role">personal_brand_revival_candidate</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">17</span>
+              <span class="badge slate">T3</span>
+              <span class="badge red">reject</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Closed candidate: acquisition path is gone and the residual upside is too weak to justify any rebuild or merge work.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">28.0<span style="color:var(--green);font-weight:700;margin-left:4px">^</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">173</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">392</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,36.0 180.0,4.0"/><circle cx="180.0" cy="4.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--purple)"/></svg></div>
+          </div>
+
+          <div class="tabs" data-group="mohitkhare-me">
+            <button class="tab active" data-tab="mohitkhare-me-health">Health</button>
+            <button class="tab" data-tab="mohitkhare-me-targets">Targets</button>
+            <button class="tab" data-tab="mohitkhare-me-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="mohitkhare-me-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">17<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:75%;background:var(--green)"></div></div><div class="pillar-val">15/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:10%;background:var(--red)"></div></div><div class="pillar-val">2/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="mohitkhare-me-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep closed unless new facts materially change the case.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain out of the active portfolio queue unless circumstances change.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>None. Rejected asset.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="mohitkhare-me-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>4</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>7</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>1</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>150</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>5</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>3</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr><td>github.com</td><td>96</td><td><span class="badge green">DF</span></td><td><span class="badge green">platform</span></td><td style="font-size:11px;color:var(--text-muted)">GitHub profile page links to blog posts</td></tr><tr><td>github.io</td><td>94</td><td><span class="badge green">DF</span></td><td><span class="badge green">platform</span></td><td style="font-size:11px;color:var(--text-muted)">9 links from his own github.io pages</td></tr><tr class="editorial-gem"><td>hackernoon.com</td><td>87</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">2 HackerNoon articles reference SOLID/DRY/KISS blog post</td></tr><tr class="editorial-gem"><td>ruanyifeng.com</td><td>80</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Chinese tech weekly #112 - git tags tutorial. BEST LINK tag.</td></tr><tr><td>indiehackers.com</td><td>80</td><td><span class="badge slate">NF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">Acrons product promotion thread</td></tr><tr class="editorial-gem"><td>labs.cybozu.co.jp</td><td>79</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Japanese Cybozu Labs covered Acrons tool</td></tr><tr class="editorial-gem"><td>codementor.io</td><td>77</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">SOLID/DRY article referenced</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="domain-card" id="studenthelpforum-com">
+          <div class="card-top">
+            <div>
+              <h3>studenthelpforum.com</h3>
+              <div class="role">education_forum_revival_candidate</div>
+            </div>
+            <div class="badges">
+              <span class="health-badge" style="background:var(--red);color:#fff">13</span>
+              <span class="badge slate">T3</span>
+              <span class="badge red">reject</span>
+            </div>
+          </div>
+
+          <div class="focus-box"><span class="label">Current Focus</span><p>Closed candidate: real education adjacency exists, but the trust contamination risk is too high to salvage safely.</p></div>
+
+          <div class="metrics-row">
+            <div class="metric-cell"><span class="label">DR</span><div class="val">10.0<span style="color:var(--red);font-weight:700;margin-left:4px">v</span></div></div>
+            <div class="metric-cell"><span class="label">Ref Domains</span><div class="val">159</div></div>
+            <div class="metric-cell"><span class="label">Backlinks</span><div class="val">222</div></div>
+            <div class="metric-cell"><span class="label">Keywords</span><div class="val">0</div></div>
+            <div class="metric-cell"><span class="label">Traffic</span><div class="val">0.0</div></div>
+            <div class="metric-cell"><span class="label">Published</span><div class="val"><span class="fresh-dot" style="background:var(--text-muted)" title="unknown"></span> unknown</div></div>
+          </div>
+
+          <div class="sparkline-row">
+            <div class="spark-box"><span class="label">DR</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--green)"/></svg></div>
+            <div class="spark-box"><span class="label">Refs</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--accent)"/></svg></div>
+            <div class="spark-box"><span class="label">Backlinks</span><svg viewBox="0 0 180 40" preserveAspectRatio="none" style="display:block;width:100%;height:40px"><polyline fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0.0,4.0 180.0,36.0"/><circle cx="180.0" cy="36.0" r="3" fill="var(--purple)"/></svg></div>
+          </div>
+
+          <div class="tabs" data-group="studenthelpforum-com">
+            <button class="tab active" data-tab="studenthelpforum-com-health">Health</button>
+            <button class="tab" data-tab="studenthelpforum-com-targets">Targets</button>
+            <button class="tab" data-tab="studenthelpforum-com-backlinks">Backlinks</button>
+          </div>
+          <div class="tab-content active" id="studenthelpforum-com-health">
+            <div class="health-header">
+              <div class="health-score-big" style="color:var(--red)">13<span class="health-max">/100</span></div>
+              <div class="health-band" style="color:var(--red)">Critical</div>
+            </div>
+            <div class="pillars-grid"><div class="pillar"><div class="pillar-label">Authority</div><div class="pillar-track"><div class="pillar-fill" style="width:30%;background:var(--amber)"></div></div><div class="pillar-val">6/20</div></div><div class="pillar"><div class="pillar-label">Link Quality</div><div class="pillar-track"><div class="pillar-fill" style="width:35%;background:var(--amber)"></div></div><div class="pillar-val">7/20</div></div><div class="pillar"><div class="pillar-label">Search</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Freshness</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div><div class="pillar"><div class="pillar-label">Operational</div><div class="pillar-track"><div class="pillar-fill" style="width:0%;background:var(--red)"></div></div><div class="pillar-val">0/20</div></div></div>
+          </div>
+          <div class="tab-content" id="studenthelpforum-com-targets">
+            <div class="targets">
+              <div class="target-item"><span class="label">12-Month</span><p>Keep closed unless materially new evidence appears.</p></div>
+              <div class="target-item"><span class="label">Long-Term</span><p>Remain out of the active portfolio queue unless a future review finds a radically different trust picture.</p></div>
+              <div class="target-item"><span class="label">Monetization</span><p>None. Rejected asset.</p></div>
+            </div>
+          </div>
+          <div class="tab-content" id="studenthelpforum-com-backlinks">
+            
+            <div class="bl-summary">
+              <div class="bl-stat"><div class="dot" style="background:var(--gold)"></div><strong>7</strong> editorial</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--green)"></div><strong>8</strong> platform</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--blue)"></div><strong>1</strong> community</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--red)"></div><strong>80</strong> spam</div>
+              <div class="bl-divider"></div>
+              <div class="bl-stat"><div class="dot" style="background:var(--accent)"></div><strong>4</strong> DF</div>
+              <div class="bl-stat"><div class="dot" style="background:var(--slate)"></div><strong>4</strong> NF</div>
+            </div>
+            <table class="bl-table"><thead><tr><th>Domain</th><th>DR</th><th>Follow</th><th>Type</th><th>Context</th></tr></thead><tbody><tr class="editorial-gem"><td>edweek.org</td><td>86</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">BEST LINK - Carnival 105th education roundup linking to writing tips</td></tr><tr class="editorial-gem"><td>copyblogger.com</td><td>84</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">2 articles - Rule of Three + Landing Page Makeover (Russ commenting)</td></tr><tr><td>infosecinstitute.com</td><td>80</td><td><span class="badge slate">NF</span></td><td><span class="badge blue">community</span></td><td style="font-size:11px;color:var(--text-muted)">TechExams forum linking to study strategy article</td></tr><tr class="editorial-gem"><td>calnewport.com</td><td>80</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">6+ articles including BEST LINK guest posts. Art of Stealth Studying links to quiz-and-recall. Student Productivity Week co-authored. KISS Lecture Notes guest post.</td></tr><tr class="editorial-gem"><td>problogger.com</td><td>79</td><td><span class="badge slate">NF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">4 comments by Russ</td></tr><tr class="editorial-gem"><td>wisebread.com</td><td>73</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">BEST LINK - Link-Love elevator featuring Student Help Forum software article</td></tr><tr class="editorial-gem"><td>gadgethacks.com</td><td>73</td><td><span class="badge green">DF</span></td><td><span class="badge gold">editorial</span></td><td style="font-size:11px;color:var(--text-muted)">Textbook savings article references studenthelpforum</td></tr></tbody></table>
+          </div>
+        </div></div>
+
+    <div class="footer">
+      <div>Refresh: <code>python3 compute_health_scores.py && python3 alerts_engine.py && python3 render_dashboard.py</code></div>
+      <div>2026-03-18 19:09 UTC</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('click', function(e) {
+  var tab = e.target.closest('.tab');
+  if (!tab) return;
+  var group = tab.closest('[data-group]');
+  if (!group) return;
+  group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  var parent = group.parentElement;
+  parent.querySelectorAll(':scope > .tab-content').forEach(c => c.classList.remove('active'));
+  var target = parent.querySelector('#' + tab.dataset.tab);
+  if (target) target.classList.add('active');
+});
+</script>
+</body>
+</html>
