@@ -1,0 +1,270 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.0.0 [release]
+//   build_date: mar 29 2026
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++
+     /++__  ++| ++
+    | ++  \ ++| ++
+    | ++++++++| ++
+    | ++__  ++| ++
+    | ++  | ++| ++
+    | ++  | ++| ++++++++
+    |__/  |__/|________/
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>building a knowledge graph with 1.8 million entities + arnaud leroy</title>
+    <meta name="description" content="How we built DropThe's entity system: a knowledge graph connecting 1.8 million entities across movies, people, crypto, and companies with 2.9 million links.">
+    <meta property="og:title" content="building a knowledge graph with 1.8 million entities">
+    <meta property="og:description" content="How we built DropThe's entity system connecting movies, people, crypto, and companies.">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:url" content="https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="../apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../components.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Building a Knowledge Graph with 1.8 Million Entities",
+        "author": {
+            "@type": "Person",
+            "name": "Arnaud Leroy",
+            "url": "https://arnaudleroy.com"
+        },
+        "datePublished": "2026-03-28",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Arnaud Leroy Studio",
+            "url": "https://arnaudleroy.com"
+        },
+        "url": "https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html",
+        "description": "How we built DropThe's entity system: connecting 1.8 million entities across movies, people, crypto, and companies."
+    }
+    </script>
+
+    <style>
+        body {
+            overflow-y: auto;
+            text-transform: lowercase;
+        }
+
+        .article-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .article-meta {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--accent-grey);
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .article-title {
+            font-family: 'Rockwell', 'Rockwell Nova', 'Roboto Slab', serif;
+            font-size: 2.2rem;
+            color: var(--text-color);
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .article-body p {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 24px;
+        }
+
+        .article-body h3 {
+            font-family: 'Rockwell', 'Rockwell Nova', 'Roboto Slab', serif;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            margin: 40px 0 16px 0;
+        }
+
+        body.dark-mode .article-body h3 {
+            color: #FAEBD7;
+        }
+
+        .article-body a {
+            color: var(--accent-blue);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .article-body a:hover {
+            opacity: 0.7;
+        }
+
+        .data-block {
+            background: rgba(0, 35, 102, 0.05);
+            border-left: 3px solid var(--accent-blue);
+            padding: 20px 24px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .data-block {
+            background: rgba(250, 235, 215, 0.05);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            text-decoration: none;
+            color: var(--accent-grey);
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .article-tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 5px;
+        }
+
+        body.dark-mode .article-tag {
+            background: rgba(144, 202, 249, 0.15);
+            color: #90caf9;
+        }
+
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">blog <span class="plus">+</span> entry</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">28 <span class="plus">+</span> 03 <span class="plus">+</span> 26</div>
+
+    <header></header>
+
+    <main>
+        <div class="article-container">
+
+            <a href="./" class="back-link">&lt; back to blog</a>
+
+            <div class="article-meta">
+                28 <span class="plus">+</span> 03 <span class="plus">+</span> 26
+                &nbsp;&nbsp;
+                <span class="article-tag">data</span>
+                <span class="article-tag">infrastructure</span>
+            </div>
+
+            <h1 class="article-title">building a knowledge graph with 1.8 million entities</h1>
+
+            <div class="article-body">
+
+                <p>
+                    when i started building <a href="https://dropthe.org">dropthe</a>, the initial idea was straightforward: a media site that covers movies, crypto, and tech with actual data behind it. not opinions dressed as analysis. not listicles generated from thin air. real entities, real connections, real numbers.
+                </p>
+
+                <p>
+                    that simple idea led to building a knowledge graph. not because i planned to <span class="plus">+</span> but because the content demanded it. you cannot write meaningfully about a film director without understanding which studios they worked with, which actors they collaborated with repeatedly, and how their box office numbers compare across decades.
+                </p>
+
+                <h3>the entity model</h3>
+
+                <p>
+                    the core of <a href="https://dropthe.org">dropthe.org</a> is a single postgres table called entities. every movie, every person, every cryptocurrency, every company lives in the same table with a type column and a jsonb data field. this sounds reductive, but it turned out to be the right call. a unified schema means every entity gets the same treatment: slug, name, type, structured data, and a web of links to other entities.
+                </p>
+
+                <div class="data-block">
+                    entities: 1,828,455<br>
+                    entity_links: 2,947,733<br>
+                    types: movies <span class="plus">+</span> series <span class="plus">+</span> people <span class="plus">+</span> cryptocurrencies <span class="plus">+</span> companies<br>
+                    link types: directed <span class="plus">+</span> acted_in <span class="plus">+</span> produced_by <span class="plus">+</span> headquartered_in <span class="plus">+</span> 40 more
+                </div>
+
+                <p>
+                    the entity_links table is where the graph lives. each row is a directional relationship: entity a relates to entity b with a specific link type. christopher nolan directed the dark knight. warner bros produced it. christian bale acted in it. these are not metadata fields on a movie record. they are first-class connections in a graph.
+                </p>
+
+                <h3>enrichment as a discipline</h3>
+
+                <p>
+                    the hardest part was not building the schema. it was filling it with real, verified data. i run enrichment pipelines that pull from public apis, cross-reference sources, and validate before writing. every enrichment run happens on a local postgres clone first <span class="plus">+</span> never directly on production. i validate row counts, check for nulls, and only then push changes upstream to the live <a href="https://dropthe.org/data/">dropthe data hub</a>.
+                </p>
+
+                <p>
+                    this discipline came from a painful lesson early on. a bad enrichment run once overwrote clean data with incomplete records. since then, i maintain three databases: production (supabase), a local work copy for daily experiments, and a stable snapshot that serves as a rollback point. paranoid, maybe. but i have never lost data since.
+                </p>
+
+                <h3>what the graph enables</h3>
+
+                <p>
+                    the real payoff is what you can do once the graph exists. on dropthe, every entity page automatically shows related entities. a director's page lists their films. a company page shows its people. a cryptocurrency page links to its founders and the companies behind it. none of this is manually curated. it all flows from the graph.
+                </p>
+
+                <p>
+                    the auto-linker runs bidirectional link inference: if christopher nolan directed inception, then inception was directed by christopher nolan. both directions are stored, both queryable. this sounds obvious, but getting it right at scale across 2.9 million links required careful deduplication and type validation.
+                </p>
+
+                <h3>the architecture in practice</h3>
+
+                <p>
+                    the stack is deliberately simple. postgres for storage, python for enrichment pipelines, wordpress for the frontend with direct supabase queries. no graphql layer, no neo4j, no fancy graph database. a well-indexed relational database with a links table handles the workload. queries that join entities through links return in under 50 milliseconds on production.
+                </p>
+
+                <p>
+                    i chose this approach because the graph is a means to an end, not the product itself. the product is <a href="https://dropthe.org">dropthe.org</a> <span class="plus">+</span> a site where every piece of content is backed by structured, interconnected data. the knowledge graph is the engine. the articles, the entity pages, the data visualizations <span class="plus">+</span> those are what people see.
+                </p>
+
+                <p>
+                    building this system taught me that data infrastructure is not about the technology you choose. it is about the discipline you bring to maintaining it. a knowledge graph is only as good as its last enrichment run.
+                </p>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="mono-font"></footer>
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->
