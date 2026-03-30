@@ -62,9 +62,12 @@ function updateFavicon(isDarkMode) {
 // =============================================================================
 // [ 02 ] HEADER COMPONENT (UPDATED WITH HAMBURGER)
 // =============================================================================
+// Detect base path for navigation links (handles subdirectories like /blog/)
+const BASE = window.location.pathname.includes('/blog') ? '../' : '';
+
 const HEADER_HTML = `
     <div class="brand-container">
-        <a href="index.html" class="brand-link">
+        <a href="${BASE}index.html" class="brand-link">
             <span class="brand-name">arnaud leroy</span>
         </a>
     </div>
@@ -76,10 +79,11 @@ const HEADER_HTML = `
 
     <nav class="mono-font">
         <ul>
-            <li><a href="projects.html">projects</a></li>
-            <li><a href="studio.html">studio</a></li>
-            <li><a href="journal.html">journal</a></li>
-            <li><a href="contact.html">contact</a></li>
+            <li><a href="${BASE}projects.html">projects</a></li>
+            <li><a href="${BASE}blog/">blog</a></li>
+            <li><a href="${BASE}studio.html">studio</a></li>
+            <li><a href="${BASE}journal.html">journal</a></li>
+            <li><a href="${BASE}contact.html">contact</a></li>
         </ul>
     </nav>
 `;
@@ -142,9 +146,14 @@ function injectAnalytics() {
 function setActiveLink() {
     const path = window.location.pathname;
     const page = path.split("/").pop();
-    
+
     document.querySelectorAll('nav a').forEach(link => {
-        if(link.getAttribute('href') === page) {
+        const href = link.getAttribute('href');
+        if(href === page) {
+            link.classList.add('active');
+        }
+        // Handle blog/ directory match
+        if(href === 'blog/' && path.includes('/blog')) {
             link.classList.add('active');
         }
     });
