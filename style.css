@@ -192,7 +192,7 @@ main { flex-grow: 1; z-index: 10; width: 100%; position: relative; }
 .project-list-container { width: 100%; max-width: 1000px; margin: 0 auto; }
 
 /* [ 07 ] ELEMENTS */
-h2.hero-statement { font-size: 4rem; color: var(--text-color); line-height: 1.1; margin-bottom: 30px; }
+h1.hero-statement, h2.hero-statement { font-size: 4rem; color: var(--text-color); line-height: 1.1; margin-bottom: 30px; font-weight: bold; }
 
 .image-frame { width: 100%; max-width: 450px; height: 550px; background-color: var(--accent-grey); border: 1px solid var(--accent-blue); padding: 10px; position: relative; justify-self: center; transition: border-color 0.8s ease; }
 body.dark-mode .image-frame { border-color: #444; }
@@ -266,7 +266,7 @@ body.dark-mode .sun-icon { opacity: 0; } body.dark-mode .moon-icon { opacity: 1;
 
     /* Adjust Layouts */
     .grid-layout, .studio-layout { grid-template-columns: 1fr; gap: 40px; }
-    h2.hero-statement { font-size: 2.5rem; }
+    h1.hero-statement, h2.hero-statement { font-size: 2.5rem; }
     .image-frame { width: 100%; height: auto; aspect-ratio: 4/5; }
     .big-link { font-size: 1.5rem; }
     .journal-entry { padding: 0; }
@@ -316,6 +316,25 @@ body.dark-mode .sun-icon { opacity: 0; } body.dark-mode .moon-icon { opacity: 1;
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+/* used by the project filter */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* [ ACCESS ] keyboard focus stays visible + motion respects the system */
+a:focus-visible, button:focus-visible, .mobile-toggle:focus-visible, #mode-toggle:focus-visible, .filter-btn:focus-visible {
+    outline: 1px dashed var(--accent-blue);
+    outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* [ SHARED ] small meta line + sealed journal entries */
+.meta-data { font-family: 'Courier New', monospace; font-size: 10px; color: var(--accent-grey); letter-spacing: 1px; }
+.sealed { font-size: 11px; color: var(--accent-grey); letter-spacing: 1px; }
 
 /* [ 11 ] MECHANICAL SCROLLBAR */
 ::-webkit-scrollbar {

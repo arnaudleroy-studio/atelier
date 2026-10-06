@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,26 +26,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project + origin</title>
-    
-    <meta name="description" content="the origin story and design philosophy of arnaud leroy studio + the syntax of silence">
+    <meta name="description" content="The origin story and design philosophy of Arnaud Leroy Studio: silence as a material, the plus as identity, the syntax of absence.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/project-birth-studio.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="arnaud leroy + studio">
     <meta property="og:title" content="arnaud leroy + origin">
     <meta property="og:description" content="silence is a material + the syntax of absence">
+    <meta property="og:url" content="https://arnaudleroy.com/project-birth-studio.html">
     <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-    <meta property="og:url" content="https://arnaudleroy.com">
-    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
-    
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="apple-touch-icon.png">
-    <meta name="apple-mobile-web-app-title" content="+">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
-
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <style>
         /* [ MANIFESTO SPECIFIC STYLES ] */
         body { 
@@ -197,14 +203,17 @@
         body.dark-mode .ghost-layer { opacity: 1; }
 
         @media (max-width: 900px) {
-            .asym-grid { grid-template-columns: 1fr; }
+            .asym-grid { grid-template-columns: minmax(0, 1fr); }
+            .asym-grid > * { min-width: 0; }
+            .palette-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+            .palette-label { grid-column: span 2; }
             .span-2, .span-3 { grid-column: span 1; }
-            .palette-grid { grid-template-columns: 1fr 1fr; }
             .hero-statement { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">project <span class="plus">+</span> 01</div>
@@ -216,7 +225,7 @@
     <main class="project-list-container" style="display: block; max-width: 1000px; margin: 0 auto;">
         
         <div style="margin-bottom: 60px;">
-            <a href="projects.html" class="mono-font back-link">&lt; return to archive</a>
+            <a href="/projects.html" class="mono-font back-link">&lt; return to archive</a>
         </div>
 
         <div class="concept-section" style="border-bottom: 1px solid var(--accent-blue); padding-bottom: 40px;">

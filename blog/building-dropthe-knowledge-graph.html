@@ -27,21 +27,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>building a knowledge graph with 1.8 million entities + arnaud leroy</title>
     <meta name="description" content="How we built DropThe's entity system: a knowledge graph connecting 1.8 million entities across movies, people, crypto, and companies with 2.9 million links.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="arnaud leroy + studio">
     <meta property="og:title" content="building a knowledge graph with 1.8 million entities">
-    <meta property="og:description" content="How we built DropThe's entity system connecting movies, people, crypto, and companies.">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:description" content="how dropthe connects movies + people + crypto + companies">
     <meta property="og:url" content="https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    <link rel="stylesheet" href="../style.css">
-    <script src="../components.js" defer></script>
-
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -62,7 +72,6 @@
         "description": "How we built DropThe's entity system: connecting 1.8 million entities across movies, people, crypto, and companies."
     }
     </script>
-
     <style>
         body {
             overflow-y: auto;
@@ -172,6 +181,7 @@
     </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">blog <span class="plus">+</span> entry</div>
     <div class="fixed-axis right-axis"></div>

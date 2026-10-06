@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,13 +26,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project + evasion</title>
-    
+    <meta name="description" content="System Evasion: a reactive arcade engine built in pure code. Time dilation, glitch storms, combo architecture and a dark mode Nightmare Drive.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/project-arcade.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + system evasion">
+    <meta property="og:description" content="reactive arcade + creative coding">
+    <meta property="og:url" content="https://arnaudleroy.com/project-arcade.html">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
-
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <style>
         /* PROJECT SPECIFIC LAYOUT */
         body { 
@@ -146,6 +165,7 @@
     </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">project <span class="plus">+</span> 06</div>
@@ -157,7 +177,7 @@
     <main class="grid-layout" style="display: block; max-width: 1000px;">
         
         <div style="margin-bottom: 40px;">
-            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+            <a href="/projects.html" class="mono-font back-link">&lt; previous</a>
         </div>
 
         <div style="position: relative;">
@@ -166,7 +186,7 @@
         </div>
         
         <div class="project-meta">
-            <span>release : v1.9.0</span>
+            <span>release : v2.0.0</span>
             <span>type : reactive arcade</span>
             <span>platform : web / mobile</span>
         </div>
@@ -177,13 +197,13 @@
                 <p class="mono-font" style="max-width: 400px; margin-bottom: 30px;">
                     a minimal survival engine built on the principles of digital tension + the goal is not just to survive + but to master the flow of time and chaos
                     <br><br>
-                    no assets + no images + pure code rendering
+                    no assets + no images + pure code rendering + the figures below are screenshots
                 </p>
-                <a href="game.html" class="btn-launch">initialize system +</a>
+                <a href="/game.html" class="btn-launch">initialize system +</a>
             </div>
 
             <div>
-                <img src="gameimg/start.jpg" class="hero-img" alt="start screen interface">
+                <img loading="lazy" src="/gameimg/start.jpg" class="hero-img" alt="start screen interface">
                 <div class="mono-font" style="font-size: 10px; text-align: right;">fig 01 + initialization sequence</div>
             </div>
         </div>
@@ -193,7 +213,7 @@
         <div class="project-grid">
             
             <div class="feature-block">
-                <img src="gameimg/focus.jpg" class="hero-img" alt="focus mechanics">
+                <img loading="lazy" src="/gameimg/focus.jpg" class="hero-img" alt="focus mechanics">
                 <h3 class="feature-title">01 + time dilation</h3>
                 <p class="mono-font">
                     the [space] bar triggers a hyper-focus state + the world slows down + contrast increases + and the audio dampens + use this resource strategically to thread through impossible gaps
@@ -201,15 +221,15 @@
             </div>
 
             <div class="feature-block">
-                <img src="gameimg/glitchmode.jpg" class="hero-img" alt="glitch mode">
+                <img loading="lazy" src="/gameimg/glitchmode.jpg" class="hero-img" alt="glitch mode">
                 <h3 class="feature-title">02 + the glitch storm</h3>
                 <p class="mono-font">
-                    every 30 seconds + the system destabilizes + colors invert + physics accelerate + this phase tests pure reflex over strategy + survival during a storm yields double points
+                    every 30 seconds + the system destabilizes + colors invert + noise floods in faster + this phase tests pure reflex over strategy + survival during a storm yields double points
                 </p>
             </div>
 
             <div class="feature-block">
-                <img src="gameimg/ingame2.jpg" class="hero-img" alt="combo system">
+                <img loading="lazy" src="/gameimg/ingame2.jpg" class="hero-img" alt="combo system">
                 <h3 class="feature-title">03 + combo architecture</h3>
                 <p class="mono-font">
                     collecting data packets (+) in rapid succession builds a multiplier (x2 + x4 + x8) + hesitation resets the counter + aggression is rewarded
@@ -217,7 +237,7 @@
             </div>
 
             <div class="feature-block">
-                <img src="gameimg/nightmare.jpg" class="hero-img" alt="nightmare mode">
+                <img loading="lazy" src="/gameimg/nightmare.jpg" class="hero-img" alt="nightmare mode">
                 <h3 class="feature-title">04 + nightmare drive</h3>
                 <p class="mono-font">
                     activating the studio's "dark mode" transforms the game into a horror-survival experience + visibility is limited to a dynamic flashlight cone that tracks player movement

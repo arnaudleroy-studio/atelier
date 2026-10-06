@@ -9,15 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-      /++++++  /++       
-     /++__  ++| ++       
-    | ++  \ ++| ++       
-    | ++++++++| ++       
-    | ++__  ++| ++       
-    | ++  | ++| ++       
-    | ++  | ++| ++++++++ 
-    |__/  |__/|________/ 
-                         
+      /++++++  /++
+     /++__  ++| ++
+    | ++  \ ++| ++
+    | ++++++++| ++
+    | ++__  ++| ++
+    | ++  | ++| ++
+    | ++  | ++| ++++++++
+    |__/  |__/|________/
+
 -->
 
 <!DOCTYPE html>
@@ -26,31 +26,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project + dropthe</title>
-    
-    <meta name="description" content="DROPTHE. A data utility network. Drop the noise. Keep the data.">
+    <meta name="description" content="DropThe. A data utility network: AI, technology, money and society, backed by a knowledge graph. Drop the noise, keep the data.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/project-dropthe.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="arnaud leroy + studio">
     <meta property="og:title" content="arnaud leroy + dropthe">
     <meta property="og:description" content="drop the noise + keep the data">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta property="og:url" content="https://arnaudleroy.com/project-dropthe.html">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
-    
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
-
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <style>
         /* [ PROJECT SPECIFIC: DROPTHE ] */
-        body { 
-            overflow-y: auto; 
-            text-transform: lowercase; 
+        body {
+            overflow-y: auto;
+            text-transform: lowercase;
         }
 
         /* THE TERMINAL AESTHETIC */
@@ -359,7 +365,8 @@
     </style>
 </head>
 <body>
-    
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
+
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">project <span class="plus">+</span> 08</div>
     <div class="fixed-axis right-axis"></div>
@@ -368,9 +375,9 @@
     <header></header>
 
     <main class="grid-layout" style="display: block; max-width: 1000px;">
-        
+
         <div style="margin-bottom: 40px;">
-            <a href="projects.html" class="mono-font back-link">&lt; previous</a>
+            <a href="/projects.html" class="mono-font back-link">&lt; previous</a>
         </div>
 
         <div style="position: relative;">
@@ -385,9 +392,9 @@
         <div class="mono-font" style="margin-top: 30px; margin-bottom: 60px; font-size: 11px; color: var(--accent-grey);">
             <span>platform : data utility network</span>
             <span style="margin: 0 20px;">|</span>
-            <span>stack : <span class="redacted">wordpress</span> + <span class="redacted">automation</span></span>
+            <span>stack : <span class="redacted">next.js</span> <span class="plus">+</span> <span class="redacted">postgres</span> <span class="plus">+</span> <span class="redacted">automation</span></span>
             <span style="margin: 0 20px;">|</span>
-            <span>status : active development</span>
+            <span>status : live</span>
         </div>
 
         <!-- THE MANIFESTO -->
@@ -398,6 +405,8 @@
                 <strong style="color: var(--accent-blue);">dropthe</strong> is the antidote <span class="plus">+</span> a data utility built on one principle <span class="plus">+</span> verified information presented without spin <span class="plus">+</span> tables over takes <span class="plus">+</span> numbers over narratives
                 <br><br>
                 we are not a blog <span class="plus">+</span> we are not a magazine <span class="plus">+</span> we are a <strong>signal amplifier</strong> in a world of noise
+                <br><br>
+                ai <span class="plus">+</span> technology <span class="plus">+</span> money <span class="plus">+</span> society <span class="plus">+</span> and the numbers underneath
             </p>
         </div>
 
@@ -416,13 +425,13 @@
                 [ VERTICAL ARCHITECTURE ]
             </div>
             <div class="spectrum-grid">
-                <div class="spectrum-bar bar-tech"><span>tech</span></div>
-                <div class="spectrum-bar bar-coin"><span>coin</span></div>
+                <div class="spectrum-bar bar-tech"><span>ai</span></div>
+                <div class="spectrum-bar bar-coin"><span>models</span></div>
+                <div class="spectrum-bar bar-culture"><span>creative ai</span></div>
+                <div class="spectrum-bar bar-gear"><span>compute</span></div>
                 <div class="spectrum-bar bar-money"><span>money</span></div>
-                <div class="spectrum-bar bar-culture"><span>culture</span></div>
-                <div class="spectrum-bar bar-travel"><span>travel</span></div>
+                <div class="spectrum-bar bar-travel"><span>society</span></div>
                 <div class="spectrum-bar bar-data"><span>data</span></div>
-                <div class="spectrum-bar bar-gear"><span>gear</span></div>
             </div>
             <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 30px; text-align: center;">
                 each vertical operates as an independent data stream <span class="plus">+</span> unified under one authority
@@ -460,43 +469,25 @@
         <!-- DATA TABLE PREVIEW -->
         <div style="margin: 80px 0;">
             <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
-                [ SAMPLE OUTPUT: DATA STACK ]
+                [ SAMPLE OUTPUT: THE GRAPH ]
             </div>
             <div class="data-preview">
                 <div class="data-header">
                     <span>ENTITY</span>
-                    <span>METRIC</span>
-                    <span>DELTA</span>
+                    <span>LINK</span>
+                    <span>TARGET</span>
                     <span>STATUS</span>
                 </div>
-                <div class="data-row">
-                    <span>claude 3.5 sonnet</span>
-                    <span>9.4</span>
-                    <span style="color: #28A745;">+0.3</span>
-                    <span class="status-verified">● verified</span>
-                </div>
-                <div class="data-row">
-                    <span>gpt-4 turbo</span>
-                    <span>9.1</span>
-                    <span style="color: #DC3545;">-0.1</span>
-                    <span class="status-verified">● verified</span>
-                </div>
-                <div class="data-row">
-                    <span>gemini ultra</span>
-                    <span>8.8</span>
-                    <span style="color: #28A745;">+0.2</span>
-                    <span class="status-verified">● verified</span>
-                </div>
-                <div class="data-row">
-                    <span style="color: var(--accent-grey);">[redacted]</span>
-                    <span style="color: var(--accent-grey);">—</span>
-                    <span style="color: var(--accent-grey);">—</span>
-                    <span class="status-pending">● pending</span>
-                </div>
+                <div class="data-row"><span>christopher nolan</span><span>directed</span><span>inception</span><span class="status-verified">● verified</span></div>
+                <div class="data-row"><span>inception</span><span>directed_by</span><span>christopher nolan</span><span class="status-verified">● inferred</span></div>
+                <div class="data-row"><span>the dark knight</span><span>produced_by</span><span>warner bros</span><span class="status-verified">● verified</span></div>
+                <div class="data-row"><span>christian bale</span><span>acted_in</span><span>the dark knight</span><span class="status-verified">● verified</span></div>
+            </div>
+            <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 10px; text-align: right;">
+                every link is stored in both directions <span class="plus">+</span> <a href="/blog/building-dropthe-knowledge-graph.html" style="color: var(--accent-blue);">how the graph was built</a>
             </div>
         </div>
 
-        <!-- ARCHITECTURE DIAGRAM -->
         <div style="margin: 80px 0;">
             <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
                 [ SYSTEM TOPOLOGY ]
@@ -529,17 +520,20 @@
         <!-- LIVE COUNTERS (Placeholder) -->
         <div class="live-counter">
             <div class="counter-item">
-                <span class="counter-value" id="counter-stacks">███</span>
-                <span class="counter-label">DATA STACKS</span>
+                <span class="counter-value" data-target="1.8">███</span>
+                <span class="counter-label">MILLION ENTITIES</span>
             </div>
             <div class="counter-item">
-                <span class="counter-value" id="counter-verticals">7</span>
-                <span class="counter-label">VERTICALS</span>
+                <span class="counter-value" data-target="2.9">███</span>
+                <span class="counter-label">MILLION LINKS</span>
             </div>
             <div class="counter-item">
-                <span class="counter-value" id="counter-uptime">99.9%</span>
-                <span class="counter-label">UPTIME</span>
+                <span class="counter-value">&lt;50ms</span>
+                <span class="counter-label">GRAPH QUERIES</span>
             </div>
+        </div>
+        <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); text-align: center; margin-top: -40px; margin-bottom: 60px;">
+            graph snapshot <span class="plus">+</span> march 2026
         </div>
 
         <!-- THE TENSION -->
@@ -565,13 +559,13 @@
                     <span style="color: #28A745;">●</span> design system
                 </span>
                 <span class="mono-font" style="font-size: 11px;">
-                    <span style="color: #FD7E14;">●</span> automation
+                    <span style="color: #28A745;">●</span> automation
+                </span>
+                <span class="mono-font" style="font-size: 11px;">
+                    <span style="color: #28A745;">●</span> public launch
                 </span>
                 <span class="mono-font" style="font-size: 11px;">
                     <span style="color: #FD7E14;">●</span> content pipeline
-                </span>
-                <span class="mono-font" style="font-size: 11px;">
-                    <span style="color: #DC3545;">●</span> public launch
                 </span>
             </div>
         </div>
@@ -582,7 +576,7 @@
                 dropthe.org
             </a>
             <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 15px;">
-                [ domain active <span class="plus">+</span> system building ]
+                [ live <span class="plus">+</span> data over drama ]
             </div>
         </div>
 
@@ -600,29 +594,26 @@
     <footer class="mono-font"></footer>
 
     <script>
-        // Animate counter on scroll
-        const counterStacks = document.getElementById('counter-stacks');
+        // Animate counters on scroll (redacted blocks resolve into the real figures)
+        const counters = document.querySelectorAll('[data-target]');
         let counted = false;
-        
         function animateCounter() {
             if (counted) return;
-            const rect = counterStacks.getBoundingClientRect();
+            const rect = counters[0].getBoundingClientRect();
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 counted = true;
-                let current = 0;
-                const target = 247;
-                const increment = Math.ceil(target / 50);
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    counterStacks.textContent = current;
-                }, 30);
+                window.removeEventListener('scroll', animateCounter);
+                counters.forEach(el => {
+                    const target = parseFloat(el.dataset.target);
+                    let step = 0;
+                    const timer = setInterval(() => {
+                        step++;
+                        el.textContent = (target * step / 40).toFixed(1);
+                        if (step >= 40) { el.textContent = target.toFixed(1); clearInterval(timer); }
+                    }, 30);
+                });
             }
         }
-        
         window.addEventListener('scroll', animateCounter);
         animateCounter();
     </script>

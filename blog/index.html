@@ -27,21 +27,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arnaud leroy + blog</title>
     <meta name="description" content="Technical notes from the studio. Building data platforms, scoring systems, and knowledge graphs.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/blog/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="arnaud leroy + studio">
     <meta property="og:title" content="arnaud leroy + blog">
-    <meta property="og:description" content="Technical notes from the studio. Building data platforms, scoring systems, and knowledge graphs.">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:description" content="technical notes from the studio + building systems + shipping products">
     <meta property="og:url" content="https://arnaudleroy.com/blog/">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    <link rel="stylesheet" href="../style.css">
-    <script src="../components.js" defer></script>
-
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <style>
         body {
             overflow-y: auto;
@@ -131,7 +141,7 @@
             border-bottom: 1px solid var(--grid-line);
         }
 
-        .blog-header h2 {
+        .blog-header h1 {
             font-family: 'Rockwell', 'Rockwell Nova', 'Roboto Slab', serif;
             font-size: 2rem;
             color: var(--text-color);
@@ -146,6 +156,7 @@
     </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">notes <span class="plus">+</span> builds</div>
     <div class="fixed-axis right-axis"></div>
@@ -157,7 +168,7 @@
         <div class="blog-list">
 
             <div class="blog-header">
-                <h2>blog</h2>
+                <h1>blog</h1>
                 <p>technical notes from the studio <span class="plus">+</span> building systems <span class="plus">+</span> shipping products</p>
             </div>
 

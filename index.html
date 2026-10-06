@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,62 +25,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
     <title>arnaud leroy + studio</title>
-    <meta name="description" content="Multidisciplinary design studio based in Lisbon, Paris, and Tokyo. Exploring silence as a material, structure, and narrative in architecture and digital fashion.">
-    <meta name="keywords" content="arnaud leroy, design studio, minimalism, silence is a material, architecture, digital fashion, creative direction, lisbon, paris, tokyo">
+    <meta name="description" content="Arnaud Leroy is a multidisciplinary designer and builder based in Lisbon, Paris and Tokyo. Silence is a material: design, data platforms and quiet systems.">
     <meta name="author" content="Arnaud Leroy">
-    <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="Silence is a material. A multidisciplinary design studio based in Lisbon, Paris, and Tokyo.">
+    <link rel="canonical" href="https://arnaudleroy.com/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://arnaudleroy.com">
+    <meta property="og:site_name" content="arnaud leroy + studio">
     <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="silence is a material.">
-   <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-   <meta property="og:url" content="https://arnaudleroy.com">
+    <meta property="og:description" content="silence is a material + multidisciplinary design studio based in lisbon + paris + tokyo">
+    <meta property="og:url" content="https://arnaudleroy.com/">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "DesignStudio",
-      "name": "Arnaud Leroy Studio",
-      "url": "https://arnaudleroy.com",
-      "slogan": "Silence is a material",
-      "founder": {
-        "@type": "Person",
-        "name": "Arnaud Leroy"
-      },
-      "location": [
+      "@graph": [
         {
-          "@type": "Place",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Lisbon",
-            "addressCountry": "Portugal"
-          }
+          "@type": "Person",
+          "@id": "https://arnaudleroy.com/#arnaud",
+          "name": "Arnaud Leroy",
+          "url": "https://arnaudleroy.com",
+          "jobTitle": "Designer + Builder",
+          "worksFor": { "@id": "https://arnaudleroy.com/#studio" },
+          "sameAs": ["https://github.com/arnaudleroy-studio"]
         },
         {
-          "@type": "Place",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Paris",
-            "addressCountry": "France"
-          }
+          "@type": "Organization",
+          "@id": "https://arnaudleroy.com/#studio",
+          "name": "Arnaud Leroy Studio",
+          "url": "https://arnaudleroy.com",
+          "logo": "https://arnaudleroy.com/apple-touch-icon.png",
+          "slogan": "Silence is a material",
+          "foundingDate": "2024",
+          "founder": { "@id": "https://arnaudleroy.com/#arnaud" },
+          "location": [
+            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Lisbon", "addressCountry": "PT" } },
+            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" } },
+            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Tokyo", "addressCountry": "JP" } }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://arnaudleroy.com/#site",
+          "url": "https://arnaudleroy.com",
+          "name": "arnaud leroy + studio",
+          "publisher": { "@id": "https://arnaudleroy.com/#studio" }
         }
       ]
     }
     </script>
-
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">lisbon <span class="plus">+</span> paris <span class="plus">+</span> tokyo</div>
     <div class="fixed-axis right-axis"></div>
@@ -88,16 +100,16 @@
 
     <header></header> <main class="grid-layout">
         <div class="hero-text-container">
-            <h2 class="hero-statement">
+            <h1 class="hero-statement">
                 silence is <span class="plus" style="font-size: 0.3em; vertical-align: middle;">+</span><br>
                 a material
-            </h2>
+            </h1>
             <p class="mono-font" style="max-width: 400px;">
                 curating ideas <span class="plus">+</span> designing emotions <span class="plus">+</span> crafting the intangible
             </p>
         </div>
         <div class="image-frame">
-            <img src="sea.jpg" alt="Arnaud Leroy Studio Concept">
+            <img src="/sea.jpg" alt="the sea under a quiet sky + concept study" width="1200" height="830" fetchpriority="high">
             <span class="image-meta mono-font">fig 01 <span class="plus">+</span> concept study</span>
         </div>
 
@@ -113,6 +125,7 @@
     // Here a little secret game. Type 'play' to access system defense
     let keyBuffer = "";
     document.addEventListener('keydown', (e) => {
+        if (e.key.length !== 1) return;
         keyBuffer += e.key.toLowerCase();
         if(keyBuffer.length > 4) keyBuffer = keyBuffer.slice(-4);
         

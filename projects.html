@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,25 +25,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="silence is a material.">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-    <meta property="og:url" content="https://arnaudleroy.com">
-    <meta name="twitter:card" content="summary_large_image">
-    
     <title>arnaud leroy + projects</title>
-    
+    <meta name="description" content="The archive of works by Arnaud Leroy Studio: data platforms, apps, games, architecture studies, fashion research and the origin of the studio.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/projects.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + projects">
+    <meta property="og:description" content="the archive of works + data + digital + architecture + fashion + research">
+    <meta property="og:url" content="https://arnaudleroy.com/projects.html">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
-    
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
     <style>
         /* [ GLOBAL OVERRIDES ] */
         body { text-transform: lowercase; }
@@ -176,6 +184,7 @@
         .tag-digi { background: #e3f2fd; color: #1565c0; }   
         .tag-fash { background: #fce4ec; color: #c2185b; }   
         .tag-res  { background: #f3e5f5; color: #7b1fa2; }   
+        .tag-data { background: #e8eaf6; color: #002366; }
 
         /* Dark Mode */
         body.dark-mode .tag-game { background: rgba(128, 255, 219, 0.15); color: #80ffdb; }
@@ -183,6 +192,7 @@
         body.dark-mode .tag-digi { background: rgba(144, 202, 249, 0.15); color: #90caf9; }
         body.dark-mode .tag-fash { background: rgba(244, 143, 177, 0.15); color: #f48fb1; }
         body.dark-mode .tag-res  { background: rgba(206, 147, 216, 0.15); color: #ce93d8; }
+        body.dark-mode .tag-data { background: rgba(250, 235, 215, 0.12); color: #FAEBD7; }
 
         /* Mobile Adjustment */
         @media (max-width: 768px) {
@@ -196,39 +206,54 @@
     </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">archive <span class="plus">+</span> work</div>
     <div class="fixed-axis right-axis"></div>
-    <div class="axis-label right-label">index no <span class="plus">+</span> 06</div>
+    <div class="axis-label right-label">index no <span class="plus">+</span> 02</div>
 
     <header></header> <main>
         <div class="project-list-container mono-font">
+            <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">projects + archive of works by arnaud leroy</h1>
             
             <div class="filter-bar">
-                <span class="filter-btn active" onclick="filterProjects('all', this)">[ all ]</span>
-                <span class="filter-btn" onclick="filterProjects('architecture', this)">architecture</span>
-                <span class="filter-btn" onclick="filterProjects('digital', this)">digital</span>
-                <span class="filter-btn" onclick="filterProjects('game', this)">game</span>
-                <span class="filter-btn" onclick="filterProjects('fashion', this)">fashion</span>
-                <span class="filter-btn" onclick="filterProjects('research', this)">research</span>
+                <span role="button" tabindex="0" class="filter-btn active" onclick="filterProjects('all', this)">[ all ]</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('architecture', this)">architecture</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('digital', this)">digital</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('data', this)">data</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('game', this)">game</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('fashion', this)">fashion</span>
+                <span role="button" tabindex="0" class="filter-btn" onclick="filterProjects('research', this)">research</span>
             </div>
 
             <div class="project-list">
-
-                <a href="project-dropthe.html" class="project-row" data-category="digital research">
-                    <span class="p-id">08</span>
+                <a href="/project-benchgecko.html" class="project-row" data-category="digital data research">
+                    <span class="p-id">11</span>
                     <div class="p-content">
-                        <h2 class="p-title">dropthe</h2>
+                        <h2 class="p-title">benchgecko</h2>
                         <div class="tag-container">
                             <span class="tag-pill tag-digi">web</span>
-                            <span class="tag-pill tag-res">data</span>
+                            <span class="tag-pill tag-data">data</span>
                         </div>
-                        <span class="p-desc">data utility network <span class="plus-spin">+</span> signal amplifier</span>
+                        <span class="p-desc">the ai economy <span class="plus-spin">+</span> tracked</span>
                     </div>
                     <span class="p-year">2026</span>
                 </a>
 
-                <a href="project-facil.html" class="project-row" data-category="digital research">
+                <a href="/project-coffeetrove.html" class="project-row" data-category="digital data">
+                    <span class="p-id">10</span>
+                    <div class="p-content">
+                        <h2 class="p-title">coffeetrove</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-digi">web</span>
+                            <span class="tag-pill tag-data">data</span>
+                        </div>
+                        <span class="p-desc">the golden pages of coffee <span class="plus-spin">+</span> scoring engine</span>
+                    </div>
+                    <span class="p-year">2026</span>
+                </a>
+
+                <a href="/project-facil.html" class="project-row" data-category="digital research">
                     <span class="p-id">09</span>
                     <div class="p-content">
                         <h2 class="p-title">facil.guide</h2>
@@ -241,7 +266,20 @@
                     <span class="p-year">2026</span>
                 </a>
 
-                <a href="project-the-oracle.html" class="project-row" data-category="digital product research">
+                <a href="/project-dropthe.html" class="project-row" data-category="digital data research">
+                    <span class="p-id">08</span>
+                    <div class="p-content">
+                        <h2 class="p-title">dropthe</h2>
+                        <div class="tag-container">
+                            <span class="tag-pill tag-digi">web</span>
+                            <span class="tag-pill tag-data">data</span>
+                        </div>
+                        <span class="p-desc">data utility network <span class="plus-spin">+</span> signal amplifier</span>
+                    </div>
+                    <span class="p-year">2026</span>
+                </a>
+
+                <a href="/project-the-oracle.html" class="project-row" data-category="digital product research">
                     <span class="p-id">07</span>
                     <div class="p-content">
                         <h2 class="p-title">the oracle</h2>
@@ -253,8 +291,9 @@
                     </div>
                     <span class="p-year">2025</span>
                 </a>
+
                 
-                <a href="project-arcade.html" class="project-row" data-category="game digital">
+                <a href="/project-arcade.html" class="project-row" data-category="game digital">
                     <span class="p-id">06</span>
                     <div class="p-content">
                         <h2 class="p-title">system evasion</h2>
@@ -267,7 +306,7 @@
                     <span class="p-year">2025</span>
                 </a>
 
-                <a href="project-wooden-wall.html" class="project-row" data-category="architecture">
+                <a href="/project-wooden-wall.html" class="project-row" data-category="architecture">
                     <span class="p-id">05</span>
                     <div class="p-content">
                         <h2 class="p-title">porous boundary</h2>
@@ -279,7 +318,7 @@
                     <span class="p-year">2025</span>
                 </a>
 
-                <a href="project-flooring.html" class="project-row" data-category="architecture">
+                <a href="/project-flooring.html" class="project-row" data-category="architecture">
                     <span class="p-id">04</span>
                     <div class="p-content">
                         <h2 class="p-title">broken grid</h2>
@@ -291,7 +330,7 @@
                     <span class="p-year">2025</span>
                 </a>
 
-                <a href="project-tree-knowledge.html" class="project-row" data-category="digital research">
+                <a href="/project-tree-knowledge.html" class="project-row" data-category="digital research">
                     <span class="p-id">03</span>
                     <div class="p-content">
                         <h2 class="p-title">tree of knowledge</h2>
@@ -303,8 +342,9 @@
                     </div>
                     <span class="p-year">2025</span>
                 </a>
+
                 
-                <a href="project-maison-automata.html" class="project-row" data-category="fashion research">
+                <a href="/project-maison-automata.html" class="project-row" data-category="fashion research">
                     <span class="p-id">02</span>
                     <div class="p-content">
                         <h2 class="p-title">maison automata</h2>
@@ -317,7 +357,7 @@
                     <span class="p-year">2025</span>
                 </a>
 
-                <a href="project-birth-studio.html" class="project-row" data-category="research">
+                <a href="/project-birth-studio.html" class="project-row" data-category="research">
                     <span class="p-id">01</span>
                     <div class="p-content">
                         <h2 class="p-title">birth of the studio</h2>
@@ -336,12 +376,16 @@
     <footer class="mono-font"></footer>
 
     <script>
+        document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('keydown', e => {
+            if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); b.click(); }
+        }));
+
         function filterProjects(category, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const rows = document.querySelectorAll('.project-row[data-category]');
             rows.forEach(row => {
-                const projectCats = row.getAttribute('data-category'); 
+                const projectCats = row.getAttribute('data-category').split(' '); 
                 if (category === 'all' || projectCats.includes(category)) {
                     row.classList.remove('hidden');
                     row.style.animation = 'none';

@@ -7,7 +7,8 @@
  * //   tasks:
  * //     [1] auto-inject header/footer
  * //     [2] manage dual-mode favicons
- * //     [3] detect konami code sequences
+ * //     [3] flashlight + dark mode + ghost title
+ * //     [4] x-ray blueprint mode [ alt ]
  * //
  * /////////////////////////////////////////////////////////////////////////////
  * 
@@ -62,12 +63,12 @@ function updateFavicon(isDarkMode) {
 // =============================================================================
 // [ 02 ] HEADER COMPONENT (UPDATED WITH HAMBURGER)
 // =============================================================================
-// Detect base path for navigation links (handles subdirectories like /blog/)
-const BASE = window.location.pathname.includes('/blog') ? '../' : '';
+// Root-absolute links: work from /blog/ and from the 404 page at any depth
+const BASE = '/';
 
 const HEADER_HTML = `
     <div class="brand-container">
-        <a href="${BASE}index.html" class="brand-link">
+        <a href="${BASE}" class="brand-link">
             <span class="brand-name">arnaud leroy</span>
         </a>
     </div>
@@ -92,7 +93,7 @@ const HEADER_HTML = `
 // [ 03 ] FOOTER COMPONENT
 // =============================================================================
 const FOOTER_HTML = `
-    <div>c 2024 arnaud leroy</div>
+    <div>c 2024 <span class="plus">+</span> ${new Date().getFullYear()} arnaud leroy</div>
     
     <div class="footer-center"> 
         multidisciplinary design<br>
@@ -148,8 +149,12 @@ function setActiveLink() {
     const page = path.split("/").pop();
 
     document.querySelectorAll('nav a').forEach(link => {
-        const href = link.getAttribute('href');
+        const href = link.getAttribute('href').replace(BASE, '');
         if(href === page) {
+            link.classList.add('active');
+        }
+        // project pages light up "projects"
+        if(href === 'projects.html' && page.startsWith('project-')) {
             link.classList.add('active');
         }
         // Handle blog/ directory match
@@ -184,17 +189,13 @@ function initDarkMode() {
     const body = document.body;
 
     const applyMode = (isDark) => {
-        if (isDark) {
-            body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
-        }
+        body.classList.toggle('dark-mode', isDark);
+        try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
         updateFavicon(isDark);
     };
 
-    const savedTheme = localStorage.getItem('theme');
+    let savedTheme = null;
+    try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
     if (savedTheme === 'dark') {
         applyMode(true);
     } else {
@@ -217,6 +218,12 @@ function initMobileMenu() {
     const nav = document.querySelector('nav');
     
     if(toggle && nav) {
+        toggle.setAttribute('role', 'button');
+        toggle.setAttribute('tabindex', '0');
+        toggle.setAttribute('aria-label', 'menu');
+        toggle.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
+        });
         toggle.addEventListener('click', () => {
             toggle.classList.toggle('active');
             nav.classList.toggle('active');
@@ -279,11 +286,13 @@ document.addEventListener('copy', function(e) {
 // =============================================================================
 // [ 10 ] PAGE VISIBILITY LOGIC (Ghost Mode)
 // =============================================================================
+let ORIGINAL_TITLE = document.title;
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
+        ORIGINAL_TITLE = document.title;
         document.title = " + ";
     } else {
-        document.title = "a l + studio"; // Or restore original title
+        document.title = ORIGINAL_TITLE;
     }
 });
 
@@ -303,3 +312,6 @@ document.addEventListener('keyup', (e) => {
         document.body.classList.remove('blueprint-mode');
     }
 });
+
+// alt+tab leaves the window before keyup fires
+window.addEventListener('blur', () => document.body.classList.remove('blueprint-mode'));

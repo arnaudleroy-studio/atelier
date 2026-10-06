@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,71 +25,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
     <title>arnaud leroy + contact</title>
-    <meta name="description" content="Contact Arnaud Leroy Studio. New business inquiries and collaborations. Based in Lisbon, Paris, and Tokyo.">
-    <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="silence is a material.">
+    <meta name="description" content="Contact Arnaud Leroy Studio. New business inquiries and collaborations. Lisbon, with satellites in Paris and Tokyo.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/contact.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + contact">
+    <meta property="og:description" content="new business + inquiries">
+    <meta property="og:url" content="https://arnaudleroy.com/contact.html">
     <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-    <meta property="og:url" content="https://arnaudleroy.com">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    <link rel="stylesheet" href="style.css">
-    <script src="components.js" defer></script>
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
+    <style>
+        /* theme-aware: the old inline navy vanished in dark mode */
+        .contact-mail { font-size: 13px; font-weight: bold; color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.3s ease; }
+        .contact-mail:hover { border-bottom-color: var(--accent-blue); }
+        .city { color: var(--accent-blue); font-weight: bold; }
+        .satellite { color: var(--accent-grey); }
+        .social { color: var(--accent-blue); text-decoration: none; }
+        .social:hover { text-decoration: underline; text-underline-offset: 4px; }
+    </style>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">get <span class="plus">+</span> in touch</div>
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">index no <span class="plus">+</span> 05</div>
 
     <header></header> <main class="contact-layout">
-        <span class="mono-font" style="color: #A0A0A0; margin-bottom: 20px; font-size: 11px;">
+        <h1 class="mono-font contact-label" style="font-weight: normal;">
             new business <span class="plus">+</span> inquiries
-        </span>
+        </h1>
         
-        <a href="mailto:hello@arnaudleroy.com" class="serif-font" 
-           style="font-size: 13px; font-weight: bold; color: #002366; text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.3s ease;">
+        <a href="mailto:hello@arnaudleroy.com" class="serif-font contact-mail">
             hello@arnaudleroy.com
         </a>
 
         <div class="mono-font" style="margin-top: 60px; text-align: center; line-height: 1.6;">
             
             <div style="margin-bottom: 30px;">
-                <span style="color: #002366; font-weight: bold;">lisboa</span><br>
-                <span style="color: #555555;">
+                <span class="city">lisboa</span><br>
+                <span>
                     avenida da liberdade<br>
                     lisboa <span class="plus">+</span> portugal
                 </span>
             </div>
 
-            <div style="margin-bottom: 30px; color: #A0A0A0;">
+            <div style="margin-bottom: 30px;">
                 <span class="plus">+</span>
             </div>
 
             <div style="margin-bottom: 30px;">
-                <span style="color: #002366; font-weight: bold;">paris</span><br>
-                <span style="color: #A0A0A0;">
+                <span class="city">paris</span><br>
+                <span class="satellite">
                     (satellite) <span class="plus">+</span> france
                 </span>
             </div>
 
             <div style="margin-bottom: 30px;">
-                <span style="color: #002366; font-weight: bold;">tokyo</span><br>
-                <span style="color: #A0A0A0;">
+                <span class="city">tokyo</span><br>
+                <span class="satellite">
                     (satellite) <span class="plus">+</span> japan
                 </span>
             </div>
 
             <div style="margin-top: 40px;">
-                <a href="#" style="color: #002366; text-decoration: none;">instagram</a> 
+                <a href="https://x.com/Middo" class="social" target="_blank" rel="noopener me">x</a> 
                 <span class="plus">+</span> 
-                <a href="#" style="color: #002366; text-decoration: none;">x</a>
+                <a href="https://github.com/arnaudleroy-studio" class="social" target="_blank" rel="noopener me">github</a>
             </div>
         </div>
     </main>

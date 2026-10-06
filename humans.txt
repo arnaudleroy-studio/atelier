@@ -1,0 +1,16 @@
+/* ARNAUD LEROY + STUDIO */
+Creative Direction: Arnaud Leroy
+System Architecture: [a.l.]
+Location: Lisbon + Paris + Tokyo
+Contact: hello [at] arnaudleroy.com
+
+/* SITE */
+Last Update: 2026/10/06
+Standards: HTML5, CSS3, JS (Vanilla)
+Components: Hand-coded
+Software: No Frameworks
+Typefaces: Rockwell + Courier New
+Palette: #002366 + #FAEBD7
+
+/* THANKS */
+To whoever turns off the lights.

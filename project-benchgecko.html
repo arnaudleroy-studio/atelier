@@ -1,0 +1,371 @@
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//   A R N A U D   L E R O Y   +   S T U D I O
+//   =========================================
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
+//   auth: [a.l.]
+//
+////////////////////////////////////////////////////////////////////////////////
+
+      /++++++  /++
+     /++__  ++| ++
+    | ++  \ ++| ++
+    | ++++++++| ++
+    | ++__  ++| ++
+    | ++  | ++| ++
+    | ++  | ++| ++++++++
+    |__/  |__/|________/
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project + benchgecko</title>
+    <meta name="description" content="BenchGecko. The AI economy, tracked: models, benchmarks, pricing, companies and compute, refreshed daily by bots with sources and dates.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/project-benchgecko.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + benchgecko">
+    <meta property="og:description" content="the ai economy + tracked">
+    <meta property="og:url" content="https://arnaudleroy.com/project-benchgecko.html">
+    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="+">
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
+    <style>
+        /* [ PROJECT SPECIFIC: BENCHGECKO ] */
+        body {
+            overflow-y: auto;
+            text-transform: lowercase;
+        }
+
+        /* THE TICKER (midnight + one pink signal) */
+        .ticker-block {
+            background: #1a1a2e;
+            border: 1px solid #2c2c48;
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #FAF3E8;
+            position: relative;
+            margin: 40px 0;
+            line-height: 1.9;
+            overflow: hidden;
+        }
+        body.dark-mode .ticker-block { background: #0b0b14; border-color: #22223a; }
+        .ticker-block::before {
+            content: "GECKO://";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 9px;
+            color: #6b6b8a;
+            letter-spacing: 2px;
+        }
+        .pink { color: #FF0050; }
+        .dim { color: #6b6b8a; }
+        .tape {
+            margin-top: 20px;
+            border-top: 1px dashed #2c2c48;
+            padding-top: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 10px;
+            color: #6b6b8a;
+            letter-spacing: 1px;
+        }
+        .tape span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: tape 38s linear infinite;
+        }
+        @keyframes tape { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* LAYER STACK */
+        .layer-stack { margin: 40px 0; border-top: 1px solid var(--accent-blue); }
+        .layer {
+            display: grid;
+            grid-template-columns: 40px 180px 1fr;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px dotted var(--grid-line);
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            transition: padding 0.3s ease, color 0.3s ease;
+        }
+        .layer:hover { padding-left: 8px; color: var(--accent-blue); }
+        .layer-id { color: var(--accent-grey); }
+        .layer-name { color: var(--accent-blue); font-weight: bold; letter-spacing: 1px; }
+        body.dark-mode .layer-name { color: #FAEBD7; }
+        .layer-desc { color: var(--text-color); opacity: 0.85; }
+
+        /* PRINCIPLE CARDS (shared pattern) */
+        .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 60px 0; }
+        .principle-card { border: 1px solid var(--grid-line); padding: 30px; position: relative; }
+        .principle-card::before {
+            content: attr(data-num);
+            position: absolute; top: -10px; left: 20px;
+            background: var(--bg-color); padding: 0 10px;
+            font-size: 10px; color: var(--accent-blue);
+            font-family: 'Courier New', monospace; letter-spacing: 2px;
+        }
+        .principle-title { font-family: 'Rockwell', 'Rockwell Nova', 'Roboto Slab', serif; font-size: 1.1rem; color: var(--accent-blue); margin-bottom: 15px; }
+        body.dark-mode .principle-title { color: #FAEBD7; }
+
+        /* LAB TESTS */
+        .lab-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 40px 0; }
+        .lab-cell {
+            background: var(--accent-blue);
+            color: #FAEBD7;
+            padding: 22px 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+        .lab-cell:hover { background: #1a1a2e; }
+        .lab-cell:hover .lab-name { color: #FF0050; }
+        .lab-name { font-size: 12px; font-weight: bold; transition: color 0.3s ease; }
+        body.dark-mode .lab-cell { background: #11192e; }
+
+        /* ARCHITECTURE */
+        .arch-diagram {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 30px;
+            border: 1px dashed var(--accent-blue);
+            margin: 40px 0;
+            white-space: pre;
+            overflow-x: auto;
+            color: var(--accent-grey);
+        }
+
+        /* DARK MODE SECRETS */
+        .night-signal {
+            opacity: 0; height: 0; overflow: hidden;
+            transition: all 0.5s ease;
+            color: #FF0050; font-family: 'Courier New', monospace; font-size: 10px;
+        }
+        body.dark-mode .night-signal { opacity: 1; height: auto; text-shadow: 0 0 10px rgba(255, 0, 80, 0.5); }
+
+        @media (max-width: 768px) {
+            .layer { grid-template-columns: 30px 1fr; }
+            .layer-desc { grid-column: 2; }
+            .lab-grid { grid-template-columns: 1fr 1fr; }
+            .principle-grid { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) { .tape span { animation: none; padding-left: 0; } }
+    </style>
+</head>
+<body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
+    <div class="fixed-axis left-axis"></div>
+    <div class="axis-label left-label">project <span class="plus">+</span> 11</div>
+    <div class="fixed-axis right-axis"></div>
+    <div class="axis-label right-label">status <span class="plus">+</span> live</div>
+
+    <header></header>
+
+    <main class="grid-layout" style="display: block; max-width: 1000px;">
+
+        <div style="margin-bottom: 40px;">
+            <a href="/projects.html" class="mono-font back-link">&lt; previous</a>
+        </div>
+
+        <div style="position: relative;">
+            <h1 class="hero-statement" style="font-size: 4rem; line-height: 0.9; letter-spacing: -2px;">
+                bench<br>gecko<span style="color: #FF0050;">.</span>
+            </h1>
+            <div class="night-signal" style="margin-top: 10px;">
+                [ the gecko never sleeps <span class="plus">+</span> it waits on the wall ]
+            </div>
+        </div>
+
+        <div class="mono-font" style="margin-top: 30px; margin-bottom: 60px; font-size: 11px; color: var(--accent-grey);">
+            <span>platform : the ai economy <span class="plus">+</span> tracked</span>
+            <span style="margin: 0 20px;">|</span>
+            <span>stack : next.js <span class="plus">+</span> supabase <span class="plus">+</span> bots</span>
+            <span style="margin: 0 20px;">|</span>
+            <span>status : live</span>
+        </div>
+
+        <div style="max-width: 700px; margin-bottom: 80px;">
+            <p class="mono-font" style="font-size: 14px; line-height: 1.8; text-align: justify;">
+                a new model ships every week <span class="plus">+</span> prices move overnight <span class="plus">+</span> valuations are announced as headlines <span class="plus">+</span> benchmarks are quoted without sources <span class="plus">+</span> the ai economy is the loudest market on earth
+                <br><br>
+                <strong style="color: var(--accent-blue);">benchgecko</strong> is the quiet instrument that sits beneath it <span class="plus">+</span> models <span class="plus">+</span> benchmarks <span class="plus">+</span> prices <span class="plus">+</span> companies <span class="plus">+</span> compute <span class="plus">+</span> measured daily <span class="plus">+</span> sourced <span class="plus">+</span> dated
+                <br><br>
+                coingecko did it for crypto <span class="plus">+</span> this is the same idea for intelligence
+            </p>
+        </div>
+
+        <div class="ticker-block">
+            <div style="margin-top: 20px;">
+                <span class="dim">&gt; gecko.status()</span><br><br>
+                <span>data refresh .................. <span class="pink">daily</span></span><br>
+                <span>edit to live page ............. seconds <span class="plus">+</span> no rebuild</span><br>
+                <span>sources ....................... every figure dated</span><br>
+                <span>api ........................... free <span class="plus">+</span> cite the source</span><br>
+                <span>open data ..................... cc by 4.0</span><br>
+                <span>languages ..................... 9</span>
+            </div>
+            <div class="tape" aria-hidden="true"><span>models + benchmarks + pricing + providers + companies + bubble index + gecko pulse + mindshare + chips + gpu rental + energy + open datasets + mcp server + models + benchmarks + pricing</span></div>
+        </div>
+
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ PRODUCT LAYERS ]
+            </div>
+            <div class="layer-stack">
+                <div class="layer"><span class="layer-id">01</span><span class="layer-name">models</span><span class="layer-desc">every model <span class="plus">+</span> scores <span class="plus">+</span> context <span class="plus">+</span> where it runs</span></div>
+                <div class="layer"><span class="layer-id">02</span><span class="layer-name">benchmarks</span><span class="layer-desc">what each test measures <span class="plus">+</span> what it does not <span class="plus">+</span> who leads</span></div>
+                <div class="layer"><span class="layer-id">03</span><span class="layer-name">pricing</span><span class="layer-desc">cost per token across hosts <span class="plus">+</span> the same model sold at different prices</span></div>
+                <div class="layer"><span class="layer-id">04</span><span class="layer-name">economy</span><span class="layer-desc">companies <span class="plus">+</span> funding <span class="plus">+</span> revenue <span class="plus">+</span> a bubble index with sources</span></div>
+                <div class="layer"><span class="layer-id">05</span><span class="layer-name">mindshare</span><span class="layer-desc">attention measured <span class="plus">+</span> not guessed <span class="plus">+</span> the gecko pulse</span></div>
+                <div class="layer"><span class="layer-id">06</span><span class="layer-name">infra</span><span class="layer-desc">chips <span class="plus">+</span> foundries <span class="plus">+</span> gpu rental <span class="plus">+</span> energy</span></div>
+                <div class="layer"><span class="layer-id">07</span><span class="layer-name">learn</span><span class="layer-desc">the vocabulary of the field <span class="plus">+</span> in plain words</span></div>
+            </div>
+        </div>
+
+        <div class="principle-grid">
+            <div class="principle-card" data-num="01">
+                <h3 class="principle-title">the database is the cms</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    no admin panel <span class="plus">+</span> no rebuild for content <span class="plus">+</span> a row changes in postgres <span class="plus">+</span> the page follows in seconds <span class="plus">+</span> deploys are only for design and code
+                </p>
+            </div>
+            <div class="principle-card" data-num="02">
+                <h3 class="principle-title">run by bots</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    scores <span class="plus">+</span> prices <span class="plus">+</span> companies <span class="plus">+</span> translations <span class="plus">+</span> a weekly digest <span class="plus">+</span> each job on a schedule <span class="plus">+</span> humans curate <span class="plus">+</span> machines keep the lights on
+                </p>
+            </div>
+            <div class="principle-card" data-num="03">
+                <h3 class="principle-title">real data or nothing</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    every figure carries a source and a date <span class="plus">+</span> when the data is missing the page says so <span class="plus">+</span> an empty state is more honest than a guess
+                </p>
+            </div>
+            <div class="principle-card" data-num="04">
+                <h3 class="principle-title">open by default</h3>
+                <p class="mono-font" style="line-height: 1.6;">
+                    the api is free <span class="plus">+</span> the datasets are public <span class="plus">+</span> an mcp server lets any agent ask the gecko directly <span class="plus">+</span> the only price is a link back
+                </p>
+            </div>
+        </div>
+
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ THE GECKO LAB <span class="plus">+</span> TESTS NOBODY ELSE RUNS ]
+            </div>
+            <div class="lab-grid">
+                <div class="lab-cell"><span class="lab-name">who are you</span><span>does a model know its own name</span></div>
+                <div class="lab-cell"><span class="lab-name">tokenizer tax</span><span>same words <span class="plus">+</span> different bill</span></div>
+                <div class="lab-cell"><span class="lab-name">knowledge horizon</span><span>where its memory ends</span></div>
+                <div class="lab-cell"><span class="lab-name">censorship index</span><span>what it refuses to say</span></div>
+                <div class="lab-cell"><span class="lab-name">same model <span class="plus">+</span> other host</span><span>is it really the same model</span></div>
+                <div class="lab-cell"><span class="lab-name">world map</span><span>can it draw the earth</span></div>
+            </div>
+        </div>
+
+        <div style="margin: 80px 0;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); margin-bottom: 20px; letter-spacing: 2px;">
+                [ SYSTEM TOPOLOGY ]
+            </div>
+            <div class="arch-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                         SOURCES                             │
+│   [ provider apis ]   [ filings ]   [ public leaderboards ] │
+└──────────┬──────────────────┬─────────────────────┬─────────┘
+           │                  │                     │
+           ▼                  ▼                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     BOTS (scheduled)                        │
+│        fetch + verify + date + write to postgres            │
+└─────────────────────────────┬───────────────────────────────┘
+                              │  row changes
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  REVALIDATION QUEUE                         │
+│          the page that changed is refreshed alone           │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              ▼
+              ┌───────────────────────────────┐
+              │  benchgecko.ai  [ 9 langs ]   │
+              │  api + mcp + open datasets    │
+              └───────────────────────────────┘</div>
+        </div>
+
+        <div style="margin: 80px 0; padding: 40px; background: var(--accent-blue); color: var(--bg-color);">
+            <h3 class="serif-font" style="font-size: 1.3rem; margin-bottom: 20px;">the instrument</h3>
+            <p class="mono-font" style="line-height: 1.8; opacity: 0.9;">
+                the studio believes silence is a material <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> the loudest market needs it most <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> benchgecko does not predict <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> it does not rank by opinion <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> it measures <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> dates <span class="plus" style="color: rgba(255,255,255,0.5);">+</span> and lets the numbers speak quietly
+            </p>
+        </div>
+
+        <div style="margin: 80px 0; text-align: center;">
+            <div class="mono-font" style="font-size: 10px; color: var(--accent-grey); letter-spacing: 3px; margin-bottom: 20px;">
+                [ PROJECT STATUS ]
+            </div>
+            <div style="display: inline-flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                <span class="mono-font" style="font-size: 11px;"><span style="color: #28A745;">&#9679;</span> live data</span>
+                <span class="mono-font" style="font-size: 11px;"><span style="color: #28A745;">&#9679;</span> bots</span>
+                <span class="mono-font" style="font-size: 11px;"><span style="color: #28A745;">&#9679;</span> free api <span class="plus">+</span> mcp</span>
+                <span class="mono-font" style="font-size: 11px;"><span style="color: #28A745;">&#9679;</span> gecko lab</span>
+                <span class="mono-font" style="font-size: 11px;"><span style="color: #FD7E14;">&#9679;</span> languages relaunch</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 80px 0;">
+            <a href="https://benchgecko.ai" target="_blank" rel="noopener" class="serif-font" style="font-size: 1.2rem; color: var(--accent-blue); text-decoration: none; border-bottom: 2px solid var(--accent-blue); padding-bottom: 5px;">
+                benchgecko.ai
+            </a>
+            <div class="mono-font" style="font-size: 9px; color: var(--accent-grey); margin-top: 15px;">
+                [ live <span class="plus">+</span> the ai economy <span class="plus">+</span> tracked ]
+            </div>
+        </div>
+
+        <div class="easter-egg" style="top: 240px; right: 60px;">tail_regenerating</div>
+        <div class="easter-egg" style="top: 900px; left: 40px;">every number has a date</div>
+        <div class="easter-egg" style="bottom: 320px; right: 50px;">the hype is not a metric</div>
+        <div class="easter-egg" style="bottom: 90px; left: 42%;">
+            <a href="https://benchgecko.ai" target="_blank" rel="noopener" class="easter-egg">[ follow the gecko ]</a>
+        </div>
+
+    </main>
+
+    <footer class="mono-font"></footer>
+</body>
+</html>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// END OF FILE
+// "silence is a material"
+////////////////////////////////////////////////////////////////////////////////
+-->

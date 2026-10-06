@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.5 [golden_master]
-//   build_date: dec 29 2025
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 29 2025 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,14 +24,26 @@
 The studio is not just a website; it is an interactive OS built on "Silence."
 It rejects modern frameworks (React, Vue) in favor of raw, timeless code.
 
-> index.html ........... [root] the manifesto entry point
-> studio.html .......... [core] the identity / philosophy
-> projects.html ........ [list] the archive of works
-> game.html ............ [module] the interactive defense system
-> 404.html ............. [error] "signal lost" custom page
-> secret.html .......... [hidden] non-indexed easter egg
+> index.html ........... [root] the manifesto entry point          index 01
+> projects.html ........ [list] the archive of works                index 02
+> studio.html .......... [core] the identity / philosophy           index 03
+> journal.html ......... [log] thoughts + sealed entries            index 04
+> contact.html ......... [signal] the way in                        index 05
+> game.html ............ [module] the interactive defense system    index 06
+> blog/ ................ [notes] technical writing                  index 07
+> project-*.html ....... [works] one page per project (01 + 11)
+> 404.html ............. [error] "signal lost" custom page (noindex)
+> secret.html .......... [hidden] the backstage (noindex)
 > style.css ............ [skin] visual syntax / glass panels / grain engine
 > components.js ........ [logic] auto-header / auto-footer / favicon-switcher
+> humans.txt ........... [credits] who built the machine
+
+* PATHS: every internal link + asset is root-absolute (/style.css, /projects.html)
+  so the 404 page and /blog/ render correctly at any depth.
+* HEAD: every page carries the same block: title + description + canonical +
+  og + twitter + theme-color + icons + fonts. 404 + secret are noindex.
+* THEME: a one-line script right after <body> applies dark mode before paint
+  (no flash). components.js then wires the toggle.
 
 * MATERIALITY: The interface mimics "digital glass." Panels use backdrop-filter 
   to blur the noise behind them, creating depth without solidity.
@@ -79,13 +91,20 @@ A hidden arcade engine embedded in the site. "Silence is a material, Noise is th
 
   [MODE B] NIGHTMARE DRIVE (Dark Mode)
   - Visual ............. Pitch black.
-  - Mechanic ........... "Dynamic Flashlight" (Light follows the player cursor).
+  - Mechanic ........... "Dynamic Flashlight" (light follows the player).
   - Physics ............ Speed increased.
-  - Loot ............... "Hearts" fall from the sky to restore life.
   - Atmosphere ......... Grain intensity reduced for "Deep Black" OLED feel.
 
+* SHARED MECHANICS:
+  - Hearts ............. Fall in both modes. Restore one life (max 5).
+  - Focus [SPACE] ...... Slows time + dampens the audio. Fed by blue [+].
+  - Combo .............. x2 + x4 + x8 on consecutive catches. A hit resets it.
+  - Glitch storm ....... Every 30s for 5s. Colors invert + noise floods in +
+                         survival points are doubled.
+  - Auto pause ......... Leaving the tab pauses the system.
+
 * SCORE MEMORY:
-  - High scores are saved to the user's local machine (localStorage).
+  - Best score saved locally (localStorage key: al_arcade_best).
 
 
 [ 04 ] INTERACTION + SECRET LAYERS
@@ -97,6 +116,21 @@ The system rewards curiosity. There is a hidden layer beneath the content.
   - It reveals hidden text elements that have 'display: none' in light mode.
   - It uses a 'radial-gradient' mask to "cut" through the darkness layer.
 
+* THE FULL MAP OF SECRETS:
+  - Dark mode ........... cursor becomes a lantern + hidden text on every page
+  - "play" .............. typed on the homepage opens the arcade
+  - ( r o r r i m ) ..... bottom right of studio in the dark + leads to secret.html
+  - [ ALT ] ............. hold anywhere for x-ray blueprint mode
+  - Ghost title ......... leave the tab + the title becomes " + "
+  - Console ............. the system says hello
+  - Copy stamp .......... copying 20+ characters signs the clipboard
+  - Print ............... any page prints as a framed archive document
+  - Manifesto ........... project-birth-studio.html downloads manifesto.txt
+  - Uptime .............. the studio counts its own age since 2024
+  - Oracle .............. tap the phone on project-the-oracle.html
+  - 404 ................. dark mode reveals the signal-lost matrix
+  - Backstage ........... secret.html counts your visits (this browser only)
+
 * ADDING SECRETS:
   <div class="easter-egg">
       your_secret_text_here
@@ -107,18 +141,23 @@ The system rewards curiosity. There is a hidden layer beneath the content.
 
 [ 05 ] ADDING A NEW PROJECT
 --------------------------------------------------------------------------------
-1. Duplicate an existing project file (e.g., project-maison-automata.html).
-2. Rename it (e.g., project-new-concept.html).
-3. Open 'projects.html' and add a new entry to the list:
+1. Duplicate an existing project file (data projects: project-coffeetrove.html
+   / project-benchgecko.html + concept projects: project-maison-automata.html).
+2. Rename it (e.g., project-new-concept.html). Update the axis label number.
+3. Open 'projects.html' and add a row at the TOP (newest first):
 
-   <a href="project-new-concept.html" class="project-row">
-       <span>0X</span>
-       <span>
-           project name <span class="plus">+</span> subtitle
-           <span class="status-badge status-ongoing">ongoing</span>
-       </span>
-       <span>DATE</span>
+   <a href="/project-new-concept.html" class="project-row" data-category="digital data">
+       <span class="p-id">12</span>
+       <div class="p-content">
+           <h2 class="p-title">project name</h2>
+           <div class="tag-container"><span class="tag-pill tag-digi">web</span></div>
+           <span class="p-desc">subtitle <span class="plus-spin">+</span> subtitle</span>
+       </div>
+       <span class="p-year">2026</span>
    </a>
+
+4. Add the page to the head metadata table (title + description) and to
+   sitemap.xml. Filters: architecture + digital + data + game + fashion + research.
 
 
 [ 06 ] SYNTAX RULES (STRICT)
@@ -127,7 +166,9 @@ The system rewards curiosity. There is a hidden layer beneath the content.
 2. LOWERCASE ........... All brand text must be lowercase (humility).
 3. IMAGES .............. Use .image-frame for the standard border/filter.
 4. LINKS ............... Use .big-link for emphasis, .back-link for nav.
-5. SITEMAP ............. Excludes 'secret.html' to prevent Google indexing.
+5. SITEMAP ............. Excludes 'secret.html' + '404.html' (both noindex).
+6. NUMBERS ............. Figures carry a date ("graph snapshot + march 2026").
+                         Never invent a metric. A redacted block beats a fake one.
 
 
 ## DropThe

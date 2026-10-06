@@ -3,8 +3,8 @@
 //
 //   A R N A U D   L E R O Y   +   S T U D I O
 //   =========================================
-//   system_ver: 1.0.0 [release]
-//   build_date: dec 27 2024
+//   system_ver: 1.1.0 [signal restored]
+//   build_date: dec 27 2024 + rev oct 06 2026
 //   auth: [a.l.]
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,29 +27,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arnaud leroy + journal</title>
     <meta name="description" content="Journal of Arnaud Leroy Studio. Notes on brutalism, digital texture, and silence.">
-    <meta property="og:title" content="arnaud leroy + studio"><meta property="og:description" content="Silence is a material. Multidisciplinary design based in Lisbon + Paris + Tokyo."><meta property="og:image" content="sea.jpg"> <meta property="og:url" content="https://arnaudleroy.com"><meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="style.css">
-    <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="silence is a material.">
+    <meta name="author" content="Arnaud Leroy">
+    <link rel="canonical" href="https://arnaudleroy.com/journal.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:title" content="arnaud leroy + journal">
+    <meta property="og:description" content="notes on brutalism + digital texture + silence">
+    <meta property="og:url" content="https://arnaudleroy.com/journal.html">
     <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
-    <meta property="og:url" content="https://arnaudleroy.com">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
-    <script src="components.js" defer></script>
+    <link rel="author" href="/humans.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- rockwell first + roboto slab only where rockwell is not installed -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/components.js" defer></script>
 </head>
 <body>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode')}catch(e){}</script>
     <div class="fixed-axis left-axis"></div>
     <div class="axis-label left-label">thoughts <span class="plus">+</span> log</div>
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">index no <span class="plus">+</span> 04</div>
 
     <header></header> <main class="journal-layout">
+        <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">journal + thoughts and field notes</h1>
         <article class="journal-entry">
             <span class="mono-font date-stamp">12 <span class="plus">+</span> 10 <span class="plus">+</span> 24</span>
             <h2 class="entry-title">notes on brutalism in the digital age</h2>
@@ -57,7 +69,7 @@
                 how do we translate the weight of concrete into pixels <span class="plus">+</span> an ongoing study into heavy web design
             </p>
             <br>
-            <a href="#" class="read-more">read entry</a>
+            <span class="sealed">[ entry sealed <span class="plus">+</span> still being written ]</span>
         </article>
         
         <article class="journal-entry">
@@ -67,8 +79,20 @@
                 silence as a building material <span class="plus">+</span> visiting the katsura imperial villa
             </p>
             <br>
-            <a href="#" class="read-more">read entry</a>
+            <span class="sealed">[ entry sealed <span class="plus">+</span> still being written ]</span>
         </article>
+
+        <article class="journal-entry">
+            <span class="mono-font date-stamp">technical notes</span>
+            <h2 class="entry-title">the builds live in the blog</h2>
+            <p class="mono-font">
+                knowledge graphs <span class="plus">+</span> scoring systems <span class="plus">+</span> data pipelines <span class="plus">+</span> the long form technical notes are filed separately
+            </p>
+            <br>
+            <a href="/blog/" class="read-more">open the blog</a>
+        </article>
+
+        <div class="easter-egg" style="top: 30vh; right: 12vw;">the margins are where the thinking happens</div>
     </main>
 
     <footer class="mono-font"></footer> </body>
