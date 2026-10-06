@@ -25,20 +25,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arnaud leroy + studio</title>
-    <meta name="description" content="Arnaud Leroy is a multidisciplinary designer and builder based in Lisbon, Paris and Tokyo. Silence is a material: design, data platforms and quiet systems.">
+    <title>arnaud leroy + studio + silence is a material</title>
+    <meta name="description" content="Arnaud Leroy is a designer and builder in Lisbon, Paris and Tokyo. His studio makes data platforms like BenchGecko, CoffeeTrove and DropThe, apps and games.">
     <meta name="author" content="Arnaud Leroy">
     <link rel="canonical" href="https://arnaudleroy.com/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:locale" content="en_US">
     <meta property="og:title" content="arnaud leroy + studio">
-    <meta property="og:description" content="silence is a material + multidisciplinary design studio based in lisbon + paris + tokyo">
+    <meta property="og:description" content="silence is a material + design + data platforms + quiet systems">
     <meta property="og:url" content="https://arnaudleroy.com/">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image" content="https://arnaudleroy.com/og/home.jpg">
+    <meta property="og:image:alt" content="arnaud leroy + studio">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="twitter:title" content="arnaud leroy + studio">
+    <meta name="twitter:description" content="silence is a material + design + data platforms + quiet systems">
+    <meta name="twitter:image" content="https://arnaudleroy.com/og/home.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -46,6 +50,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
     <link rel="author" href="/humans.txt">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- rockwell first + roboto slab only where rockwell is not installed -->
@@ -61,9 +66,21 @@
           "@id": "https://arnaudleroy.com/#arnaud",
           "name": "Arnaud Leroy",
           "url": "https://arnaudleroy.com",
+          "image": "https://arnaudleroy.com/apple-touch-icon.png",
           "jobTitle": "Designer + Builder",
-          "worksFor": { "@id": "https://arnaudleroy.com/#studio" },
-          "sameAs": ["https://github.com/arnaudleroy-studio"]
+          "worksFor": {
+            "@id": "https://arnaudleroy.com/#studio"
+          },
+          "knowsAbout": [
+            "data platforms",
+            "knowledge graphs",
+            "creative direction",
+            "product design",
+            "AI economy data"
+          ],
+          "sameAs": [
+            "https://github.com/arnaudleroy-studio"
+          ]
         },
         {
           "@type": "Organization",
@@ -73,11 +90,34 @@
           "logo": "https://arnaudleroy.com/apple-touch-icon.png",
           "slogan": "Silence is a material",
           "foundingDate": "2024",
-          "founder": { "@id": "https://arnaudleroy.com/#arnaud" },
+          "founder": {
+            "@id": "https://arnaudleroy.com/#arnaud"
+          },
           "location": [
-            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Lisbon", "addressCountry": "PT" } },
-            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" } },
-            { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Tokyo", "addressCountry": "JP" } }
+            {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Lisbon",
+                "addressCountry": "PT"
+              }
+            },
+            {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Paris",
+                "addressCountry": "FR"
+              }
+            },
+            {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Tokyo",
+                "addressCountry": "JP"
+              }
+            }
           ]
         },
         {
@@ -85,7 +125,12 @@
           "@id": "https://arnaudleroy.com/#site",
           "url": "https://arnaudleroy.com",
           "name": "arnaud leroy + studio",
-          "publisher": { "@id": "https://arnaudleroy.com/#studio" }
+          "publisher": {
+            "@id": "https://arnaudleroy.com/#studio"
+          },
+          "author": {
+            "@id": "https://arnaudleroy.com/#arnaud"
+          }
         }
       ]
     }
@@ -98,7 +143,28 @@
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">index no <span class="plus">+</span> 01</div>
 
-    <header></header> <main class="grid-layout">
+    <header>
+    <div class="brand-container">
+        <a href="/" class="brand-link">
+            <span class="brand-name">arnaud leroy</span>
+        </a>
+    </div>
+
+    <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="mono-font">
+        <ul>
+            <li><a href="/projects.html">projects</a></li>
+            <li><a href="/blog/">blog</a></li>
+            <li><a href="/studio.html">studio</a></li>
+            <li><a href="/journal.html">journal</a></li>
+            <li><a href="/contact.html">contact</a></li>
+        </ul>
+    </nav>
+    </header> <main class="grid-layout">
         <div class="hero-text-container">
             <h1 class="hero-statement">
                 silence is <span class="plus" style="font-size: 0.3em; vertical-align: middle;">+</span><br>
@@ -107,9 +173,17 @@
             <p class="mono-font" style="max-width: 400px;">
                 curating ideas <span class="plus">+</span> designing emotions <span class="plus">+</span> crafting the intangible
             </p>
+            <p class="mono-font selected-works">
+                <span class="sw-label">selected works</span><br>
+                <a href="/project-benchgecko.html">benchgecko</a> <span class="plus">+</span>
+                <a href="/project-coffeetrove.html">coffeetrove</a> <span class="plus">+</span>
+                <a href="/project-facil.html">facil.guide</a> <span class="plus">+</span>
+                <a href="/project-dropthe.html">dropthe</a> <span class="plus">+</span>
+                <a href="/projects.html">all</a>
+            </p>
         </div>
         <div class="image-frame">
-            <img src="/sea.jpg" alt="the sea under a quiet sky + concept study" width="1200" height="830" fetchpriority="high">
+            <img src="/sea.jpg" alt="the great wave off kanagawa by hokusai in black and white + concept study" width="1200" height="830" fetchpriority="high">
             <span class="image-meta mono-font">fig 01 <span class="plus">+</span> concept study</span>
         </div>
 
@@ -118,7 +192,36 @@
         <div class="easter-egg" style="top: 45%; left: 50%; transform: rotate(-90deg);">lat 38.7223 <span class="plus">+</span> lon -9.1393</div>
     </main>
 
-    <footer class="mono-font"></footer> 
+    <footer class="mono-font">
+    <div>c 2024 <span class="plus">+</span> 2026 arnaud leroy</div>
+    
+    <div class="footer-center"> 
+        multidisciplinary design<br>
+        studio based in lisbon <span class="plus">+</span> paris <span class="plus">+</span> tokyo
+    </div>
+    
+    <div style="text-align: right; color: var(--accent-blue); display: flex; align-items: center; justify-content: flex-end;">
+        a l <span class="plus">+</span> studio
+        
+        <div id="mode-toggle" title="Toggle Theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </div>
+    </footer> 
   
   <script>
     // [ KONAMI CODE: P-L-A-Y ]

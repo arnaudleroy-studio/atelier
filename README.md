@@ -160,6 +160,22 @@ The system rewards curiosity. There is a hidden layer beneath the content.
    sitemap.xml. Filters: architecture + digital + data + game + fashion + research.
 
 
+[ 05.5 ] MAINTENANCE TOOLS (_tools/ + not served by github pages)
+--------------------------------------------------------------------------------
+> python3 _tools/head.py ...... rebuilds every <head> from ONE table: title +
+                                description + canonical + og + json-ld. New page?
+                                add a row there first.
+> python3 _tools/links.py ..... rewrites the "next project" trail on every
+                                project page (order lives in the script).
+> python3 _tools/og.py ........ renders /og/<slug>.jpg share cards (1200x630)
+                                in rockwell + courier on the void.
+> sh _tools/indexnow.sh ....... after a deploy: tells bing + yandex every url
+                                in the sitemap changed.
+* Header + footer are prerendered in each page for crawlers that skip js.
+  components.js re-injects them, so after changing HEADER_HTML / FOOTER_HTML
+  paste the same markup into the pages (or ask the machine to).
+
+
 [ 06 ] SYNTAX RULES (STRICT)
 --------------------------------------------------------------------------------
 1. NO COMMAS ........... Replace with <span class="plus">+</span>

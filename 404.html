@@ -31,14 +31,18 @@
     <meta name="robots" content="noindex">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:locale" content="en_US">
     <meta property="og:title" content="signal lost">
     <meta property="og:description" content="404 + void detected">
     <meta property="og:url" content="https://arnaudleroy.com/">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image" content="https://arnaudleroy.com/og/home.jpg">
+    <meta property="og:image:alt" content="signal lost">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="twitter:title" content="signal lost">
+    <meta name="twitter:description" content="404 + void detected">
+    <meta name="twitter:image" content="https://arnaudleroy.com/og/home.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -46,6 +50,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
     <link rel="author" href="/humans.txt">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- rockwell first + roboto slab only where rockwell is not installed -->
@@ -87,7 +92,28 @@
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">code <span class="plus">+</span> 404</div>
 
-    <header></header>
+    <header>
+    <div class="brand-container">
+        <a href="/" class="brand-link">
+            <span class="brand-name">arnaud leroy</span>
+        </a>
+    </div>
+
+    <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="mono-font">
+        <ul>
+            <li><a href="/projects.html">projects</a></li>
+            <li><a href="/blog/">blog</a></li>
+            <li><a href="/studio.html">studio</a></li>
+            <li><a href="/journal.html">journal</a></li>
+            <li><a href="/contact.html">contact</a></li>
+        </ul>
+    </nav>
+    </header>
 
     <main>
         <div id="matrix-bg"></div>
@@ -105,7 +131,36 @@
         </div>
     </main>
 
-    <footer class="mono-font"></footer>
+    <footer class="mono-font">
+    <div>c 2024 <span class="plus">+</span> 2026 arnaud leroy</div>
+    
+    <div class="footer-center"> 
+        multidisciplinary design<br>
+        studio based in lisbon <span class="plus">+</span> paris <span class="plus">+</span> tokyo
+    </div>
+    
+    <div style="text-align: right; color: var(--accent-blue); display: flex; align-items: center; justify-content: flex-end;">
+        a l <span class="plus">+</span> studio
+        
+        <div id="mode-toggle" title="Toggle Theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </div>
+    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -25,20 +25,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>project + evasion</title>
-    <meta name="description" content="System Evasion: a reactive arcade engine built in pure code. Time dilation, glitch storms, combo architecture and a dark mode Nightmare Drive.">
+    <title>system evasion + reactive arcade + arnaud leroy</title>
+    <meta name="description" content="System Evasion by Arnaud Leroy: a reactive arcade engine in pure code. Time dilation, glitch storms, combo architecture and a dark mode Nightmare Drive.">
     <meta name="author" content="Arnaud Leroy">
     <link rel="canonical" href="https://arnaudleroy.com/project-arcade.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="arnaud leroy + studio">
-    <meta property="og:title" content="arnaud leroy + system evasion">
-    <meta property="og:description" content="reactive arcade + creative coding">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="system evasion + reactive arcade">
+    <meta property="og:description" content="time dilation + glitch storms + nightmare drive">
     <meta property="og:url" content="https://arnaudleroy.com/project-arcade.html">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image" content="https://arnaudleroy.com/og/arcade.jpg">
+    <meta property="og:image:alt" content="system evasion + reactive arcade">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="twitter:title" content="system evasion + reactive arcade">
+    <meta name="twitter:description" content="time dilation + glitch storms + nightmare drive">
+    <meta name="twitter:image" content="https://arnaudleroy.com/og/arcade.jpg">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -46,12 +50,59 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
     <link rel="author" href="/humans.txt">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- rockwell first + roboto slab only where rockwell is not installed -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap">
     <link rel="stylesheet" href="/style.css">
     <script src="/components.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "VideoGame",
+          "name": "System Evasion",
+          "description": "System Evasion by Arnaud Leroy: a reactive arcade engine in pure code. Time dilation, glitch storms, combo architecture and a dark mode Nightmare Drive.",
+          "creator": {
+            "@id": "https://arnaudleroy.com/#arnaud"
+          },
+          "author": {
+            "@id": "https://arnaudleroy.com/#arnaud"
+          },
+          "dateCreated": "2025",
+          "image": "https://arnaudleroy.com/og/arcade.jpg",
+          "mainEntityOfPage": "https://arnaudleroy.com/project-arcade.html",
+          "url": "https://arnaudleroy.com/game.html",
+          "genre": "Browser arcade game"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "arnaud leroy",
+              "item": "https://arnaudleroy.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "projects",
+              "item": "https://arnaudleroy.com/projects.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "system evasion",
+              "item": "https://arnaudleroy.com/project-arcade.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <style>
         /* PROJECT SPECIFIC LAYOUT */
         body { 
@@ -172,7 +223,28 @@
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">status <span class="plus">+</span> live</div>
 
-    <header></header> 
+    <header>
+    <div class="brand-container">
+        <a href="/" class="brand-link">
+            <span class="brand-name">arnaud leroy</span>
+        </a>
+    </div>
+
+    <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="mono-font">
+        <ul>
+            <li><a href="/projects.html">projects</a></li>
+            <li><a href="/blog/">blog</a></li>
+            <li><a href="/studio.html">studio</a></li>
+            <li><a href="/journal.html">journal</a></li>
+            <li><a href="/contact.html">contact</a></li>
+        </ul>
+    </nav>
+    </header> 
     
     <main class="grid-layout" style="display: block; max-width: 1000px;">
         
@@ -203,7 +275,7 @@
             </div>
 
             <div>
-                <img loading="lazy" src="/gameimg/start.jpg" class="hero-img" alt="start screen interface">
+                <img loading="lazy" src="/gameimg/start.jpg" class="hero-img" alt="system evasion start screen" width="1400" height="788">
                 <div class="mono-font" style="font-size: 10px; text-align: right;">fig 01 + initialization sequence</div>
             </div>
         </div>
@@ -213,7 +285,7 @@
         <div class="project-grid">
             
             <div class="feature-block">
-                <img loading="lazy" src="/gameimg/focus.jpg" class="hero-img" alt="focus mechanics">
+                <img loading="lazy" src="/gameimg/focus.jpg" class="hero-img" alt="system evasion focus mode slowing time" width="1400" height="757">
                 <h3 class="feature-title">01 + time dilation</h3>
                 <p class="mono-font">
                     the [space] bar triggers a hyper-focus state + the world slows down + contrast increases + and the audio dampens + use this resource strategically to thread through impossible gaps
@@ -221,7 +293,7 @@
             </div>
 
             <div class="feature-block">
-                <img loading="lazy" src="/gameimg/glitchmode.jpg" class="hero-img" alt="glitch mode">
+                <img loading="lazy" src="/gameimg/glitchmode.jpg" class="hero-img" alt="system evasion glitch storm with inverted colors" width="1400" height="771">
                 <h3 class="feature-title">02 + the glitch storm</h3>
                 <p class="mono-font">
                     every 30 seconds + the system destabilizes + colors invert + noise floods in faster + this phase tests pure reflex over strategy + survival during a storm yields double points
@@ -229,7 +301,7 @@
             </div>
 
             <div class="feature-block">
-                <img loading="lazy" src="/gameimg/ingame2.jpg" class="hero-img" alt="combo system">
+                <img loading="lazy" src="/gameimg/ingame2.jpg" class="hero-img" alt="system evasion combo multiplier in play" width="1400" height="760">
                 <h3 class="feature-title">03 + combo architecture</h3>
                 <p class="mono-font">
                     collecting data packets (+) in rapid succession builds a multiplier (x2 + x4 + x8) + hesitation resets the counter + aggression is rewarded
@@ -237,7 +309,7 @@
             </div>
 
             <div class="feature-block">
-                <img loading="lazy" src="/gameimg/nightmare.jpg" class="hero-img" alt="nightmare mode">
+                <img loading="lazy" src="/gameimg/nightmare.jpg" class="hero-img" alt="system evasion nightmare drive with flashlight cone" width="1400" height="720">
                 <h3 class="feature-title">04 + nightmare drive</h3>
                 <p class="mono-font">
                     activating the studio's "dark mode" transforms the game into a horror-survival experience + visibility is limited to a dynamic flashlight cone that tracks player movement
@@ -262,9 +334,45 @@
             signal_strength: 10% ... connection_unstable
         </div>
 
+            <!-- [ TRAIL ] -->
+        <div class="project-trail mono-font" role="navigation" aria-label="more projects">
+            <a href="/project-the-oracle.html" class="trail-link">&lt; 07 <span class="plus">+</span> the oracle</a>
+            <a href="/projects.html" class="trail-link trail-archive">archive</a>
+            <a href="/project-wooden-wall.html" class="trail-link">05 <span class="plus">+</span> porous boundary &gt;</a>
+        </div>
+        <!-- [ /TRAIL ] -->
     </main>
 
-    <footer class="mono-font"></footer> 
+    <footer class="mono-font">
+    <div>c 2024 <span class="plus">+</span> 2026 arnaud leroy</div>
+    
+    <div class="footer-center"> 
+        multidisciplinary design<br>
+        studio based in lisbon <span class="plus">+</span> paris <span class="plus">+</span> tokyo
+    </div>
+    
+    <div style="text-align: right; color: var(--accent-blue); display: flex; align-items: center; justify-content: flex-end;">
+        a l <span class="plus">+</span> studio
+        
+        <div id="mode-toggle" title="Toggle Theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </div>
+    </footer> 
 
 </body>
 </html>

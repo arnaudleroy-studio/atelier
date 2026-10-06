@@ -26,19 +26,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>building a knowledge graph with 1.8 million entities + arnaud leroy</title>
-    <meta name="description" content="How we built DropThe's entity system: a knowledge graph connecting 1.8 million entities across movies, people, crypto, and companies with 2.9 million links.">
+    <meta name="description" content="How Arnaud Leroy built DropThe's entity system: a Postgres knowledge graph linking 1.8 million entities with 2.9 million links, and the discipline behind it.">
     <meta name="author" content="Arnaud Leroy">
     <link rel="canonical" href="https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="arnaud leroy + studio">
+    <meta property="og:locale" content="en_US">
     <meta property="og:title" content="building a knowledge graph with 1.8 million entities">
-    <meta property="og:description" content="how dropthe connects movies + people + crypto + companies">
+    <meta property="og:description" content="postgres + an entity table + a links table + discipline">
     <meta property="og:url" content="https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html">
-    <meta property="og:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta property="og:image" content="https://arnaudleroy.com/og/blog-knowledge-graph.jpg">
+    <meta property="og:image:alt" content="building a knowledge graph with 1.8 million entities">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://arnaudleroy.com/share-image.jpg">
+    <meta name="twitter:title" content="building a knowledge graph with 1.8 million entities">
+    <meta name="twitter:description" content="postgres + an entity table + a links table + discipline">
+    <meta name="twitter:image" content="https://arnaudleroy.com/og/blog-knowledge-graph.jpg">
+    <meta property="article:published_time" content="2026-03-28">
+    <meta property="article:modified_time" content="2026-10-06">
+    <meta property="article:author" content="Arnaud Leroy">
     <meta name="theme-color" content="#FAEBD7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#002366" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -46,6 +53,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="+">
     <link rel="author" href="/humans.txt">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- rockwell first + roboto slab only where rockwell is not installed -->
@@ -54,22 +62,51 @@
     <script src="/components.js" defer></script>
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Building a Knowledge Graph with 1.8 Million Entities",
-        "author": {
-            "@type": "Person",
-            "name": "Arnaud Leroy",
-            "url": "https://arnaudleroy.com"
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "Building a Knowledge Graph with 1.8 Million Entities",
+          "description": "How Arnaud Leroy built DropThe's entity system: a Postgres knowledge graph linking 1.8 million entities with 2.9 million links, and the discipline behind it.",
+          "datePublished": "2026-03-28",
+          "dateModified": "2026-10-06",
+          "author": {
+            "@id": "https://arnaudleroy.com/#arnaud"
+          },
+          "publisher": {
+            "@id": "https://arnaudleroy.com/#studio"
+          },
+          "image": "https://arnaudleroy.com/og/blog-knowledge-graph.jpg",
+          "url": "https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html",
+          "mainEntityOfPage": "https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html",
+          "about": {
+            "@id": "https://arnaudleroy.com/project-dropthe.html"
+          }
         },
-        "datePublished": "2026-03-28",
-        "publisher": {
-            "@type": "Organization",
-            "name": "Arnaud Leroy Studio",
-            "url": "https://arnaudleroy.com"
-        },
-        "url": "https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html",
-        "description": "How we built DropThe's entity system: connecting 1.8 million entities across movies, people, crypto, and companies."
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "arnaud leroy",
+              "item": "https://arnaudleroy.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "blog",
+              "item": "https://arnaudleroy.com/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "building a knowledge graph with 1.8 million entities",
+              "item": "https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html"
+            }
+          ]
+        }
+      ]
     }
     </script>
     <style>
@@ -187,7 +224,28 @@
     <div class="fixed-axis right-axis"></div>
     <div class="axis-label right-label">28 <span class="plus">+</span> 03 <span class="plus">+</span> 26</div>
 
-    <header></header>
+    <header>
+    <div class="brand-container">
+        <a href="/" class="brand-link">
+            <span class="brand-name">arnaud leroy</span>
+        </a>
+    </div>
+
+    <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="mono-font">
+        <ul>
+            <li><a href="/projects.html">projects</a></li>
+            <li><a href="/blog/">blog</a></li>
+            <li><a href="/studio.html">studio</a></li>
+            <li><a href="/journal.html">journal</a></li>
+            <li><a href="/contact.html">contact</a></li>
+        </ul>
+    </nav>
+    </header>
 
     <main>
         <div class="article-container">
@@ -265,10 +323,45 @@
                 </p>
 
             </div>
+            <!-- [ AUTHOR ] -->
+            <div class="post-signature mono-font">
+                <span>written by <a href="/studio.html">arnaud leroy</a> <span class="plus">+</span> lisbon</span>
+                <a href="/project-dropthe.html">project 08 <span class="plus">+</span> dropthe &gt;</a>
+            </div>
+            <!-- [ /AUTHOR ] -->
         </div>
     </main>
 
-    <footer class="mono-font"></footer>
+    <footer class="mono-font">
+    <div>c 2024 <span class="plus">+</span> 2026 arnaud leroy</div>
+    
+    <div class="footer-center"> 
+        multidisciplinary design<br>
+        studio based in lisbon <span class="plus">+</span> paris <span class="plus">+</span> tokyo
+    </div>
+    
+    <div style="text-align: right; color: var(--accent-blue); display: flex; align-items: center; justify-content: flex-end;">
+        a l <span class="plus">+</span> studio
+        
+        <div id="mode-toggle" title="Toggle Theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </div>
+    </footer>
 </body>
 </html>
 

@@ -1,0 +1,23 @@
+# arnaud leroy + studio
+
+> Arnaud Leroy is a designer and builder based in Lisbon, with satellites in Paris and Tokyo. His studio, founded in 2024, works at the intersection of fashion, visual culture, data and pure creation. Its idea: silence is a material.
+
+## Data platforms
+- [BenchGecko](https://arnaudleroy.com/project-benchgecko.html): the AI economy, tracked. Models, benchmarks, pricing, companies and compute, refreshed daily by bots. Live at https://benchgecko.ai
+- [CoffeeTrove](https://arnaudleroy.com/project-coffeetrove.html): the golden pages of coffee. The Golden Drop score ranks cafes on what can be known. Live at https://coffeetrove.com
+- [facil.guide](https://arnaudleroy.com/project-facil.html): technology simplified for seniors in 5 languages. Live at https://facil.guide
+- [DropThe](https://arnaudleroy.com/project-dropthe.html): a data utility network backed by a knowledge graph. Live at https://dropthe.org
+
+## Apps, games and research
+- [The Oracle](https://arnaudleroy.com/project-the-oracle.html): iOS and watchOS activation engine
+- [System Evasion](https://arnaudleroy.com/project-arcade.html): a reactive arcade game hidden in the site
+- [Maison Automata](https://arnaudleroy.com/project-maison-automata.html): robotic fashion house research
+- [All projects](https://arnaudleroy.com/projects.html)
+
+## Writing
+- [Building a knowledge graph with 1.8 million entities](https://arnaudleroy.com/blog/building-dropthe-knowledge-graph.html)
+- [Designing a scoring system for 440,000 cafes](https://arnaudleroy.com/blog/coffeetrove-golden-drop-scoring.html)
+
+## About
+- [Studio](https://arnaudleroy.com/studio.html)
+- [Contact](https://arnaudleroy.com/contact.html)

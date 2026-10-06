@@ -1,5 +1,10 @@
+# arnaud leroy + studio
+# silence is a material + crawl gently
+
 User-agent: *
 Allow: /
 Disallow: /secret.html
+Disallow: /README.md
+Disallow: /_tools/
 
 Sitemap: https://arnaudleroy.com/sitemap.xml
