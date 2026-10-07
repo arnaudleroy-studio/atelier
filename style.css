@@ -429,9 +429,3 @@ body.blueprint-mode main {
 }
 .post-signature a { color: var(--accent-blue); text-decoration: none; }
 .post-signature a:hover { text-decoration: underline; text-underline-offset: 4px; }
-
-/* [ 14 ] SELECTED WORKS (homepage, barely there) */
-.selected-works { margin-top: 40px; font-size: 11px; line-height: 2; color: var(--accent-grey); }
-.selected-works .sw-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.7; }
-.selected-works a { color: var(--accent-grey); text-decoration: none; transition: color 0.3s ease; }
-.selected-works a:hover { color: var(--accent-blue); }
